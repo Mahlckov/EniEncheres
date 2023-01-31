@@ -46,7 +46,7 @@
 
 </form>
 
-<a href="/ENIencheres/Inscription"><p class="lienCréaDeCompte">Vous n'avez pas de compte ? Cliquez ici pour s'inscrire</a> </p>
+<a href="/EniEncheres/Inscription"><p class="lienCréaDeCompte">Vous n'avez pas de compte ? Cliquez ici pour s'inscrire</a> </p>
 
 
     <c:if test="${!empty messageConnexion}"> <c:out value="${messageConnexion }"></c:out> </c:if> 

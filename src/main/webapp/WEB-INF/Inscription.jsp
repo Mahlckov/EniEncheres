@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="/ENIencheres/css/style.css" rel="stylesheet">
+<link href="/EniEncheres/css/style.css" rel="stylesheet">
 
 <title>Insert title here</title>
 </head>
@@ -68,7 +68,7 @@
 
 
 
-<a class="annuler" href="/ENIencheres/Accueil"><button class="annuler"value="Annuler">Annuler</button></a>
+<a class="annuler" href="/EniEncheres/Accueil"><button class="annuler"value="Annuler">Annuler</button></a>
 
 </div>
 
