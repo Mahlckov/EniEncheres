@@ -6,6 +6,7 @@ import java.util.List;
 public class Utilisateur {
 
 	int noUtilisateur;
+	int noVendeur;
 	String pseudo;
 	String nom;
 	String prenom;
@@ -38,6 +39,11 @@ public class Utilisateur {
 		this.credit = credit;
 		this.administrateur = administrateur;		
 	}
+	
+//	public Utilisateur(Utilisateur noVendeur) {
+//		this.noUtilisateur = noVendeur;
+//		
+//	}
 	
 	public String getTelephone() {
 		return telephone;
