@@ -1,0 +1,93 @@
+@charset "UTF-8";
+
+body {
+	margin: 0;
+}
+
+h1 {
+	margin-bottom: 0, 5em;
+}
+
+header {
+	width: 100%;
+	display: flex;
+}
+
+.header {
+	width: 50%;
+	font-weight: bold;
+	font-size: 1em;
+	text-align: center;
+	color: red;
+	height: 5em;
+	line-height: 1em;
+	vertical-align: middle;
+	margin: 0;
+}
+
+.connect {
+	width: 50%;
+	text-align: center;
+	height: 5em;
+	line-height: 5em;
+	vertical-align: middle;
+}
+
+.barreDeco {
+	width: 75%;
+	height: 0.5em;
+	border-bottom: solid;
+	border-color: black;
+	margin-left: auto;
+	margin-right: auto;
+	border-width: 1px;
+}
+
+
+
+a {
+	text-decoration: none;
+}
+
+
+form {
+	width: 70%;
+	margin: 0 auto;
+	margin-left: 28%;
+}
+
+
+label, input {
+	display: inline-block;
+}
+
+label {
+	width: 10%;
+	text-align: left;
+}
+
+label+input {
+	width: 30%;
+
+	margin: 0 30% 0 4%;
+}
+
+.submit {
+	display: inline-block;
+	width: 10%;
+	margin-left: 20%;
+	position: center;
+}
+
+.lienCréaDeCompte {
+	width: 100%;
+	text-align: center;
+}
+
+.annuler {
+	width: 10%;
+}
+
+.containerButton {
+	width: 60%;
+}
