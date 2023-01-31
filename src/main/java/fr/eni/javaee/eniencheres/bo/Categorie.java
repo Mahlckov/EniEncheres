@@ -4,6 +4,8 @@ public class Categorie {
 	
 private int noCategorie;
 private String libelle;
+
+
 public int getNoCategorie() {
 	return noCategorie;
 }
