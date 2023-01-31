@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="/ENIencheres/css/style.css" rel="stylesheet">
+<link href="/EniEncheres/css/style.css" rel="stylesheet">
 
 <title>ENI Enchères</title>
 </head>
@@ -17,7 +17,7 @@
 
 <nav class="connect">
 
-<a href="/ENIencheres/Connexion">Se connecter / S'inscrire</a>
+<a href="/EniEncheres/Connexion">Se connecter / S'inscrire</a>
 
 </nav>
 

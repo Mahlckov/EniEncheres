@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="/ENIencheres/css/style.css" rel="stylesheet">
+<link href="/EniEncheres/css/style.css" rel="stylesheet">
 
 <title>ENI Enchères</title>
 </head>
@@ -46,7 +46,7 @@
 
 </form>
 
-<a href="/ENIencheres/Inscription"><p class="lienCréaDeCompte">Vous n'avez pas de compte ? Cliquez ici pour s'inscrire</a> </p>
+<a href="/EniEncheres/Inscription"><p class="lienCréaDeCompte">Vous n'avez pas de compte ? Cliquez ici pour s'inscrire</a> </p>
 
 
     <c:if test="${!empty messageConnexion}"> <c:out value="${messageConnexion }"></c:out> </c:if> 
