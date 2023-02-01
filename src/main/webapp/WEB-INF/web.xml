@@ -47,6 +47,14 @@
   </servlet-mapping>
   
   
+ <servlet>
+    <servlet-name>JSPTestDAL</servlet-name>
+    <jsp-file>/WEB-INF/jsp/testDAL.jsp</jsp-file>
+</servlet>
+<servlet-mapping>
+  	<servlet-name>JSPTestDAL</servlet-name>
+  	<url-pattern>jsp/testDAL</url-pattern>
+</servlet-mapping> 
   
   
 </web-app>
