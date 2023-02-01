@@ -157,7 +157,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		{
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
-			businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTE_ECHEC);
+			businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTES_ECHEC);
 			throw businessException;
 		}
 /*		if(utilisateur.getId()==0)

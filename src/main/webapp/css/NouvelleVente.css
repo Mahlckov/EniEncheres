@@ -1,5 +1,8 @@
 @charset "UTF-8";
 
+
+@charset "UTF-8";
+
 body {
 	margin: 0;
 }
@@ -49,55 +52,46 @@ a {
 	text-decoration: none;
 }
 
+p{margin-right:0.0em;}
 
-form {
-	width: 70%;
-	margin: 0 auto;
-	margin-left: 28%;
+.titreNouvelleVente{	text-align:center;}
+
+
+
+.conteneurPhoto {width:45em;
+				height:80em;
+				margin:	0;}
+				
+.conteneur {display:flex;}
+
+.conteneurFormulaire {width:45em;}
+
+.libelle {width:8em; display:inline-block;}
+
+.DescriptionArticle {width:8em; display:inline-block;}
+
+
+				
+				
+.divParam {
+width:30em;
+margin-top:1.5em;	}
+
+.divRetrait {border: solid;
+width:25em;
+padding-left:2em;
+padding-bottom:0em;
+
 }
 
+.divParam {
+width:30em;
+margin-bottom:1.5em;	}
 
-label, input {
-	display: inline-block;
-}
-
-label {
-	width: 10%;
-	text-align: left;
-}
-
-label+input {
-	width: 30%;
-
-	margin: 0 30% 0 4%;
-}
-
-.submit {
-	display: inline-block;
-	width: 10%;
-	margin-left: 20%;
-	position: center;
-}
-
-.lienCréaDeCompte {
-	width: 100%;
-	text-align: center;
-}
-
-.annuler {
-	width: 10%;
-}
-
-.containerButton {
-	width: 60%;
-}
+.submit {margin-top:3em;
+width:10em;}
 
 
+.annuler {width:10em;}
 
-.titreListeEnchere {
-	text-align:center;}
-	
-.filtre {font-weight:bold;
-		font-size:1.5em;
-		padding-left:3em;
-		}
+
