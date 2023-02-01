@@ -6,6 +6,7 @@ import java.util.List;
 public class Utilisateur {
 
 	int noUtilisateur;
+	int noVendeur;
 	String pseudo;
 	String nom;
 	String prenom;
@@ -20,6 +21,23 @@ public class Utilisateur {
 	private List<Encheres> listEnchere = new ArrayList<Encheres>() ;
 	private List<Articles> listArticles = new ArrayList<Articles>() ;
 
+	
+	
+	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
+			String codePostal, String ville, String motDePasse, int credit, boolean administrateur) {
+		super();
+		this.pseudo = pseudo;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.telephone=telephone;
+		this.rue = rue;
+		this.codePostal = codePostal;
+		this.ville = ville;
+		this.motDePasse = motDePasse;
+		this.credit = credit;
+		this.administrateur = administrateur;		
+	}
 	
 
 	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone, String rue,
@@ -38,6 +56,11 @@ public class Utilisateur {
 		this.credit = credit;
 		this.administrateur = administrateur;		
 	}
+	
+//	public Utilisateur(Utilisateur noVendeur) {
+//		this.noUtilisateur = noVendeur;
+//		
+//	}
 	
 	public String getTelephone() {
 		return telephone;

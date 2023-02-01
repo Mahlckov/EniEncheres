@@ -1,6 +1,7 @@
 package fr.eni.javaee.eniencheres.bo;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Articles {
 	private int noArticle;
@@ -9,16 +10,31 @@ public class Articles {
 	private LocalDate dateDebutEncheres;
 	private LocalDate dateFinEncheres;
 	private int miseAprix;
-	private int prixVente;
 	private String etatVente;
-	private Encheres enchere;
+	private Categorie noCategorie;
+	private Utilisateur noVendeur;
+	private List<Encheres> listEnchere;
 
 	
 	public Articles() {
 		super();
 	}
+
+	public Articles(String nomArticle, String description, LocalDate dateDebutEncheres,
+			LocalDate dateFinEncheres, int miseAprix, String etatVente, Categorie noCategorie, Utilisateur noVendeur) {
+		super();
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAprix = miseAprix;
+		this.etatVente = etatVente;
+		this.noCategorie = noCategorie;
+		this.noVendeur =noVendeur;
+	}
+	
 	public Articles(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAprix, int prixVente, String etatVente, Encheres enchere) {
+			LocalDate dateFinEncheres, int miseAprix, int prixVente, String etatVente) {
 		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -26,8 +42,20 @@ public class Articles {
 		this.dateDebutEncheres = dateDebutEncheres;
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAprix = miseAprix;
-		this.prixVente = prixVente;
 		this.etatVente = etatVente;
+	}
+	
+	public Articles(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
+			LocalDate dateFinEncheres, int miseAprix, int prixVente, String etatVente,List<Encheres> listEnchere ) {
+		super();
+		this.noArticle = noArticle;
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAprix = miseAprix;
+		this.etatVente = etatVente;
+		this.listEnchere = listEnchere;
 	}
 	
 	public int getNoArticle() {
@@ -66,25 +94,39 @@ public class Articles {
 	public void setMiseAprix(int miseAprix) {
 		this.miseAprix = miseAprix;
 	}
-	public int getPrixVente() {
-		return prixVente;
-	}
-	public void setPrixVente(int prixVente) {
-		this.prixVente = prixVente;
-	}
+	
 	public String getEtatVente() {
 		return etatVente;
 	}
 	public void setEtatVente(String etatVente) {
 		this.etatVente = etatVente;
 	}
+
+	public Categorie getNoCategorie() {
+		return noCategorie;
+	}
+
+	public void setNoCategorie(Categorie noCategorie) {
+		this.noCategorie = noCategorie;
+	}
+
+	public Utilisateur getNoVendeur() {
+		return noVendeur;
+	}
+
+	public void setNoVendeur(Utilisateur noVendeur) {
+		this.noVendeur = noVendeur;
+	}
+
+	public List<Encheres> getListEnchere() {
+		return listEnchere;
+	}
+
+	public void setListEnchere(List<Encheres> listEnchere) {
+		this.listEnchere = listEnchere;
+	}
 	
-	public Encheres getEnchere() {
-		return enchere;
-	}
-	public void setEnchere(Encheres enchere) {
-		this.enchere = enchere;
-	}
+	
 	
 	
 
