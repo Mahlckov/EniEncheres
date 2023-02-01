@@ -55,23 +55,6 @@ public abstract class CodesResultatDAL {
 	 */
 	public static final int LECTURE_UTILISATEUR_ECHEC = 10009;
 	
-	
-//	/**
-//	 * Erreur à la suppression d'une liste
-//	 */
-//	public static final int SUPPRESSION_LISTE_ERREUR = 10006;
-//	/**
-//	 * Erreur au cochage d'un article
-//	 */
-//	public static final int COCHE_ARTICLE_ERREUR = 10007;
-//	/**
-//	 * Erreur au décochage d'un article
-//	 */
-//	public static final int DECOCHE_ARTICLE_ERREUR = 10008;
-//	/**
-//	 * Erreur au décochage de tous les articles d'une liste
-//	 */
-//	public static final int DECOCHE_ARTICLES_ERREUR = 10009;
 }
 
 

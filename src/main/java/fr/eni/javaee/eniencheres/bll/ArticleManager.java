@@ -75,8 +75,5 @@ private ArticleDAO articleDAO;
 			if ((article.getDateDebutEncheres()==null && article.getDateDebutEncheres().isBefore(LocalDate.now()) )|| (article.getDateFinEncheres()==null && article.getDateFinEncheres().isBefore(LocalDate.now())) ){
 				businessException.ajouterErreur(CodesResultatBLL.REGLE_DATE_ARTICLE_ERREUR);
 			}
-		
-		}
-	
-	
+		}	
 }
