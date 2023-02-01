@@ -19,7 +19,7 @@ public class UtilisateurManager {
 	public UtilisateurManager() {
 		utilisateurDAO = DAOFactory.getUtilisateurDAO();
 	}
-
+ 
 	public List<Utilisateur> listeUtilisateur() throws BusinessException {
 		return utilisateurDAO.selectAllUser();
 	}

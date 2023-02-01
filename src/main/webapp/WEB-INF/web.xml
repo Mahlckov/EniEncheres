@@ -37,7 +37,7 @@
   
       <servlet>
   <servlet-name>JSP_Inscription</servlet-name>
-  <jsp-file>/WEB-INF/Inscription.jsp</jsp-file>
+  <jsp-file>/WEB-INF/Inscription.jsp</jsp-file> 
   
   </servlet>
   <servlet-mapping>
