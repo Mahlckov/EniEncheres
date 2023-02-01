@@ -1,3 +1,4 @@
+
 @charset "UTF-8";
 
 body {
@@ -12,6 +13,7 @@ header {
 	width: 100%;
 	display: flex;
 }
+
 
 .header {
 	width: 50%;
@@ -33,6 +35,9 @@ header {
 	vertical-align: middle;
 }
 
+.rubrique {display:inline-block; width:10em;
+text-decoration:underline;}
+
 .barreDeco {
 	width: 75%;
 	height: 0.5em;
@@ -50,46 +55,20 @@ a {
 }
 
 
-form {
-	width: 70%;
-	margin: 0 auto;
-	margin-left: 28%;
+.searchBar {width:20em;
+			margin-left:5em;
 }
 
-
-label, input {
-	display: inline-block;
-}
-
-label {
-	width: 10%;
-	text-align: left;
-}
-
-label+input {
-	width: 30%;
-
-	margin: 0 30% 0 4%;
-}
-
-.submit {
-	display: inline-block;
-	width: 10%;
-	margin-left: 20%;
-	position: center;
-}
-
-.lienCréaDeCompte {
-	width: 100%;
-	text-align: center;
-}
-
-.annuler {
-	width: 10%;
-}
-
-.containerButton {
-	width: 60%;
+.categories {
+		font-size:1.1em;
+		
+		padding-left:4.2em;
+		margin-top:2em;
+		}
+		
+.inputCategorie {
+	
+	width:14em;;
 }
 
 

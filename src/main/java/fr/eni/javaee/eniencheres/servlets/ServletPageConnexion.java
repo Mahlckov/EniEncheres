@@ -31,10 +31,13 @@ public class ServletPageConnexion extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 *      response) 
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		String identifiant = request.getParameter("identifiant");
+
 
 		UtilisateurManager manager = new UtilisateurManager();
 
@@ -42,7 +45,6 @@ public class ServletPageConnexion extends HttpServlet {
 
 		if (connexionAutorisee == true) {
 			
-			String identifiant = request.getParameter("pseudo");
 
 			HttpSession session = request.getSession();
 
