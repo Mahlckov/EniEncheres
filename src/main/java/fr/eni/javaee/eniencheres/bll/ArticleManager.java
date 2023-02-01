@@ -58,15 +58,15 @@ private ArticleDAO articleDAO;
 		 BusinessException businessException = new BusinessException();
 	    
 	        
-			if(article.getNomArticle()==null || article.getNomArticle().trim().length()>50) {
+			if(article.getNomArticle()==null || article.getNomArticle().trim().length()>30) {
 				businessException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_NOM_ERREUR);
 			}
 			
-			if(article.getDescription()==null|| article.getDescription().trim().isEmpty()){
+			if(article.getDescription()==null|| article.getDescription().trim().isEmpty()|| article.getDescription().trim().length()>300){
 				businessException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_DESCRIPTION_ERREUR);
 				
 			}
-			if(article.getEtatVente()==null|| article.getEtatVente().trim().isEmpty()) {
+			if(article.getEtatVente()==null|| article.getEtatVente().trim().isEmpty()|| article.getDescription().trim().length()>30) {
 				businessException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_ETAT_ERREUR);
 			}
 			if(article.getMiseAprix()<0 ||article.getMiseAprix()==0) {
@@ -75,8 +75,5 @@ private ArticleDAO articleDAO;
 			if ((article.getDateDebutEncheres()==null && article.getDateDebutEncheres().isBefore(LocalDate.now()) )|| (article.getDateFinEncheres()==null && article.getDateFinEncheres().isBefore(LocalDate.now())) ){
 				businessException.ajouterErreur(CodesResultatBLL.REGLE_DATE_ARTICLE_ERREUR);
 			}
-		
-		}
-	
-	
+		}	
 }
