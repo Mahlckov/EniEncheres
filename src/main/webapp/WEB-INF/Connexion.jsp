@@ -44,7 +44,7 @@
 
 
 
-</form>
+</form> 
 
 <a href="/EniEncheres/Inscription"><p class="lienCréaDeCompte">Vous n'avez pas de compte ? Cliquez ici pour s'inscrire</a> </p>
 
