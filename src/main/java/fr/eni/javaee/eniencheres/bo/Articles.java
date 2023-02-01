@@ -11,17 +11,24 @@ public class Articles {
 	private LocalDate dateFinEncheres;
 	private int miseAprix;
 	private String etatVente;
-	private Categorie noCategorie;
-	private Utilisateur noVendeur;
+	private int noCategorie;
+	private int noVendeur;
+	private Retrait retrait;
 	private List<Encheres> listEnchere;
 
 	
 	public Articles() {
 		super();
 	}
-
+	
+	public Articles(String nomArticle, String description) {
+        super();
+        this.nomArticle = nomArticle;
+        this.description = description;
+    }
+	
 	public Articles(String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAprix, String etatVente, Categorie noCategorie, Utilisateur noVendeur) {
+			LocalDate dateFinEncheres, int miseAprix, String etatVente, int noCategorie, int noVendeur) {
 		super();
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -34,7 +41,7 @@ public class Articles {
 	}
 	
 	public Articles(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAprix, int prixVente, String etatVente) {
+			LocalDate dateFinEncheres, int miseAprix, String etatVente, int noCategorie, int noVendeur) {
 		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -43,10 +50,12 @@ public class Articles {
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAprix = miseAprix;
 		this.etatVente = etatVente;
+		this.noCategorie = noCategorie;
+		this.noVendeur =noVendeur;
 	}
 	
 	public Articles(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAprix, int prixVente, String etatVente,List<Encheres> listEnchere ) {
+			LocalDate dateFinEncheres, int miseAprix, String etatVente,List<Encheres> listEnchere ) {
 		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -102,20 +111,29 @@ public class Articles {
 		this.etatVente = etatVente;
 	}
 
-	public Categorie getNoCategorie() {
+	public int getNoCategorie() {
 		return noCategorie;
 	}
 
-	public void setNoCategorie(Categorie noCategorie) {
+	public void setNoCategorie(int noCategorie) {
 		this.noCategorie = noCategorie;
 	}
 
-	public Utilisateur getNoVendeur() {
+	public int getNoVendeur() {
 		return noVendeur;
 	}
 
-	public void setNoVendeur(Utilisateur noVendeur) {
+	public void setNoVendeur(int noVendeur) {
 		this.noVendeur = noVendeur;
+	}
+	
+
+	public Retrait getRetrait() {
+		return retrait;
+	}
+
+	public void setRetrait(Retrait retrait) {
+		this.retrait = retrait;
 	}
 
 	public List<Encheres> getListEnchere() {
