@@ -11,6 +11,8 @@ import java.util.List;
 
 import fr.eni.javaee.eniencheres.BusinessException;
 import fr.eni.javaee.eniencheres.bo.Articles;
+import fr.eni.javaee.eniencheres.bo.Categorie;
+import fr.eni.javaee.eniencheres.bo.Utilisateur;
 import fr.eni.javaee.eniencheres.dal.ArticleDAO;
 import fr.eni.javaee.eniencheres.dal.CodesResultatDAL;
 import fr.eni.javaee.eniencheres.dal.ConnectionProvider;
@@ -21,10 +23,10 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String SELECT_BY_ID = "SELECT* FROM ARTICLES WHERE no_article=?";
 	private static final String DELETE_ARTICLE ="DELETE FROM ARTICLES WHERE no_article=?";
 
-	private static final String INSERT_ARTICLE ="INSERT INTO ARTICLES( nom_article, description, date_debut_encheres,\r\n"
-			+ "			 date_fin_encheres,prix_initial, prix_vente, etat_vente) VALUES(?,?,?,?,?,?,?)";
+	private static final String INSERT_ARTICLE ="INSERT INTO ARTICLES(nom_article, description, date_debut_encheres,\r\n"
+			+ "			 date_fin_encheres, prix_initial, etat_vente, no_categorie, no_vendeur) VALUES(?,?,?,?,?,?,?,?)";
 	private static final String UPDATE_ARTICLE ="UPDATE ARTICLES SET nom_article=?, description=?, date_debut_encheres=?, \"\r\n"
-			+ "				+ \"date_fin_encheres=?, prix_initial=?, prix_vente=?, etat_vente=? WHERE no_article=?";
+			+ "				+ \"date_fin_encheres=?, prix_initial=?, etat_vente=?, no_categorie=?, no_vendeur=? WHERE no_article=?";
 	
 	@Override
 	public List<Articles> selectAll() throws BusinessException {
@@ -35,22 +37,25 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next())
 			{
-				listArticles.add(new Articles(
-						rs.getInt("noArticle"), 
-						rs.getString("nomArticle"),
-						rs.getString("description"), 
-						rs.getDate("dateDebutEncheres").toLocalDate(),
-						rs.getDate("dateFinEncheres").toLocalDate(),
-						rs.getInt("miseAprix"), 
-						rs.getInt("prixVente"), 
-						rs.getString("etatVente")));
+				
+				int noArticle = rs.getInt("noArticle");
+				String nomArticle = rs.getString("nomArticle");
+				String description = rs.getString("description");
+				LocalDate dateDebutEncheres = rs.getDate("dateDebutEncheres").toLocalDate();
+				LocalDate dateFinEncheres = rs.getDate("dateFinEncheres").toLocalDate();
+				int miseAprix = rs.getInt("miseAprix");
+				String etatVente = rs.getString("etatVente");
+				int noCategorie = rs.getInt("noCategorie");
+				int noVendeur = rs.getInt("noVendeur");
+				Articles article = new Articles(noArticle, nomArticle, description, dateDebutEncheres, dateFinEncheres, miseAprix, etatVente, noCategorie, noVendeur);
+				listArticles.add(article);
 			}
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
-			businessException.ajouterErreur(CodesResultatDAL.LECTURE_ARTICLE_ECHEC);
+			businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTE_ARTICLES_ECHEC);
 			throw businessException;
 		}
 		return listArticles;
@@ -68,13 +73,14 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				String nomArticle = rs.getString("nomArticle");
 				String description = rs.getString("description");
 				LocalDate dateDebutEncheres = rs.getDate("dateDebutEncheres").toLocalDate();
-				LocalDate dateFinEncheres =	rs.getDate("dateFinEncheres").toLocalDate();
+				LocalDate dateFinEncheres = rs.getDate("dateFinEncheres").toLocalDate();
 				int miseAprix = rs.getInt("miseAprix");
-				int prixVente = rs.getInt("prixVente");
 				String etatVente = rs.getString("etatVente");
-				
-				article = new Articles(noArticle, nomArticle, description, dateDebutEncheres, dateFinEncheres, 
-						miseAprix, prixVente, etatVente);
+				int noCategorie = rs.getInt("noCategorie");
+				int noVendeur = rs.getInt("noVendeur");	
+				article = new Articles(noArticle, nomArticle, description,dateDebutEncheres, dateFinEncheres, miseAprix, etatVente, noCategorie, noVendeur);
+//				article = new Articles(noArticle, nomArticle, description,dateDebutEncheres, dateFinEncheres, miseAprix, etatVente, noCategorie, noVendeur);
+
 			}
 		}
 		catch(Exception e){
@@ -125,9 +131,9 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			    pstmt.setDate(3, java.sql.Date.valueOf(article.getDateDebutEncheres()));
 			    pstmt.setDate(4, java.sql.Date.valueOf(article.getDateFinEncheres()));
 			    pstmt.setInt(5, article.getMiseAprix());
-//			    pstmt.setInt(6, article.getPrixVente());
-			    pstmt.setString(7, article.getEtatVente());
-			    
+			    pstmt.setString(6, article.getEtatVente());
+			    pstmt.setInt(7, article.getNoCategorie());
+			    pstmt.setInt(8, article.getNoVendeur());
 			    pstmt.executeUpdate();
 			    rs= pstmt.getGeneratedKeys();
 			   
@@ -161,9 +167,10 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			pstmt.setDate(3,java.sql.Date.valueOf(article.getDateDebutEncheres()));
 		    pstmt.setDate(4, java.sql.Date.valueOf(article.getDateFinEncheres()));
 		    pstmt.setInt(5, article.getMiseAprix());
-//		    pstmt.setInt(6, article.getPrixVente());
-		    pstmt.setString(7, article.getEtatVente());
-		    pstmt.setInt(8, article.getNoArticle());
+		    pstmt.setString(6, article.getEtatVente());
+		    pstmt.setInt(7, article.getNoCategorie());
+		    pstmt.setInt(8, article.getNoVendeur());
+		    pstmt.setInt(9, article.getNoArticle());
 		    pstmt.executeUpdate();
 		    pstmt.close();	
 		}
