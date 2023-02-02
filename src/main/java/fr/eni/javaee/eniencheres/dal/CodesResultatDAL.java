@@ -54,6 +54,8 @@ public abstract class CodesResultatDAL {
 	 * Echec de la lecture des infos d'un utilisateur
 	 */
 	public static final int LECTURE_UTILISATEUR_ECHEC = 10009;
+
+	public static final int LECTURE_ENCHERES_ECHEC = 10010;
 	
 }
 
