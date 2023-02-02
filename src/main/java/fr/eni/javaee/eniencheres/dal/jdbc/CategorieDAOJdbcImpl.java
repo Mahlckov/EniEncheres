@@ -44,7 +44,6 @@ public class CategorieDAOJdbcImpl implements CategorieDAO{
 		return listCategories;
 	}	
 	
-	
 	@Override
 	public Categorie selectByIdCategorie(int noCategorie) throws BusinessException {
 		Categorie categorie = null;
