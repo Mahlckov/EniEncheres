@@ -21,6 +21,9 @@ public class Articles {
 		super();
 	}
 	
+	public Articles(int noArticle) {this.noArticle=noArticle;
+	}
+	
 	public Articles(int noArticle,Retrait retrait) {
 		super();
 	}
