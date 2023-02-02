@@ -48,5 +48,6 @@ public class Retrait {
 
 	public void setNoArticle(Articles noArticle) {
 		this.noArticle = noArticle;
-	}	 
+	}
+	
 }
