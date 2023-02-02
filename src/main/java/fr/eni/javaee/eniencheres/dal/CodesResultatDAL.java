@@ -55,6 +55,20 @@ public abstract class CodesResultatDAL {
 	 */
 	public static final int LECTURE_UTILISATEUR_ECHEC = 10009;
 	
+	/**
+	 * Echec de la lecture de la liste des catégories
+	 */
+	public static final int LECTURE_LISTE_CATEGORIES_ECHEC = 10010;
+	
+	/**
+	 * Echec de la lecture d'une catégorie
+	 */
+	public static final int LECTURE_CATEGORIE_ECHEC = 10011;
+	
+	/**
+	 * Catégorie inexistante
+	 */
+	public static final int LECTURE_CATEGORIE_INEXISTANTE = 10012;
 }
 
 
