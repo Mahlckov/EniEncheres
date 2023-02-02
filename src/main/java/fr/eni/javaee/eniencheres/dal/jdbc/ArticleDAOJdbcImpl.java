@@ -139,12 +139,9 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			    pstmt.setDate(4, java.sql.Date.valueOf(article.getDateFinEncheres()));
 			    pstmt.setInt(5, article.getMiseAprix());
 			    pstmt.setString(6, article.getEtatVente());
-			    pstmt.setInt(7, Integer.valueOf(article.getNoCategorie()));
-			    pstmt.setInt(8, article.getNoVendeur());
+			    pstmt.setInt(7, article.getNoCategorie().getNoCategorie());
+			    pstmt.setInt(8, article.getNoVendeur().getNoUtilisateur());
 			    
-			   
-			    Categorie noCategorie = categorieDAOJdbcImpl.selectByIdCategorie(0) ;
-				Utilisateur noVendeur = utilisateurDAOJdbcImpl.selectUserById(rs.getInt("noVendeur"));
 			    
 			    pstmt.executeUpdate();
 			    rs= pstmt.getGeneratedKeys();
@@ -181,8 +178,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		    pstmt.setDate(4, java.sql.Date.valueOf(article.getDateFinEncheres()));
 		    pstmt.setInt(5, article.getMiseAprix());
 		    pstmt.setString(6, article.getEtatVente());
-		    pstmt.setInt(7, article.getNoCategorie());
-		    pstmt.setInt(8, article.getNoVendeur());
+		    pstmt.setInt(7, article.getNoCategorie().getNoCategorie());
+		    pstmt.setInt(8, article.getNoVendeur().getNoUtilisateur());
 		    pstmt.setInt(9, article.getNoArticle());
 		    pstmt.executeUpdate();
 		    pstmt.close();	
