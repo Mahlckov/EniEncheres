@@ -11,13 +11,17 @@ public class Articles {
 	private LocalDate dateFinEncheres;
 	private int miseAprix;
 	private String etatVente;
-	private int noCategorie;
-	private int noVendeur;
+	private Categorie noCategorie;
+	private Utilisateur noVendeur;
 	private Retrait retrait;
 	private List<Encheres> listEnchere;
 
 	
 	public Articles() {
+		super();
+	}
+	
+	public Articles(int noArticle,Retrait retrait) {
 		super();
 	}
 	
@@ -28,8 +32,36 @@ public class Articles {
     }
 	
 	public Articles(String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAprix, String etatVente, int noCategorie, int noVendeur) {
+			LocalDate dateFinEncheres, int miseAprix, String etatVente, Categorie noCategorie, Utilisateur noVendeur) {
 		super();
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAprix = miseAprix;
+		this.etatVente = etatVente;
+		this.noCategorie = noCategorie;
+		this.noVendeur =noVendeur;
+	}
+	
+	public Articles(String nomArticle, String description, LocalDate dateDebutEncheres,
+			LocalDate dateFinEncheres, int miseAprix, String etatVente, Categorie noCategorie, Utilisateur noVendeur, Retrait retrait) {
+		super();
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAprix = miseAprix;
+		this.etatVente = etatVente;
+		this.noCategorie = noCategorie;
+		this.noVendeur =noVendeur;
+		this.retrait = retrait;
+	}
+	
+	public Articles(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
+			LocalDate dateFinEncheres, int miseAprix, String etatVente, Categorie noCategorie, Utilisateur noVendeur) {
+		super();
+		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.dateDebutEncheres = dateDebutEncheres;
@@ -41,7 +73,7 @@ public class Articles {
 	}
 	
 	public Articles(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAprix, String etatVente, int noCategorie, int noVendeur) {
+			LocalDate dateFinEncheres, int miseAprix, String etatVente, Categorie noCategorie, Utilisateur noVendeur, Retrait retrait) {
 		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -52,6 +84,8 @@ public class Articles {
 		this.etatVente = etatVente;
 		this.noCategorie = noCategorie;
 		this.noVendeur =noVendeur;
+		this.retrait = retrait;
+
 	}
 	
 	public Articles(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
@@ -111,19 +145,19 @@ public class Articles {
 		this.etatVente = etatVente;
 	}
 
-	public int getNoCategorie() {
+	public Categorie getNoCategorie() {
 		return noCategorie;
 	}
 
-	public void setNoCategorie(int noCategorie) {
+	public void setNoCategorie(Categorie noCategorie) {
 		this.noCategorie = noCategorie;
 	}
 
-	public int getNoVendeur() {
+	public Utilisateur getNoVendeur() {
 		return noVendeur;
 	}
 
-	public void setNoVendeur(int noVendeur) {
+	public void setNoVendeur(Utilisateur noVendeur) {
 		this.noVendeur = noVendeur;
 	}
 	
