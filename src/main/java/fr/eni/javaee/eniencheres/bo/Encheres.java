@@ -1,23 +1,54 @@
 package fr.eni.javaee.eniencheres.bo;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Encheres implements Comparable <Encheres> {
 	private LocalDate date_enchere ;
 	private int montant_enchere ;
-	
+	private Articles noArticle;
+	private Utilisateur noAcheteur;
 	
 	public Encheres() {
 		super();
 	}
 	
-	public Encheres(LocalDate date_enchere, int montant_enchere) {
+
+	
+	public Encheres(Utilisateur noAcheteur,Articles noArticle,LocalDate date_enchere, int montant_enchere) {
 		super();
+		this.noAcheteur = noAcheteur;
+		this.noArticle = noArticle;
 		this.date_enchere = date_enchere;
 		this.montant_enchere = montant_enchere;
+		
 	}
-	
+
+
+
+	public Articles getNoArticle() {
+		return noArticle;
+	}
+
+
+
+	public void setNoArticle(Articles noArticle) {
+		this.noArticle = noArticle;
+	}
+
+
+
+	public Utilisateur getNoAcheteur() {
+		return noAcheteur;
+	}
+
+
+
+	public void setNoAcheteur(Utilisateur noAcheteur) {
+		this.noAcheteur = noAcheteur;
+	}
+
+
+
 	public LocalDate getDate_enchere() {
 		return date_enchere;
 	}
