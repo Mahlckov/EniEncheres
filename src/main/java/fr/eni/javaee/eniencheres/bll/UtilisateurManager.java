@@ -35,7 +35,18 @@ public class UtilisateurManager {
 
 	public void deleteUser(int id) throws BusinessException {
 		utilisateurDAO.deleteUser(id);
+		
 	}
+	
+	public Utilisateur selectUserByPseudo(String pseudo) throws BusinessException {
+		return utilisateurDAO.selectUserByPseudo(pseudo);}
+	
+	
+	public Utilisateur selectUserByMail(String mail) throws BusinessException {
+		return utilisateurDAO.selectUserByMail(mail);}
+	
+	
+	
 
 	public List<String> verifierFormulaireInscription(HttpServletRequest request) {
 
@@ -56,40 +67,40 @@ public class UtilisateurManager {
 		/* VERIFICATION DES CHAMPS */
 
 		if (pseudo.isBlank()) {
-			errorList.add("Le champ 'Pseudo' doit être rempli.");
+			errorList.add("Le champ 'Pseudo' doit Ãªtre rempli.");
 		}
 		;
 		if (nom.isBlank()) {
-			errorList.add("Le champ 'Nom' doit être rempli.");
+			errorList.add("Le champ 'Nom' doit Ãªtre rempli.");
 		}
 		;
 		if (prenom.isBlank()) {
-			errorList.add("Le champ 'Prenom' doit être rempli.");
+			errorList.add("Le champ 'Prenom' doit Ãªtre rempli.");
 		}
 		;
 		if (email.isBlank()) {
-			errorList.add("Le champ 'Email' doit être rempli.");
+			errorList.add("Le champ 'Email' doit Ãªtre rempli.");
 		}
 		;
 
 		if (rue.isBlank()) {
-			errorList.add("Le champ 'Rue' doit être rempli.");
+			errorList.add("Le champ 'Rue' doit Ãªtre rempli.");
 		}
 		;
 		if (codePostal.isBlank()) {
-			errorList.add("Le champ 'Code Postal' doit être rempli.");
+			errorList.add("Le champ 'Code Postal' doit Ãªtre rempli.");
 		}
 		;
 		if (ville.isBlank()) {
-			errorList.add("Le champ 'ville' doit être rempli.");
+			errorList.add("Le champ 'ville' doit Ãªtre rempli.");
 		}
 		;
 		if (motDePasse.isBlank()) {
-			errorList.add("Le champ 'Mot de passe' doit être rempli.");
+			errorList.add("Le champ 'Mot de passe' doit Ãªtre rempli.");
 		}
 		;
 		if (confirmation.isBlank()) {
-			errorList.add("Le champ 'Confirmation' doit être rempli.");
+			errorList.add("Le champ 'Confirmation' doit Ãªtre rempli.");
 		}
 		;
 
@@ -122,12 +133,12 @@ public class UtilisateurManager {
 
 			if (pseudo.equals(pseudoUtilisateur)) {
 
-				errorList.add("Le pseudo '" + pseudo + "' est déjà utilisé.");
+				errorList.add("Le pseudo '" + pseudo + "' est dÃ©jÃ  utilisÃ©.");
 			}
 
 			if (email.equals(emailUtilisateur)) {
 
-				errorList.add("L'email '" + email + "' est déjà utilisé.");
+				errorList.add("L'email '" + email + "' est dÃ©jÃ  utilisÃ©.");
 			}
 
 		}

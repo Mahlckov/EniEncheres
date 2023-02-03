@@ -18,24 +18,19 @@ import fr.eni.javaee.eniencheres.BusinessException;
 /**
  * Servlet implementation class ServletPageInscription
  */
-@WebServlet("/ServletPageInscription")
+@WebServlet("/Inscription")
 public class ServletPageInscription extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ServletPageInscription() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/JSP/Inscription.jsp");
+		rd.forward(request, response);
 	}
 
 	/**
@@ -76,17 +71,15 @@ public class ServletPageInscription extends HttpServlet {
 
 	        session.setAttribute("identifiant",pseudo );
 	        
-	        
-	    	RequestDispatcher rd = request.getRequestDispatcher("/Accueil");
-			rd.forward(request, response);	
-			
+
+	        response.sendRedirect("Accueil");
 				} catch (BusinessException e) {
 				e.printStackTrace();
 			}
 		}
 		
 		else {request.setAttribute("errorList", errorList);
-		RequestDispatcher rd = request.getRequestDispatcher("/Inscription");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/JSP/Inscription.jsp");
 		rd.forward(request, response);		}
 		
 		
