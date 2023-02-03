@@ -29,8 +29,9 @@ public class RetraitDAOJdbcImpl implements RetraitDAO{
 				String rue = rs.getString("rue");
 				String code_postal = rs.getString("code_postal");
 				String ville = rs.getString("ville");
+				Articles article = new Articles (rs.getInt(noArticle));
 				
-				retrait = new Retrait(noArticle, rue, code_postal, ville);
+				retrait = new Retrait(article, rue, code_postal, ville);
 			}
 		}
 		catch(Exception e){
@@ -39,7 +40,7 @@ public class RetraitDAOJdbcImpl implements RetraitDAO{
 			businessException.ajouterErreur(CodesResultatDAL.LECTURE_RETRAIT_ECHEC);
 			throw businessException;	
 		}
-		if(retrait.getNoArticle()==0){
+		if(retrait.getNoArticle()==null){
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.LECTURE_RETRAIT_INEXISTANT);
 			throw businessException;
