@@ -29,10 +29,10 @@ public class ServletPageAccueil extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/JSP/Accueil.jsp");
-		rd.forward(request, response);
-	
+		rd.forward(request, response);	
+
 		
-	
+		
 	
 	}
 

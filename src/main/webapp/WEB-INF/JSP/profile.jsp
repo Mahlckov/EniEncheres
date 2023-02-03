@@ -9,8 +9,13 @@
 </head>
 <body>
 <h1>Mon Profil</h1>
+<<<<<<< HEAD
 <div>${sessionScope.pseudo}</div>
 <div>${sessionScope.nom}</div>
+=======
+<div>${user.pseudo}</div>
+<div>${user.nom}</div>
+>>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 <div>${user.prenom}</div>
 <div>${user.email}</div>
 <div>${user.telephone}</div>
