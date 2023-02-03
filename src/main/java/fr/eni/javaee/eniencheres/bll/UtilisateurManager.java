@@ -35,7 +35,18 @@ public class UtilisateurManager {
 
 	public void deleteUser(int id) throws BusinessException {
 		utilisateurDAO.deleteUser(id);
+		
 	}
+	
+	public Utilisateur selectUserByPseudo(String pseudo) throws BusinessException {
+		return utilisateurDAO.selectUserByPseudo(pseudo);}
+	
+	
+	public Utilisateur selectUserByMail(String mail) throws BusinessException {
+		return utilisateurDAO.selectUserByMail(mail);}
+	
+	
+	
 
 	public List<String> verifierFormulaireInscription(HttpServletRequest request) {
 

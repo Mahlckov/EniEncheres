@@ -25,6 +25,13 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String sqlInsert = "insert into UTILISATEURS( pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) values(?,?,?,?,?,?,?,?,?,?,?)";	
 	private static final String sqlDelete = "delete from UTILISATEURS where no_utilisateur=?";
 	
+	private static final String sqlSelectByPseudo = "select no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur " +
+			" from UTILISATEURS where pseudo = ?";
+	
+	private static final String sqlSelectByEmail = "select no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur " +
+			" from UTILISATEURS where email = ?";
+	
+	
 	//INSERT
 	
 	public void insertUser(Utilisateur utilisateur) throws BusinessException {
@@ -124,7 +131,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		{
 			
 			
-				cnx.setAutoCommit(false);
 				PreparedStatement pstmt;
 				ResultSet rs;
 				pstmt = cnx.prepareStatement(sqlSelectById);
@@ -169,6 +175,118 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		*/
 		return utilisateur;
 	}
+	
+	
+	//SELECT BY PSEUDO
+
+	@Override
+	public Utilisateur selectUserByPseudo(String pseudo) throws BusinessException {
+		Utilisateur utilisateur=null ;
+
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			
+			
+				PreparedStatement pstmt;
+				ResultSet rs;
+				pstmt = cnx.prepareStatement(sqlSelectByPseudo);
+				pstmt.setString(1, pseudo);
+
+				rs = pstmt.executeQuery();
+				while (rs.next()){
+
+
+						utilisateur = new Utilisateur(
+								
+								
+								rs.getInt("no_utilisateur"),
+								rs.getString("pseudo").trim(),
+								rs.getString("nom").trim(),
+								rs.getString("prenom").trim(),
+								rs.getString("email").trim(),
+								rs.getString("telephone").trim(),
+								rs.getString("rue"),
+								rs.getString("code_postal"),
+								rs.getString("ville").trim(),
+								rs.getString("mot_de_passe").trim(),
+								rs.getInt("credit"),
+								rs.getBoolean("administrateur"));
+					}
+				
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.LECTURE_UTILISATEUR_ECHEC);
+			throw businessException;
+		}
+/*		if(utilisateur.getId()==0)
+		{
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTE_INEXISTANTE);
+			throw businessException;
+		}
+		*/
+		return utilisateur;
+	}
+	
+	//SELECT USER BY MAIL
+	
+	public Utilisateur selectUserByMail(String mail) throws BusinessException {
+		Utilisateur utilisateur=null ;
+
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			
+			
+				PreparedStatement pstmt;
+				ResultSet rs;
+				pstmt = cnx.prepareStatement(sqlSelectByEmail);
+				pstmt.setString(1, mail);
+
+				rs = pstmt.executeQuery();
+				while (rs.next()){
+
+
+						utilisateur = new Utilisateur(
+								
+								
+								rs.getInt("no_utilisateur"),
+								rs.getString("pseudo").trim(),
+								rs.getString("nom").trim(),
+								rs.getString("prenom").trim(),
+								rs.getString("email").trim(),
+								rs.getString("telephone").trim(),
+								rs.getString("rue"),
+								rs.getString("code_postal"),
+								rs.getString("ville").trim(),
+								rs.getString("mot_de_passe").trim(),
+								rs.getInt("credit"),
+								rs.getBoolean("administrateur"));
+					}
+				
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.LECTURE_UTILISATEUR_ECHEC);
+			throw businessException;
+		}
+/*		if(utilisateur.getId()==0)
+		{
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTE_INEXISTANTE);
+			throw businessException;
+		}
+		*/
+		return utilisateur;
+	}
+	
+	
 
 	@Override
 	public void deleteUser(int idUtilisateur) throws BusinessException {
