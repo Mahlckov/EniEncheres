@@ -3,7 +3,7 @@ package fr.eni.javaee.eniencheres.bo;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class Encheres {
+public class Encheres implements Comparable <Encheres> {
 	private LocalDate date_enchere ;
 	private int montant_enchere ;
 	
@@ -29,6 +29,18 @@ public class Encheres {
 	}
 	public void setMontant_enchere(int montant_enchere) {
 		this.montant_enchere = montant_enchere;
+	}
+
+	@Override
+	public int compareTo(Encheres encheres) {
+	if(encheres.getMontant_enchere()==this.montant_enchere)	{
+		return 0;
+	}
+		if(encheres.getMontant_enchere()<this.montant_enchere) {
+			return -1;
+		}
+		else return 1;
+		
 	}
 	
 	
