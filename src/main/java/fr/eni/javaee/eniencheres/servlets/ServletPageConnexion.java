@@ -10,12 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.javaee.eniencheres.BusinessException;
 import fr.eni.javaee.eniencheres.bll.UtilisateurManager;
+import fr.eni.javaee.eniencheres.bo.Utilisateur;
 
 /**
  * Servlet implementation class ServletPageConnexion
  */
-@WebServlet("/ServletPageConnexion")
+@WebServlet("/Connexion")
 public class ServletPageConnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -25,44 +27,61 @@ public class ServletPageConnexion extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/JSP/Connexion.jsp");
+		rd.forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response) 
+	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		String identifiant = request.getParameter("identifiant");
 
+		String identifiant = request.getParameter("identifiant");
 
 		UtilisateurManager manager = new UtilisateurManager();
 
 		boolean connexionAutorisee = manager.seConnecter(request);
 
 		if (connexionAutorisee == true) {
+
+			Utilisateur utilisateur = new Utilisateur();
+
+			if (identifiant.contains("@")) {
+
+				try {
+					utilisateur = manager.selectUserByMail(identifiant);
+				} catch (BusinessException e) {
+					e.printStackTrace();
+				}
+
+			} else {
+				try {
+					utilisateur = manager.selectUserByPseudo(identifiant);
+				} catch (BusinessException e) {
+					e.printStackTrace();
+				}
+			}
 			
+			int noUtilisateur = utilisateur.getNoUtilisateur();
 
 			HttpSession session = request.getSession();
+			
+			session.setAttribute("noUtilisateur", noUtilisateur);
 
-			session.setAttribute("identifiant", identifiant);
-			
-			
-			RequestDispatcher rd = request.getRequestDispatcher("/Accueil");
-			rd.forward(request, response);
+
+			response.sendRedirect("Accueil");
 
 		}
-		
+
 		else {
 			String messageConnexion = "'Identifiant / Mot de passe'inconnus ou incorrects.";
-			
-			request.setAttribute("messageConnexion", messageConnexion);
-			RequestDispatcher rd = request.getRequestDispatcher("/Connexion");
-			rd.forward(request, response);
-	}
 
-}
+			request.setAttribute("messageConnexion", messageConnexion);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/JSP/Connexion.jsp");
+			rd.forward(request, response);
+		}
+
+	}
 }

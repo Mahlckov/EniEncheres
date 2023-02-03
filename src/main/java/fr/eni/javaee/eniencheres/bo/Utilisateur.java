@@ -57,10 +57,7 @@ public class Utilisateur {
 		this.administrateur = administrateur;		
 	}
 	
-//	public Utilisateur(Utilisateur noVendeur) {
-//		this.noUtilisateur = noVendeur;
-//		
-//	}
+		public Utilisateur() {};	
 	
 	public String getTelephone() {
 		return telephone;
