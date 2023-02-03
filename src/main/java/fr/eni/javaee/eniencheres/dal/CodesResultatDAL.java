@@ -71,6 +71,10 @@ public abstract class CodesResultatDAL {
 	 * Catégorie inexistante
 	 */
 	public static final int LECTURE_CATEGORIE_INEXISTANTE = 10012;
+
+	public static final int LECTURE_RETRAIT_ECHEC = 10013;
+
+	public static final int LECTURE_RETRAIT_INEXISTANT = 10014;
 }
 
 
