@@ -38,11 +38,11 @@ public class ServletVenteGagnee extends HttpServlet {
 		try {
 			Articles article = articleManager.selectionnerArticle(noArticle);
 			request.setAttribute("article", article);
-<<<<<<< HEAD
+
 			request.getRequestDispatcher("/WEB-INF/VenteGagnee.jsp").forward(request, response);;
-=======
+
 			request.getRequestDispatcher("/WEB-INF/JSP/VenteGagnee.jsp").forward(request, response);
->>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
+
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
