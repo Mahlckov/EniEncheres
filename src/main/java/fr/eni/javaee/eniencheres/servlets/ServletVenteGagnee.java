@@ -39,7 +39,7 @@ public class ServletVenteGagnee extends HttpServlet {
 			Articles article = articleManager.selectionnerArticle(noArticle);
 			request.setAttribute("article", article);
 
-			request.getRequestDispatcher("/WEB-INF/VenteGagnee.jsp").forward(request, response);;
+			request.getRequestDispatcher("/WEB-INF/JSP/VenteGagnee.jsp").forward(request, response);
 
 			request.getRequestDispatcher("/WEB-INF/JSP/VenteGagnee.jsp").forward(request, response);
 
