@@ -39,7 +39,6 @@ private ArticleDAO articleDAO;
 		else{
 			throw businessException;
 		}
-		
 	}
 	
 	public void miseAjourArticle(Articles newArticle) throws BusinessException{
@@ -51,7 +50,6 @@ private ArticleDAO articleDAO;
 		else{
 			throw businessException;
 		}
-		
 	}
 	
 	 private void validerArticle(Articles article) throws BusinessException{
@@ -61,15 +59,13 @@ private ArticleDAO articleDAO;
 			if(article.getNomArticle()==null || article.getNomArticle().trim().length()>30) {
 				businessException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_NOM_ERREUR);
 			}
-			
 			if(article.getDescription()==null|| article.getDescription().trim().isEmpty()|| article.getDescription().trim().length()>300){
 				businessException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_DESCRIPTION_ERREUR);
-				
 			}
 			if(article.getEtatVente()==null|| article.getEtatVente().trim().isEmpty()|| article.getDescription().trim().length()>30) {
 				businessException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_ETAT_ERREUR);
 			}
-			if(article.getMiseAprix()<0 ||article.getMiseAprix()==0) {
+			if(article.getMiseAprix()<0 ||article.getMiseAprix()==0 ||article.getPrixVente()<0 ||article.getPrixVente()==0) {
 				businessException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_PRIX_ERREUR);
 			}
 			if ((article.getDateDebutEncheres()==null && article.getDateDebutEncheres().isBefore(LocalDate.now()) )|| (article.getDateFinEncheres()==null && article.getDateFinEncheres().isBefore(LocalDate.now())) ){

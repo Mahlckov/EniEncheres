@@ -16,16 +16,14 @@ public class EnchereManager {
 	
 	public EnchereManager() {
 		this.enchereDAO=DAOFactory.getEnchereDAO();
+		ArticleManager article = new ArticleManager();
 	}
 
-	
-	
-	
 	private void validerEncheres(Encheres enchere) throws BusinessException{
 		 BusinessException businessException = new BusinessException();
-	    
+	     
 	        
-			if(enchere.getMontant_enchere()<0) {
+			if(enchere.getMontant_enchere()<0 || enchere.getMontant_enchere() < enchere.getNoArticle().getMiseAprix() || enchere.getMontant_enchere() < enchere.getNoArticle().getPrixVente()) {
 				businessException.ajouterErreur(CodesResultatBLL.REGLE_ENCHERES_MONTANT_ERREUR);
 			}
 			
