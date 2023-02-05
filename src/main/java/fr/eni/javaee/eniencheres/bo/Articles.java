@@ -13,8 +13,10 @@ public class Articles {
 	private String etatVente;
 	private Categorie noCategorie;
 	private Utilisateur noVendeur;
+	private Utilisateur noAcheteur;
 	private Retrait retrait;
 	private List<Encheres> listEnchere;
+	private int prixVente;
 
 	
 	public Articles() {
@@ -35,34 +37,38 @@ public class Articles {
     }
 	
 	public Articles(String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAprix, String etatVente, Categorie noCategorie, Utilisateur noVendeur) {
+			LocalDate dateFinEncheres, int miseAprix, int prixVente, String etatVente, Categorie noCategorie, Utilisateur noVendeur, Utilisateur noAcheteur) {
 		super();
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.dateDebutEncheres = dateDebutEncheres;
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAprix = miseAprix;
+		this.prixVente = prixVente;
 		this.etatVente = etatVente;
 		this.noCategorie = noCategorie;
 		this.noVendeur =noVendeur;
+		this.noAcheteur =noAcheteur;
 	}
 	
 	public Articles(String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAprix, String etatVente, Categorie noCategorie, Utilisateur noVendeur, Retrait retrait) {
+			LocalDate dateFinEncheres, int miseAprix, int prixVente, String etatVente, Categorie noCategorie, Utilisateur noVendeur, Utilisateur noAcheteur, Retrait retrait) {
 		super();
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.dateDebutEncheres = dateDebutEncheres;
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAprix = miseAprix;
+		this.prixVente = prixVente;
 		this.etatVente = etatVente;
 		this.noCategorie = noCategorie;
 		this.noVendeur =noVendeur;
+		this.noAcheteur =noAcheteur;
 		this.retrait = retrait;
 	}
 	
 	public Articles(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAprix, String etatVente, Categorie noCategorie, Utilisateur noVendeur) {
+			LocalDate dateFinEncheres, int miseAprix, int prixVente, String etatVente, Categorie noCategorie, Utilisateur noVendeur, Utilisateur noAcheteur) {
 		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -70,13 +76,15 @@ public class Articles {
 		this.dateDebutEncheres = dateDebutEncheres;
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAprix = miseAprix;
+		this.prixVente = prixVente;
 		this.etatVente = etatVente;
 		this.noCategorie = noCategorie;
 		this.noVendeur =noVendeur;
+		this.noAcheteur =noAcheteur;
 	}
 	
 	public Articles(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAprix, String etatVente, Categorie noCategorie, Utilisateur noVendeur, Retrait retrait) {
+			LocalDate dateFinEncheres, int miseAprix, int prixVente, String etatVente, Categorie noCategorie, Utilisateur noVendeur, Utilisateur noAcheteur, Retrait retrait) {
 		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -84,24 +92,13 @@ public class Articles {
 		this.dateDebutEncheres = dateDebutEncheres;
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAprix = miseAprix;
+		this.prixVente = prixVente;
 		this.etatVente = etatVente;
 		this.noCategorie = noCategorie;
 		this.noVendeur =noVendeur;
+		this.noAcheteur =noAcheteur;
 		this.retrait = retrait;
 
-	}
-	
-	public Articles(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAprix, String etatVente,List<Encheres> listEnchere ) {
-		super();
-		this.noArticle = noArticle;
-		this.nomArticle = nomArticle;
-		this.description = description;
-		this.dateDebutEncheres = dateDebutEncheres;
-		this.dateFinEncheres = dateFinEncheres;
-		this.miseAprix = miseAprix;
-		this.etatVente = etatVente;
-		this.listEnchere = listEnchere;
 	}
 	
 	public int getNoArticle() {
@@ -141,6 +138,14 @@ public class Articles {
 		this.miseAprix = miseAprix;
 	}
 	
+	public int getPrixVente() {
+		return prixVente;
+	}
+
+	public void setPrixVente(int prixVente) {
+		this.prixVente = prixVente;
+	}
+
 	public String getEtatVente() {
 		return etatVente;
 	}
@@ -163,7 +168,14 @@ public class Articles {
 	public void setNoVendeur(Utilisateur noVendeur) {
 		this.noVendeur = noVendeur;
 	}
-	
+
+	public Utilisateur getNoAcheteur() {
+		return noAcheteur;
+	}
+
+	public void setNoAcheteur(Utilisateur noAcheteur) {
+		this.noAcheteur = noAcheteur;
+	}
 
 	public Retrait getRetrait() {
 		return retrait;
@@ -180,9 +192,5 @@ public class Articles {
 	public void setListEnchere(List<Encheres> listEnchere) {
 		this.listEnchere = listEnchere;
 	}
-	
-	
-	
-	
 
 }

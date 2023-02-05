@@ -21,17 +21,18 @@ import fr.eni.javaee.eniencheres.dal.ConnectionProvider;
 public class ArticleDAOJdbcImpl implements ArticleDAO {
 	UtilisateurDAOJdbcImpl utilisateurDAOJdbcImpl = new UtilisateurDAOJdbcImpl();
 	CategorieDAOJdbcImpl categorieDAOJdbcImpl = new CategorieDAOJdbcImpl();
-//	RetraitDAOJdbcImpl retraitDAOJdbcImpl = new RetraitDAOJdbcImpl();
-
 	
 	private static final String SELECT_ALL = "SELECT * FROM ARTICLES";
 	private static final String SELECT_BY_ID = "SELECT* FROM ARTICLES WHERE no_article=?";
 	private static final String DELETE_ARTICLE ="DELETE FROM ARTICLES WHERE no_article=?";
 
 	private static final String INSERT_ARTICLE ="INSERT INTO ARTICLES(nom_article, description, date_debut_encheres,\r\n"
-			+ "			 date_fin_encheres, prix_initial, etat_vente, no_categorie, no_vendeur) VALUES(?,?,?,?,?,?,?,?)";
+			+ "			 date_fin_encheres, prix_initial, prix_vente, etat_vente, no_categorie, no_vendeur, no_acheteur) "
+			+ "			 VALUES(?,?,?,?,?,?,?,?,?,?)";
+	
 	private static final String UPDATE_ARTICLE ="UPDATE ARTICLES SET nom_article=?, description=?, date_debut_encheres=?, \"\r\n"
-			+ "				+ \"date_fin_encheres=?, prix_initial=?, etat_vente=?, no_categorie=?, no_vendeur=? WHERE no_article=?";
+			+ "				+ \"date_fin_encheres=?, prix_initial=?, prix_vente=? etat_vente=?, no_categorie=?, "
+			+ "				no_vendeur=?, no_acheteur=?  WHERE no_article=?";
 	
 	@Override
 	public List<Articles> selectAll() throws BusinessException {
@@ -48,13 +49,14 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				LocalDate dateDebutEncheres = rs.getDate("date_debut_encheres").toLocalDate();
 				LocalDate dateFinEncheres = rs.getDate("date_fin_encheres").toLocalDate();
 				int miseAprix = rs.getInt("prix_initial");
+				int prixVente = rs.getInt("prix_vente");
 				String etatVente = rs.getString("etat_vente");
 				
 				Categorie categorie = categorieDAOJdbcImpl.selectByIdCategorie(rs.getInt("no_categorie")) ;
-				Utilisateur vendeur = utilisateurDAOJdbcImpl.selectUserById(rs.getInt("no_vendeur"));
-//				Retrait retrait = retraitDAOJdbcImpl.selectRetraitByNoArticle(rs.getInt("no_vendeur"));
+				Utilisateur vendeur = utilisateurDAOJdbcImpl.selectUserById(rs.getInt("no_utilisateur"));
+				Utilisateur acheteur = utilisateurDAOJdbcImpl.selectUserById(rs.getInt("no_utilisateur"));
 
-				Articles article = new Articles(noArticle, nomArticle, description, dateDebutEncheres, dateFinEncheres, miseAprix, etatVente, categorie, vendeur);
+				Articles article = new Articles(noArticle, nomArticle, description, dateDebutEncheres, dateFinEncheres, miseAprix, prixVente, etatVente, categorie, vendeur, acheteur);
 				listArticles.add(article);
 			}
 		}
@@ -82,12 +84,14 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				LocalDate dateDebutEncheres = rs.getDate("date_debut_encheres").toLocalDate();
 				LocalDate dateFinEncheres = rs.getDate("date_fin_encheres").toLocalDate();
 				int miseAprix = rs.getInt("prix_initial");
+				int prixVente = rs.getInt("prix_vente");
 				String etatVente = rs.getString("etat_vente");
 				
 				Categorie categorie = categorieDAOJdbcImpl.selectByIdCategorie(rs.getInt("no_categorie")) ;
-				Utilisateur vendeur = utilisateurDAOJdbcImpl.selectUserById(rs.getInt("no_vendeur"));
+				Utilisateur vendeur = utilisateurDAOJdbcImpl.selectUserById(rs.getInt("no_utilisateur"));
+				Utilisateur acheteur = utilisateurDAOJdbcImpl.selectUserById(rs.getInt("no_utilisateur"));
 				
-				article = new Articles(noArticle, nomArticle, description,dateDebutEncheres, dateFinEncheres, miseAprix, etatVente, categorie, vendeur);
+				article = new Articles(noArticle, nomArticle, description,dateDebutEncheres, dateFinEncheres, miseAprix, prixVente, etatVente, categorie, vendeur, acheteur);
 			}
 		}
 		catch(Exception e){
@@ -119,8 +123,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		}
 	}
 	
-@Override
-	
+	@Override
 	public void insert(Articles article) throws BusinessException {
 		if (article== null) {
 			BusinessException businessException = new BusinessException();
@@ -129,7 +132,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		}
 		try(Connection cnx = ConnectionProvider.getConnection()){
 			try{
-//				cnx.setAutoCommit(false);//does not commit transaction automatically after each query
+//				cnx.setAutoCommit(false); //does not commit transaction automatically after each query
 			    PreparedStatement pstmt;
 			    ResultSet rs;
 			    pstmt = cnx.prepareStatement(INSERT_ARTICLE, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -138,10 +141,11 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			    pstmt.setDate(3, java.sql.Date.valueOf(article.getDateDebutEncheres()));
 			    pstmt.setDate(4, java.sql.Date.valueOf(article.getDateFinEncheres()));
 			    pstmt.setInt(5, article.getMiseAprix());
-			    pstmt.setString(6, article.getEtatVente());
-			    pstmt.setInt(7, article.getNoCategorie().getNoCategorie());
-			    pstmt.setInt(8, article.getNoVendeur().getNoUtilisateur());
-			    
+			    pstmt.setInt(6, article.getPrixVente());
+			    pstmt.setString(7, article.getEtatVente());
+			    pstmt.setInt(8, article.getNoCategorie().getNoCategorie());
+			    pstmt.setInt(9, article.getNoVendeur().getNoUtilisateur());
+			    pstmt.setInt(10, article.getNoAcheteur().getNoUtilisateur());
 			    
 			    pstmt.executeUpdate();
 			    rs= pstmt.getGeneratedKeys();
@@ -177,10 +181,12 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			pstmt.setDate(3,java.sql.Date.valueOf(article.getDateDebutEncheres()));
 		    pstmt.setDate(4, java.sql.Date.valueOf(article.getDateFinEncheres()));
 		    pstmt.setInt(5, article.getMiseAprix());
-		    pstmt.setString(6, article.getEtatVente());
-		    pstmt.setInt(7, article.getNoCategorie().getNoCategorie());
-		    pstmt.setInt(8, article.getNoVendeur().getNoUtilisateur());
-		    pstmt.setInt(9, article.getNoArticle());
+		    pstmt.setInt(6, article.getPrixVente());
+		    pstmt.setString(7, article.getEtatVente());
+		    pstmt.setInt(8, article.getNoCategorie().getNoCategorie());
+		    pstmt.setInt(9, article.getNoVendeur().getNoUtilisateur());
+		    pstmt.setInt(10, article.getNoAcheteur().getNoUtilisateur());
+		    pstmt.setInt(11, article.getNoArticle());
 		    pstmt.executeUpdate();
 		    pstmt.close();	
 		}
