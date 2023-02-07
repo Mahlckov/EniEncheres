@@ -27,12 +27,15 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String DELETE_ARTICLE ="DELETE FROM ARTICLES WHERE no_article=?";
 
 	private static final String INSERT_ARTICLE ="INSERT INTO ARTICLES(nom_article, description, date_debut_encheres,\r\n"
-			+ "			 date_fin_encheres, prix_initial, prix_vente, etat_vente, no_categorie, no_vendeur, no_acheteur) "
-			+ "			 VALUES(?,?,?,?,?,?,?,?,?,?)";
+			+ "			 date_fin_encheres, prix_initial, prix_vente, etat_vente, no_categorie, no_vendeur) "
+			+ "			 VALUES(?,?,?,?,?,?,?,?,?)";
 	
-	private static final String UPDATE_ARTICLE ="UPDATE ARTICLES SET nom_article=?, description=?, date_debut_encheres=?, \"\r\n"
-			+ "				+ \"date_fin_encheres=?, prix_initial=?, prix_vente=? etat_vente=?, no_categorie=?, "
+	private static final String UPDATE_ARTICLE ="UPDATE ARTICLES SET nom_article=?, description=?, date_debut_encheres=?, \r\n"
+			+ "				date_fin_encheres=?, prix_initial=?, prix_vente=?, etat_vente=?, no_categorie=?, \r\n"
 			+ "				no_vendeur=?, no_acheteur=?  WHERE no_article=?";
+	
+	private static final String SELECT_ALL_BY_ETAT_VENTE = "SELECT* FROM ARTICLES WHERE etat_vente=?";
+
 	
 	@Override
 	public List<Articles> selectAll() throws BusinessException {
@@ -53,8 +56,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				String etatVente = rs.getString("etat_vente");
 				
 				Categorie categorie = categorieDAOJdbcImpl.selectByIdCategorie(rs.getInt("no_categorie")) ;
-				Utilisateur vendeur = utilisateurDAOJdbcImpl.selectUserById(rs.getInt("no_utilisateur"));
-				Utilisateur acheteur = utilisateurDAOJdbcImpl.selectUserById(rs.getInt("no_utilisateur"));
+				Utilisateur vendeur = utilisateurDAOJdbcImpl.selectUserById(rs.getInt("no_vendeur"));
+				Utilisateur acheteur = utilisateurDAOJdbcImpl.selectUserById(rs.getInt("no_acheteur"));
 
 				Articles article = new Articles(noArticle, nomArticle, description, dateDebutEncheres, dateFinEncheres, miseAprix, prixVente, etatVente, categorie, vendeur, acheteur);
 				listArticles.add(article);
@@ -88,8 +91,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				String etatVente = rs.getString("etat_vente");
 				
 				Categorie categorie = categorieDAOJdbcImpl.selectByIdCategorie(rs.getInt("no_categorie")) ;
-				Utilisateur vendeur = utilisateurDAOJdbcImpl.selectUserById(rs.getInt("no_utilisateur"));
-				Utilisateur acheteur = utilisateurDAOJdbcImpl.selectUserById(rs.getInt("no_utilisateur"));
+				Utilisateur vendeur = utilisateurDAOJdbcImpl.selectUserById(rs.getInt("no_vendeur"));
+				Utilisateur acheteur = utilisateurDAOJdbcImpl.selectUserById(rs.getInt("no_acheteur"));
 				
 				article = new Articles(noArticle, nomArticle, description,dateDebutEncheres, dateFinEncheres, miseAprix, prixVente, etatVente, categorie, vendeur, acheteur);
 			}
@@ -145,7 +148,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			    pstmt.setString(7, article.getEtatVente());
 			    pstmt.setInt(8, article.getNoCategorie().getNoCategorie());
 			    pstmt.setInt(9, article.getNoVendeur().getNoUtilisateur());
-			    pstmt.setInt(10, article.getNoAcheteur().getNoUtilisateur());
+//			    pstmt.setInt(10, article.getNoAcheteur().getNoUtilisateur());
 			    
 			    pstmt.executeUpdate();
 			    rs= pstmt.getGeneratedKeys();
@@ -176,17 +179,17 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			PreparedStatement pstmt = cnx.prepareStatement(UPDATE_ARTICLE);
-			pstmt.setString(1, article.getNomArticle());
-			pstmt.setString(2, article.getDescription());
+			pstmt.setString(1,article.getNomArticle());
+			pstmt.setString(2,article.getDescription());
 			pstmt.setDate(3,java.sql.Date.valueOf(article.getDateDebutEncheres()));
-		    pstmt.setDate(4, java.sql.Date.valueOf(article.getDateFinEncheres()));
-		    pstmt.setInt(5, article.getMiseAprix());
-		    pstmt.setInt(6, article.getPrixVente());
-		    pstmt.setString(7, article.getEtatVente());
-		    pstmt.setInt(8, article.getNoCategorie().getNoCategorie());
-		    pstmt.setInt(9, article.getNoVendeur().getNoUtilisateur());
-		    pstmt.setInt(10, article.getNoAcheteur().getNoUtilisateur());
-		    pstmt.setInt(11, article.getNoArticle());
+		    pstmt.setDate(4,java.sql.Date.valueOf(article.getDateFinEncheres()));
+		    pstmt.setInt(5,article.getMiseAprix());
+		    pstmt.setInt(6,article.getPrixVente());
+		    pstmt.setString(7,article.getEtatVente());
+		    pstmt.setInt(8,article.getNoCategorie().getNoCategorie());
+		    pstmt.setInt(9,article.getNoVendeur().getNoUtilisateur());
+		    pstmt.setInt(10,article.getNoAcheteur().getNoUtilisateur());
+		    pstmt.setInt(11,article.getNoArticle());
 		    pstmt.executeUpdate();
 		    pstmt.close();	
 		}
@@ -197,6 +200,43 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			throw businessException;
 		}
 	}
+	
+	public List<Articles> selectAllByEtatVente(String inputEtatVente) throws BusinessException {
+		List<Articles> listArticles = new ArrayList<Articles>();
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ALL_BY_ETAT_VENTE);
+			pstmt.setString(1, inputEtatVente);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next())
+			{
+				int noArticle = rs.getInt("no_article");
+				String nomArticle = rs.getString("nom_article");
+				String description = rs.getString("description");
+				LocalDate dateDebutEncheres = rs.getDate("date_debut_encheres").toLocalDate();
+				LocalDate dateFinEncheres = rs.getDate("date_fin_encheres").toLocalDate();
+				int miseAprix = rs.getInt("prix_initial");
+				int prixVente = rs.getInt("prix_vente");
+				String etatVente = rs.getString("etat_vente");
+				
+				Categorie categorie = categorieDAOJdbcImpl.selectByIdCategorie(rs.getInt("no_categorie")) ;
+				Utilisateur vendeur = utilisateurDAOJdbcImpl.selectUserById(rs.getInt("no_vendeur"));
+				Utilisateur acheteur = utilisateurDAOJdbcImpl.selectUserById(rs.getInt("no_acheteur"));
+
+				Articles article = new Articles(noArticle, nomArticle, description, dateDebutEncheres, dateFinEncheres, miseAprix, prixVente, etatVente, categorie, vendeur, acheteur);
+				listArticles.add(article);
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTE_ARTICLES_ECHEC);
+			throw businessException;
+		}
+		return listArticles;
+	}	
 	
 	
 	

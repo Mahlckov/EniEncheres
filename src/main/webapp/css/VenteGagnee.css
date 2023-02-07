@@ -1,0 +1,48 @@
+
+@charset "UTF-8";
+
+body {
+	margin: 0;
+}
+
+h1 {
+	margin-bottom: 0, 5em;
+}
+
+header {
+	width: 100%;
+	display: flex;
+}
+
+
+.header {
+	width: 50%;
+	font-weight: bold;
+	font-size: 1em;
+	text-align: center;
+	color: red;
+	height: 5em;
+	line-height: 1em;
+	vertical-align: middle;
+	margin: 0;
+}
+
+
+a {
+	text-decoration: none;
+}
+
+
+	
+.conteneurPhoto {width:45em;
+        height:80em;
+        margin:	0;}
+        
+.conteneur {display:flex;}
+
+
+
+.annuler {
+	width:10em;
+	vertical-align: middle;
+}

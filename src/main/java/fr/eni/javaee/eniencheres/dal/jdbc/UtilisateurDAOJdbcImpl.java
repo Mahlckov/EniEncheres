@@ -21,7 +21,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			" from UTILISATEURS where no_utilisateur = ?";
 	private static final String sqlSelectAll = "select no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur " +
 			" from UTILISATEURS";
-	private static final String sqlUpdate = "update UTILISATEURS set pseudo=?,nom=?, prenom=?, email=?,telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=?,credit=?,admnistrateur=? where noID=?";
+	private static final String sqlUpdate = "update UTILISATEURS set pseudo=?,nom=?, prenom=?, email=?,telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=?,credit=?,administrateur=? where no_utilisateur=?";
 	private static final String sqlInsert = "insert into UTILISATEURS( pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) values(?,?,?,?,?,?,?,?,?,?,?)";	
 	private static final String sqlDelete = "delete from UTILISATEURS where no_utilisateur=?";
 	
@@ -328,19 +328,10 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				pstmt.setString(9, utilisateur.getMotDePasse());
 				pstmt.setInt(10, utilisateur.getCredit());
 				pstmt.setBoolean(11, utilisateur.getAdministrateur());
-
-			
-
-
-
-
-
-
+				pstmt.setInt(12, utilisateur.getNoUtilisateur());
 
 				pstmt.executeUpdate();
-
-				
-				
+		
 				cnx.commit();
 			}
 			catch(Exception e)

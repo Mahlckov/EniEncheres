@@ -75,20 +75,21 @@ public class ServletPageNouvelleVente extends HttpServlet {
 		
 		//RECUPERATION DE l'IDENTIFIANT EN COURS DE SESSION
 		
-		HttpSession session = request.getSession();								
+		HttpSession session = request.getSession();	
+		
+		int noUtilisateur=0;
 
-		String identifiant = (String) session.getAttribute("identifiant");
+
+		noUtilisateur = (int) session.getAttribute("noUtilisateur");
 		
 		Utilisateur utilisateur = new Utilisateur();
 		
-		int noUtilisateur=0;
 		
-		if (identifiant.isBlank()){response.sendRedirect("Connexion");};
+		if (noUtilisateur==0){response.sendRedirect("Connexion");};
 		
-		if(identifiant.contains("@")) {
 			
 			try {
-				utilisateur = utilisateurManager.selectUserByMail(identifiant);
+				utilisateur = utilisateurManager.selectUser(noUtilisateur);
 
 			} catch (BusinessException e) {
 				// TODO Auto-generated catch block
@@ -96,23 +97,11 @@ public class ServletPageNouvelleVente extends HttpServlet {
 			}
 			
 			
-		}
-		
-		else {
-		
-		try {
-			utilisateur = utilisateurManager.selectUserByPseudo(identifiant);
-		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		}
-		
+	
 
 		
 		
-	Articles article = new Articles(nomArticle,descriptionArticle,dateDebutEnchere,dateFinEnchere,miseAPrix,"EN COURS",categorie,utilisateur);
+	Articles article = new Articles(nomArticle,descriptionArticle,dateDebutEnchere,dateFinEnchere,miseAPrix,miseAPrix,"EN COURS",categorie,utilisateur,null);
 	
 	try {
 		articleManager.ajouterArticle(article);
