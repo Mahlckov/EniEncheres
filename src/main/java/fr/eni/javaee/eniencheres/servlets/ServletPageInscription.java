@@ -58,7 +58,7 @@ public class ServletPageInscription extends HttpServlet {
 			int credit = 0;
 			boolean administrateur = false;
 			
-			//n'a pas d'id car c'est la bdd qui le crée
+			
 			Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
 			
 			
@@ -72,12 +72,11 @@ public class ServletPageInscription extends HttpServlet {
 			}
 			
 			try {
-				//l'utilisateur créé n'a pas d'id dans la servlet donc on refait un select pour avoir l'utilisateur avec un id que la bdd a attribué
 				utilisateur = manager.selectUserByPseudo(request.getParameter("pseudo"));
 			} catch (BusinessException e) {
 				e.printStackTrace();
 			}
-			//on récupère l'id par un intermédiaire
+			
 			int noUtilisateur = utilisateur.getNoUtilisateur();
 
 			HttpSession session = request.getSession();

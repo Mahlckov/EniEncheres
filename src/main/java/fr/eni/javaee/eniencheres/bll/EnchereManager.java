@@ -29,7 +29,7 @@ public class EnchereManager {
 		 BusinessException businessException = new BusinessException();
 	     
 	        
-			if(enchere.getMontant_enchere() <= enchere.getNoArticle().getPrixVente()) {
+			if(enchere.getMontant_enchere() < enchere.getNoArticle().getPrixVente()) {
 				businessException.ajouterErreur(CodesResultatBLL.REGLE_ENCHERES_MONTANT_ERREUR);
 			}
 			

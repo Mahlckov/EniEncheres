@@ -104,3 +104,13 @@ a {
 	position:relative;
 
 }
+
+
+.aCocher {
+	font-size: 1.1em;
+	padding-left: 4.2em;
+	margin-top: 1em;
+	width:15em;
+}
+
+.surContainerACocher{display:flex;width: 50em;}

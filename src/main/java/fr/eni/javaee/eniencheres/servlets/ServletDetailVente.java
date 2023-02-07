@@ -13,9 +13,11 @@ import javax.servlet.http.HttpSession;
 import fr.eni.javaee.eniencheres.BusinessException;
 import fr.eni.javaee.eniencheres.bll.ArticleManager;
 import fr.eni.javaee.eniencheres.bll.EnchereManager;
+import fr.eni.javaee.eniencheres.bll.RetraitManager;
 import fr.eni.javaee.eniencheres.bll.UtilisateurManager;
 import fr.eni.javaee.eniencheres.bo.Articles;
 import fr.eni.javaee.eniencheres.bo.Encheres;
+import fr.eni.javaee.eniencheres.bo.Retrait;
 import fr.eni.javaee.eniencheres.bo.Utilisateur;
 
 /**
@@ -31,6 +33,8 @@ public class ServletDetailVente extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		Retrait retrait = null;
+
 		
 		//SI UTILISATEUR NON CONNECTE REDIRECTION VERS PAGE CONNEXION
 		
@@ -51,22 +55,32 @@ public class ServletDetailVente extends HttpServlet {
 			
 		try {
 			article =  articleManager.selectionnerArticle(noArticle);
-			
-			//Test vérif état vente de l'enchere
-			String statutEnchere = article.getEtatVente();
-			if (statutEnchere.equals("EN COURS")) {
-				
-			} else if (statutEnchere.equals("TERMINEE")) {
-				
-			}
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	
+			
+		}
+		
+		//RECUPERATION DU RETRAIT
+		RetraitManager retraitManager= new RetraitManager();
+
+		try {
+			retrait = retraitManager.selectRetraitById(article.getNoArticle());
+		} catch (BusinessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		}
 		request.setAttribute("article", article);
+		request.setAttribute("retrait", retrait);
+
 		
-		request.getRequestDispatcher("/WEB-INF/JSP/DetailVente.jsp").forward(request, response);}		
+		request.getRequestDispatcher("/WEB-INF/JSP/DetailVente.jsp").forward(request, response);}
+		
+		
+		
+		
 	}
 
 	/**
@@ -78,8 +92,11 @@ public class ServletDetailVente extends HttpServlet {
 		UtilisateurManager utilisateurManager= new UtilisateurManager();
 		
 		ArticleManager articleManager = new ArticleManager();
-		
+				
 		HttpSession session = request.getSession();
+		
+		Retrait retrait = null;
+
 		
 		//RECUPERATION DU MONTANT DE L ENCHERE, DU NO DE L'ACHETEUR ( = utilisateur en session) ET DU NO ARTICLE
 		int noUtilisateur = (int) session.getAttribute("noUtilisateur");
@@ -87,6 +104,8 @@ public class ServletDetailVente extends HttpServlet {
 		int propositionEnchere= Integer.parseInt(request.getParameter("propositionEnchere"));
 		
 		int noArticle = Integer.parseInt(request.getParameter("noArticle"));
+		
+
 		
 		//RECUPERATION DE L'UTILISATEUR EN COURS
 		Utilisateur noAcheteur = new Utilisateur();
@@ -107,6 +126,18 @@ public class ServletDetailVente extends HttpServlet {
 		}
 		
 		Articles articleAvantModifications = article;
+		
+		//RECUPERATION DU RETRAIT
+		
+		RetraitManager retraitManager= new RetraitManager();
+
+		try {
+			retrait = retraitManager.selectRetraitById(article.getNoArticle());
+		} catch (BusinessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		//CREATION LOCALDATE
 		
 		LocalDate localDate;
@@ -135,6 +166,8 @@ public class ServletDetailVente extends HttpServlet {
 			}	
 			
 			request.setAttribute("article", article);
+			request.setAttribute("retrait", retrait);
+
 			
 			request.getRequestDispatcher("/WEB-INF/JSP/DetailVente.jsp").forward(request, response);
 			
