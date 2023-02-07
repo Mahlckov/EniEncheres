@@ -67,15 +67,25 @@ public class ServletPageInscription extends HttpServlet {
 			manager.insertUser(utilisateur);
 			
 						
-	        HttpSession session = request.getSession();
-
-	        session.setAttribute("identifiant",pseudo );
-	        
-
-	        response.sendRedirect("Accueil");
 				} catch (BusinessException e) {
 				e.printStackTrace();
 			}
+			
+			try {
+				utilisateur = manager.selectUserByPseudo(request.getParameter("pseudo"));
+			} catch (BusinessException e) {
+				e.printStackTrace();
+			}
+			
+			int noUtilisateur = utilisateur.getNoUtilisateur();
+
+			HttpSession session = request.getSession();
+			
+			session.setAttribute("noUtilisateur", noUtilisateur);
+	        
+
+	        response.sendRedirect("Accueil");
+		
 		}
 		
 		else {request.setAttribute("errorList", errorList);

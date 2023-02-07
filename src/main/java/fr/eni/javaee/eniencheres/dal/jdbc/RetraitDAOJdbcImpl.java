@@ -15,21 +15,28 @@ import fr.eni.javaee.eniencheres.dal.ConnectionProvider;
 import fr.eni.javaee.eniencheres.dal.RetraitDAO;
 
 public class RetraitDAOJdbcImpl implements RetraitDAO{
-	private static final String SELECT_RETRAIT_BY_IDARTICLE = "SELECT* FROM RETRAIT WHERE no_article=?";
+	private static final String SELECT_RETRAIT_BY_IDARTICLE = "SELECT* FROM RETRAITS WHERE no_article=?";
+	private static final String INSERT_RETRAIT = "INSERT INTO RETRAITS(no_article, rue, code_postal,\r\n"
+			+ "			 ville) "
+			+ "			 VALUES(?,?,?,?)";
 
 	@Override
 	public Retrait selectRetraitByNoArticle(int noArticle) throws BusinessException {
 		Retrait retrait = null;
 		try(Connection cnx = ConnectionProvider.getConnection())
-		{
-			PreparedStatement ps = cnx.prepareStatement(SELECT_RETRAIT_BY_IDARTICLE);			
-			ps.setInt(1, noArticle);
-			ResultSet rs = ps.executeQuery();
+		{	
+			
+			PreparedStatement pstmt;
+			ResultSet rs;
+			pstmt = cnx.prepareStatement(SELECT_RETRAIT_BY_IDARTICLE);
+			pstmt.setInt(1, noArticle);
+
+			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				String rue = rs.getString("rue");
 				String code_postal = rs.getString("code_postal");
 				String ville = rs.getString("ville");
-				Articles article = new Articles (rs.getInt(noArticle));
+				Articles article = new Articles (rs.getInt("no_article"));
 				
 				retrait = new Retrait(article, rue, code_postal, ville);
 			}
@@ -46,6 +53,46 @@ public class RetraitDAOJdbcImpl implements RetraitDAO{
 			throw businessException;
 		}
 		return retrait;
+	}
+	
+
+	@Override
+	public void insertRetrait(Retrait retrait) throws BusinessException {
+
+		if (retrait== null) {
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_NULL);
+			throw businessException;
+		}
+		try(Connection cnx = ConnectionProvider.getConnection()){
+			try{
+//				cnx.setAutoCommit(false); //does not commit transaction automatically after each query
+			    PreparedStatement pstmt;
+			    pstmt = cnx.prepareStatement(INSERT_RETRAIT);
+			    pstmt.setInt(1, retrait.getNoArticle().getNoArticle());
+			    pstmt.setString(2, retrait.getRue());
+			    pstmt.setString(3, retrait.getCode_postal());
+			    pstmt.setString(4, retrait.getVille());
+
+			    
+			    pstmt.executeUpdate();
+
+					
+			    
+			    pstmt.close();
+			 
+			} catch (Exception e) {
+				e.printStackTrace();
+				cnx.rollback();
+				throw e;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
+			throw businessException;
+		}
+	
 	}
 	
 

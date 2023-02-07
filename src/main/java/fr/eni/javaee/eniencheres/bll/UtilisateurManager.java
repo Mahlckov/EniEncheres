@@ -38,15 +38,101 @@ public class UtilisateurManager {
 		
 	}
 	
+	public void updateUser(Utilisateur utilisateur) throws BusinessException{
+		utilisateurDAO.updateUser(utilisateur);
+	}
+	
+	public List<String> verifierFormulaireModification(HttpServletRequest request) {
+		List<Utilisateur> liste = null;
+		List<String> errorList = new ArrayList();
+		UtilisateurManager utilisateurManager = new UtilisateurManager();
+		
+
+		String pseudo = request.getParameter("pseudo");
+		String nom = request.getParameter("nom");
+		String prenom = request.getParameter("prenom");
+		String email = request.getParameter("email");
+		String telephone = request.getParameter("telephone");
+		String rue = request.getParameter("rue");
+		String codePostal = request.getParameter("codePostal");
+		String ville = request.getParameter("ville");
+		String motDePasse = request.getParameter("newPassword");
+		String confirmation = request.getParameter("confirmPassword");
+		
+		/* VERIFICATION DES CHAMPS */
+		if (pseudo.trim().length()>30) {
+			errorList.add("Le champ 'Pseudo' ne peut dépasser 30 caractères.");
+		}
+		
+		if (nom.trim().length()>30) {
+			errorList.add("Le champ 'Nom' ne peut dépasser 30 caractères.");
+		}
+		if (prenom.trim().length()>30) {
+			errorList.add("Le champ 'Prénom' ne peut dépasser 30 caractères.");
+		}
+		if (email.trim().length()>20) {
+			errorList.add("Le champ 'Email' ne peut dépasser 70 caractères.");
+		}
+		if (telephone.trim().length()>15) {
+			errorList.add("Le champ 'Téléphone' saisi n'est pas conforme.");
+		}
+		if (rue.trim().length()>30) {
+			errorList.add("Le champ 'Rue' ne peut dépasser 30 caractères.");
+		}
+		if (codePostal.length()>5) {
+			errorList.add("Le champ 'Code Postal' saisi n'est pas conforme.");
+		}
+		if (ville.trim().length()>30) {
+			errorList.add("Le champ 'Ville' ne peut dépasser 30 caractères.");
+		}
+		if (motDePasse.trim().length()>20) {
+			errorList.add("Le champ 'Mot de passe' ne peut dépasser 30 caractères.");
+		}
+		
+		/* TEST DIFFERENCE ENTRE MDP ET CONFIRMATION */
+		if (!motDePasse.equals(confirmation)) {
+			errorList.add("Les champs 'Mot de passe' et 'Confirmation' ne correspondent pas.");
+		}
+		
+
+		/* TEST DE VALIDITE DE l'EMAIL */
+		boolean emailValide = UtilisateurManager.emailIsValid(email);
+
+		if (emailValide != true) {
+			errorList.add("Le format de l'adresse email n'est pas valide.");
+			try {
+				liste = utilisateurManager.listeUtilisateur();
+			} catch (BusinessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			/* SI EMAIL VALIDE TEST SI PSEUDO ET EMAIL DEJA UTILISES */
+			for (Utilisateur utilisateur : liste) {
+				String pseudoUtilisateur = utilisateur.getPseudo();
+				String emailUtilisateur = utilisateur.getEmail();
+
+				if (pseudo.equals(pseudoUtilisateur)) {
+
+					errorList.add("Le pseudo '" + pseudo + "' est déjà utilisé.");
+				}
+
+				if (email.equals(emailUtilisateur)) {
+
+					errorList.add("L'email '" + email + "' est déjà utilisé.");
+				}
+			}
+		}
+		return errorList;
+	}
+	
+	
 	public Utilisateur selectUserByPseudo(String pseudo) throws BusinessException {
 		return utilisateurDAO.selectUserByPseudo(pseudo);}
 	
 	
 	public Utilisateur selectUserByMail(String mail) throws BusinessException {
 		return utilisateurDAO.selectUserByMail(mail);}
-	
-	
-	
+
 
 	public List<String> verifierFormulaireInscription(HttpServletRequest request) {
 

@@ -1,4 +1,3 @@
-
 @charset "UTF-8";
 
 body {
@@ -13,7 +12,6 @@ header {
 	width: 100%;
 	display: flex;
 }
-
 
 .header {
 	width: 50%;
@@ -35,8 +33,11 @@ header {
 	vertical-align: middle;
 }
 
-.rubrique {display:inline-block; width:10em;
-text-decoration:underline;}
+.rubrique {
+	display: inline-block;
+	width: 10em;
+	text-decoration: underline;
+}
 
 .barreDeco {
 	width: 75%;
@@ -48,35 +49,68 @@ text-decoration:underline;}
 	border-width: 1px;
 }
 
-
-
 a {
 	text-decoration: none;
 }
 
-
-.searchBar {width:20em;
-			margin-left:5em;
+.searchBar {
+	width: 20em;
+	margin-left: 5em;
 }
 
 .categories {
-		font-size:1.1em;
-		
-		padding-left:4.2em;
-		margin-top:2em;
-		}
-		
+	font-size: 1.1em;
+	padding-left: 4.2em;
+	margin-top: 2em;
+}
+
 .inputCategorie {
+	width: 14em;;
+}
+
+.titreListeEnchere {
+	text-align: center;
+}
+
+.filtre {
+	font-weight: bold;
+	font-size: 1.5em;
+	padding-left: 3em;
+}
+
+.conteneurListeEnchere {
+	width: 80%;
+	display: flex;
+	margin-left: auto;
+	margin-right: auto;
+		flex-direction:row;
+		flex-wrap:wrap;
 	
-	width:14em;;
+}
+
+.conteneurArticle {
+	width: 40em;;
+	display: flex;
+	height:10em;
+	margin-left:5em;
+	margin-top:5em;
+	border-color:black;
+	border:solid;
+
+}
+
+.conteneurPhoto {
+	width: 15em;
+	position:relative;
+
 }
 
 
+.aCocher {
+	font-size: 1.1em;
+	padding-left: 4.2em;
+	margin-top: 1em;
+	width:15em;
+}
 
-.titreListeEnchere {
-	text-align:center;}
-	
-.filtre {font-weight:bold;
-		font-size:1.5em;
-		padding-left:3em;
-		}
+.surContainerACocher{display:flex;width: 50em;}
