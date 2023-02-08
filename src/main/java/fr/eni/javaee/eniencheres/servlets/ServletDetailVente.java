@@ -35,7 +35,7 @@ public class ServletDetailVente extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Retrait retrait = null;
-		
+
 		
 		//SI UTILISATEUR NON CONNECTE REDIRECTION VERS PAGE CONNEXION
 		
@@ -56,15 +56,6 @@ public class ServletDetailVente extends HttpServlet {
 			
 		try {
 			article =  articleManager.selectionnerArticle(noArticle);
-			
-			//Test vérif état vente de l'enchere
-//			String statutEnchere = article.getEtatVente();
-//			if (statutEnchere.equals("EN COURS")) {
-//				
-//			} else if (statutEnchere.equals("TERMINEE")) {
-//				
-//			}
-
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -82,14 +73,6 @@ public class ServletDetailVente extends HttpServlet {
 		}
 		
 		}
-		if(article.getEtatVente().equals("TERMINEE")) {
-		Utilisateur utilisateurGagnant = article.getNoAcheteur();
-		
-		request.setAttribute("utilisateurGagnant", utilisateurGagnant);
-		
-		}
-		
-		
 		request.setAttribute("article", article);
 		request.setAttribute("retrait", retrait);
 
@@ -201,7 +184,7 @@ public class ServletDetailVente extends HttpServlet {
 			} catch (BusinessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}	
 			
 			request.setAttribute("article", article);
 			request.setAttribute("retrait", retrait);

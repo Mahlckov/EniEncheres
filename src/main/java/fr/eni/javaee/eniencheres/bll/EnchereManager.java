@@ -25,7 +25,7 @@ public class EnchereManager {
 		enchereDAO.insertEnchere(enchere);
 	}
 
-	private void validerEncheres(Encheres enchere) throws BusinessException{
+	public BusinessException validerEncheres(Encheres enchere) throws BusinessException{
 		 BusinessException businessException = new BusinessException();
 	     
 	        
@@ -44,9 +44,7 @@ public class EnchereManager {
 			if(enchere.getNoAcheteur()==null) {
 				businessException.ajouterErreur(CodesResultatBLL.REGLE_NO_ACHETEUR_NULL);
 			}
-			if (enchere.getDate_enchere()==null || enchere.getDate_enchere().isBefore(LocalDate.now())){
-				businessException.ajouterErreur(CodesResultatBLL.REGLE_DATE_ENCHERE_ERREUR);
-			}
+			return businessException;
 		}	
 	
 	
@@ -62,34 +60,4 @@ public class EnchereManager {
 			return listEncheres;
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	public List<Encheres> validateDateEnchere(LocalDate date_enchere) throws BusinessException
-//	{
-//		LocalDate currentDate = LocalDate.now();
-//		List<Encheres> liste = new ArrayList<Encheres>();
-//	    
-//	    if(date_enchere.isAfter(currentDate)||date_enchere.isEqual(currentDate)) {
-//	    	liste.add((Encheres) this.enchereDAO.selectAll());
-//	    }
-//	    return liste;
-//		
-//	
-//}}
-
-	
-}	private void validerEncheres(Encheres enchere) throws BusinessException{
+}

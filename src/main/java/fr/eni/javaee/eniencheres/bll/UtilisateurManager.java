@@ -5,11 +5,14 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import fr.eni.javaee.eniencheres.bo.Encheres;
 import fr.eni.javaee.eniencheres.bo.Utilisateur;
 import fr.eni.javaee.eniencheres.BusinessException;
 
 import fr.eni.javaee.eniencheres.dal.UtilisateurDAO;
+import fr.eni.javaee.eniencheres.dal.CodesResultatDAL;
 import fr.eni.javaee.eniencheres.dal.DAOFactory;
 
 public class UtilisateurManager {
@@ -155,7 +158,7 @@ public class UtilisateurManager {
 		if (pseudo.isBlank()) {
 			errorList.add("Le champ 'Pseudo' doit être rempli.");
 		}
-		;
+		
 		if (nom.isBlank()) {
 			errorList.add("Le champ 'Nom' doit être rempli.");
 		}
@@ -202,9 +205,17 @@ public class UtilisateurManager {
 
 		if (emailValide != true) {
 			errorList.add("Le format de l'adresse email n'est pas valide.");
-
-			/* TEST SI LE PSEUDO OU L'EMAIL SONT DEJA UTILISES */
 		}
+
+		/* TEST DE VALIDITE DU PSEUDO */	
+		boolean pseudoValide = UtilisateurManager.pseudoIsValid(pseudo);
+
+		if (pseudoValide != true) {
+			errorList.add("Le format du pseudo n'est pas valide, il ne doit contenir que des caractères alphanumériques.");
+		}
+		
+		/* TEST SI LE PSEUDO OU L'EMAIL SONT DEJA UTILISES */
+
 
 		try {
 			liste = manager.listeUtilisateur();
@@ -288,5 +299,39 @@ public class UtilisateurManager {
 			return false;
 		return pat.matcher(email).matches();
 	}
-
+	
+	/* METHODE VERIFICATION PSEUDO */
+	public static boolean pseudoIsValid (String pseudo) {
+	    if (pseudo != null && pseudo.matches("^[a-zA-Z0-9]+$")) {
+	      return true;
+	    } else {
+	      return false;
+	    }
+	  }
+	
+	public void retirerCredit (int credit, int noUtilisateur, Encheres encheres) throws BusinessException {
+		String errorList = null;
+		UtilisateurManager userManager = new UtilisateurManager();
+		Utilisateur user = userManager.selectUser(noUtilisateur);
+		Encheres enchere =  encheres;
+		
+			if(user.getCredit() >= enchere.getMontant_enchere()) {
+				int montantRetire = user.getCredit() - enchere.getMontant_enchere();
+					user.setCredit(montantRetire);
+					userManager.updateUser(user);
+					
+				}
+//			else if(user.getCredit() < enchere.getMontant_enchere()){
+//				errorList = "Votre nombre de crédits est insuffisant pour enchérir, il vous manque " + (enchere.getMontant_enchere()-user.getCredit())+ " points";
+//			}
+//			return errorList;
+	}
+	
+	public void restituerCredit  (int credit, int noUtilisateur) throws BusinessException {
+		UtilisateurManager userManager = new UtilisateurManager();
+		Utilisateur user = userManager.selectUser(noUtilisateur);
+		
+		user.setCredit(user.getCredit() + credit);
+		userManager.updateUser(user);
+	}
 }
