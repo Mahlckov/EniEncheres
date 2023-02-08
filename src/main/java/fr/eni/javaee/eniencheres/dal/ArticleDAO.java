@@ -16,7 +16,7 @@ public interface ArticleDAO {
 	public void insert(Articles newArticle) throws BusinessException;
 
 	public void updateArticle(Articles newArticle) throws BusinessException;
-
+	
 	public List<Articles> selectAllByEtatVente(String inputEtatVente) throws BusinessException;
 
 	public List<Articles> selectAllByCategorie(Categorie inputCategorie) throws BusinessException;

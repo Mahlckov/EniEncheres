@@ -12,7 +12,12 @@ public class Encheres implements Comparable <Encheres> {
 		super();
 	}
 	
-
+	public Encheres(Utilisateur noAcheteur,Articles noArticle) {
+		super();
+		this.noAcheteur = noAcheteur;
+		this.noArticle = noArticle;
+	}
+	
 	
 	public Encheres(Utilisateur noAcheteur,Articles noArticle,LocalDate date_enchere, int montant_enchere) {
 		super();

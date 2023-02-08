@@ -2,6 +2,7 @@ package fr.eni.javaee.eniencheres.servlets;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -162,17 +163,37 @@ public class ServletDetailVente extends HttpServlet {
 		localDate = LocalDate.now();
 		
 		//CREATION ENCHERE
-		
+		BusinessException businessException = null;
 		Encheres enchere = new Encheres(noAcheteur,article,localDate,propositionEnchere);
+		try {
+			 businessException = enchereManager.validerEncheres(enchere);
+			
+		} catch (BusinessException e1) {
+			e1.printStackTrace();
+		}
+		if(businessException.hasErreurs()) {
+			request.setAttribute("listError", businessException.getListeCodesErreur());
+			request.setAttribute("article", articleAvantModifications);
+			request.getRequestDispatcher("/WEB-INF/JSP/DetailVente.jsp").forward(request, response);
+			
+		}
 		
 		try {
-			enchereManager.insertEnchere(enchere);
+			//MODIF NOMBRE DE CREDITS DE L'ACHETEUR
+			utilisateurManager.retirerCredit(article.getNoArticle(), noAcheteur.getNoUtilisateur(), enchere);
 			
-			//SI INSERT REUSSI, MISE A JOUR DE l'ARTICLE(NO ACHETEUR ET PRIX VENTE)
-			article.setNoAcheteur(noAcheteur);
-			article.setPrixVente(enchere.getMontant_enchere());
-			articleManager.miseAjourArticle(article);
-			
+				enchereManager.insertEnchere(enchere);
+				//S'EXECUTE UNIQUEMENT SI DEJA UNE PREMIERE ENCHERE
+				if(article.getNoAcheteur()!=null) {
+					utilisateurManager.restituerCredit(article.getPrixVente(),article.getNoAcheteur().getNoUtilisateur());
+				};
+				
+				
+				//SI INSERT REUSSI, MISE A JOUR DE l'ARTICLE(NO ACHETEUR ET PRIX VENTE)
+				article.setNoAcheteur(noAcheteur);
+				article.setPrixVente(enchere.getMontant_enchere());
+				articleManager.miseAjourArticle(article);
+
 			
 			//REDIRECTION VERS LA PAGE DE VENTE ACTUALISEE
 			try {

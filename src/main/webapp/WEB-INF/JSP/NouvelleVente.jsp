@@ -99,9 +99,14 @@
 				<div style="height:2em;"></div>
 				<div class="buttonsDiv">
 
+<<<<<<< HEAD
 					<input class="submit" type="submit" value="Enregistrer"> 
 					
 					<a href="/EniEncheres/Accueil"><button class="delete">Annuler</button></a>
+=======
+					<input class="submit" type="submit" value="Enregistrer"> <a
+						href="/EniEncheres/Accueil"><button class="delete">Annuler</button></a>
+>>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 
 				</div>
 			</form>
