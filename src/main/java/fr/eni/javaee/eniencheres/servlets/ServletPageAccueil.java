@@ -48,8 +48,8 @@ public class ServletPageAccueil extends HttpServlet {
 		Categorie categorie = null;
 
 
-		if (request.getParameter("encheresOuvertes") != null | request.getParameter("enchereEnCours") != null
-				| request.getParameter("mesEnchereRemportees") != null | request.getParameter("mesVentesEnCours") != null
+		if (request.getParameter("encheresOuvertes") != null | request.getParameter("mesEncheresEnCours") != null
+				| request.getParameter("mesEncheresRemportees") != null | request.getParameter("mesVentesEnCours") != null
 				| request.getParameter("ventesNonDebutees") != null | request.getParameter("ventesTerminees") != null) {
 			
 			try {

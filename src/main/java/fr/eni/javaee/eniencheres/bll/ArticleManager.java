@@ -59,37 +59,34 @@ public class ArticleManager {
 	public List<Articles> selectionnerListArticleSelonCategorie(Categorie inputCategorie) throws BusinessException {
 		return this.articleDAO.selectAllByCategorie(inputCategorie);
 	}
-	
+
 	public void miseAJourEtatVente() throws BusinessException {
 		ArticleManager articleManager = new ArticleManager();
-		List <Articles> listArticle = new ArrayList<>();
+		List<Articles> listArticle = new ArrayList<>();
 		LocalDate localDate = LocalDate.now();
-		
+
 		listArticle = articleManager.selectionnerListArticleSelonEtatVente("NON DEBUTEE");
 		for (Articles articles : listArticle) {
-			
-			if(articles.getDateDebutEncheres().isEqual(localDate) ) {
-				
+
+			if (articles.getDateDebutEncheres().isEqual(localDate)) {
+
 				articles.setEtatVente("EN COURS");
 				articleManager.miseAjourArticle(articles);
 			}
-			
+
 		}
-		
+
 		listArticle = articleManager.selectionnerListArticleSelonEtatVente("EN COURS");
 		for (Articles articles : listArticle) {
-			
-			if(articles.getDateFinEncheres().isEqual(localDate) ) {
-				
+
+			if (articles.getDateFinEncheres().isEqual(localDate)) {
+
 				articles.setEtatVente("TERMINEE");
 				articleManager.miseAjourArticle(articles);
 			}
-			
+
 		}
-		
-		
-		
-		
+
 	}
 
 	public List<Articles> Filtrage(HttpServletRequest request) throws BusinessException {
@@ -104,8 +101,8 @@ public class ArticleManager {
 		String search = request.getParameter("search");
 		String cat = request.getParameter("categorie");
 		String encheresOuvertes = request.getParameter("encheresOuvertes");
-		String mesEnchereEnCours = request.getParameter("enchereEnCours");
-		String mesEnchereRemportees = request.getParameter("mesEnchereRemportees");
+		String mesEnchereEnCours = request.getParameter("mesEncheresEnCours");
+		String mesEnchereRemportees = request.getParameter("mesEncheresRemportees");
 
 		String mesVentesEnCours = request.getParameter("mesVentesEnCours");
 		String ventesNonDebutees = request.getParameter("ventesNonDebutees");
@@ -139,22 +136,24 @@ public class ArticleManager {
 		// SELECTION DES ARTICLES DANS LA LISTE OBTENUE PAR CATEGORIE DONT L ETAT VENTE
 		// EST 'EN COURS' ET noACHETEUR = noUTILISATEUR EN SESSION
 
-		if (mesEnchereEnCours!=null && mesEnchereEnCours.equals("true")) {
+		if (mesEnchereEnCours != null) {
 			for (Articles articles : listArticles) {
 
-				if (articles.getEtatVente().equals("EN COURS") && articles.getNoAcheteur()
-						.getNoUtilisateur() == ((int) session.getAttribute("noUtilisateur"))) {
-					listArticlesFiltree.add(articles);
+				if (articles.getNoAcheteur() != null) {
+
+					if (articles.getEtatVente().equals("EN COURS") && articles.getNoAcheteur()
+							.getNoUtilisateur() == ((int) session.getAttribute("noUtilisateur"))) {
+						listArticlesFiltree.add(articles);
+					}
+
 				}
-
 			}
-
 		}
 
 		// SELECTION DES ARTICLES DANS LA LISTE OBTENUE PAR CATEGORIE DONT L ETAT VENTE
 		// EST 'TERMINEE' ET noACHETEUR = noUTILISATEUR EN SESSION
 
-		if (mesEnchereRemportees!= null && mesEnchereRemportees.equals("true")) {
+		if (mesEnchereRemportees != null && mesEnchereRemportees.equals("true")) {
 			for (Articles articles : listArticles) {
 
 				if (articles.getEtatVente().equals("TERMINEE") && articles.getNoAcheteur()
@@ -169,7 +168,7 @@ public class ArticleManager {
 		// SELECTION DES ARTICLES DANS LA LISTE OBTENUE PAR CATEGORIE DONT L ETAT VENTE
 		// EST 'EN COURS' ET noVENDEUR = noUTILISATEUR EN SESSION
 
-		if (mesVentesEnCours!=null && mesVentesEnCours.equals("true")) {
+		if (mesVentesEnCours != null && mesVentesEnCours.equals("true")) {
 			for (Articles articles : listArticles) {
 
 				if (articles.getEtatVente().equals("EN COURS") && articles.getNoVendeur()
@@ -184,7 +183,7 @@ public class ArticleManager {
 		// SELECTION DES ARTICLES DANS LA LISTE OBTENUE PAR CATEGORIE DONT L ETAT VENTE
 		// EST 'NON DEBUTEE' ET noVENDEUR = noUTILISATEUR EN SESSION
 
-		if (ventesNonDebutees!=null && ventesNonDebutees.equals("true")) {
+		if (ventesNonDebutees != null && ventesNonDebutees.equals("true")) {
 			for (Articles articles : listArticles) {
 
 				if (articles.getEtatVente().equals("NON DEBUTEE") && articles.getNoVendeur()
@@ -199,7 +198,7 @@ public class ArticleManager {
 		// SELECTION DES ARTICLES DANS LA LISTE OBTENUE PAR CATEGORIE DONT L ETAT VENTE
 		// EST 'NON DEBUTEE' ET noVENDEUR = noUTILISATEUR EN SESSION
 
-		if (ventesTerminees!=null && ventesTerminees.equals("true")) {
+		if (ventesTerminees != null && ventesTerminees.equals("true")) {
 			for (Articles articles : listArticles) {
 
 				if (articles.getEtatVente().equals("TERMINEE") && articles.getNoVendeur()
@@ -207,25 +206,25 @@ public class ArticleManager {
 					listArticlesFiltree.add(articles);
 				}
 
-			}}
-
-			// SELECTION DES ARTICLES DANS LA LISTE FILTREE DONT LE NOM D'ARTICLE EST EGALE
-			// A L INPUT DE LA BARRE DE RECHERCHE
-
-			if (search != null) {
-
-				for (
-
-				Articles articles : listArticlesFiltree) {
-
-					if (articles.getNomArticle().contains(search)) {
-						listRecherche.add(articles);
-					}
-				}
-				listArticlesFiltree = listRecherche;
 			}
+		}
 
-		
+		// SELECTION DES ARTICLES DANS LA LISTE FILTREE DONT LE NOM D'ARTICLE EST EGALE
+		// A L INPUT DE LA BARRE DE RECHERCHE
+
+		if (search != null) {
+
+			for (
+
+			Articles articles : listArticlesFiltree) {
+
+				if (articles.getNomArticle().contains(search)) {
+					listRecherche.add(articles);
+				}
+			}
+			listArticlesFiltree = listRecherche;
+		}
+
 		return listArticlesFiltree;
 
 	}

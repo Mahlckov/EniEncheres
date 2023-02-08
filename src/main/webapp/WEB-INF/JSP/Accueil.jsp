@@ -11,53 +11,9 @@
 <title>ENI Enchères</title>
 </head>
 <body>
-
-<header>
-<div class="header"><h1>ENI</h1><p>Enchères</p></div> 
-
-<nav class="connect">
-
-<!--SI UTILISATEUR CONNECTE   --> 
+<jsp:include page="Menu.jsp"></jsp:include>
 
 
-
-    <c:if test="${ !empty sessionScope.noUtilisateur}">
-    
-    <div class="menuConnecte">
-    
-    <a href="/EniEncheres/Accueil"><div class="rubrique">Enchères</div></a>
-    <a href="/EniEncheres/NouvelleVente"><div class="rubrique">Vendre un article</div></a>
-    <a href="/EniEncheres/MonProfil"><div class="rubrique">Mon profil</div></a>
-    <a href="/EniEncheres/Deconnexion"><div class="rubrique">Deconnexion</div></a>
-    
-    
-    
-    
-    
-    
-    </div>
-    
-    
-    </c:if>
-
-<!--SI UTILISATEUR CONNECTE   --> 
-
-
-    <c:if test="${ empty sessionScope.noUtilisateur}">
-
-
-<a href="/EniEncheres/Connexion">Se connecter / S'inscrire</a>
-
-
-</c:if>
-</nav>
-
-</header>
-
-
-
-
-<div class="barreDeco"></div>
 
 <h1 class="titreListeEnchere">Liste des enchères</h1>
 
@@ -100,12 +56,12 @@
   </div>
   
    <div class="aCocher">
-    <input type="checkbox" id="EO" name="mesEnchereEnCours" value="true">
+    <input type="checkbox" id="EO" name="mesEncheresEnCours" value="true">
     <label for="EO">Mes enchères en cours</label>
   </div>
   
      <div class="aCocher">
-    <input type="checkbox" id="EO" name="mesEnchereRemportees" value="true">
+    <input type="checkbox" id="EO" name="mesEncheresRemportees" value="true">
     <label for="EO">Mes enchères remportées</label>
   </div>
 </div>
@@ -139,7 +95,7 @@
 
 <div class="conteneurArticle"> 
 
-<div class="conteneurPhoto"></div>
+<div class="conteneurPhotoAccueil"></div>
 <div class="conteneurDescriptionArticle">
 
 <a href="/EniEncheres/DetailVente?id=${a.noArticle}"><p class="descriptionArticle"><c:out value="${a.getNomArticle()}"></c:out> <p></a>
@@ -148,8 +104,11 @@
 
 <p class="descriptionArticle">Fin de l'enchère : <c:out value="${a.getDateFinEncheres()}"></c:out> <p>
 
-<p class="descriptionArticle">Vendeur : <c:out value="${a.getNoVendeur().getNom()}"></c:out> <p>
-
+<p class="descriptionArticle">Vendeur : 
+    <a href="/EniEncheres/MonProfil?noVendeur=${a.getNoVendeur().getPseudo()}">
+      <c:out value="${a.getNoVendeur().getPseudo()}"> 
+      </c:out> 
+    </a>
 
 
 

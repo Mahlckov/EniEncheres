@@ -43,6 +43,8 @@ public class EnchereManager {
 			if (enchere.getDate_enchere()==null || enchere.getDate_enchere().isBefore(LocalDate.now())){
 				businessException.ajouterErreur(CodesResultatBLL.REGLE_DATE_ENCHERE_ERREUR);
 			}
+			
+			
 		}	
 	
 	

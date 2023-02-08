@@ -288,5 +288,8 @@ public class UtilisateurManager {
 			return false;
 		return pat.matcher(email).matches();
 	}
+	
+	
+
 
 }
