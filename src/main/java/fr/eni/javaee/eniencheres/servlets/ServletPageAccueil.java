@@ -14,6 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.javaee.eniencheres.BusinessException;
 import fr.eni.javaee.eniencheres.bll.ArticleManager;
 import fr.eni.javaee.eniencheres.bo.Articles;
+<<<<<<< HEAD
+=======
+import fr.eni.javaee.eniencheres.bo.Categorie;
+>>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 
 /**
  * Servlet implementation class ServletPageAccueil
@@ -21,11 +25,16 @@ import fr.eni.javaee.eniencheres.bo.Articles;
 @WebServlet("/Accueil")
 public class ServletPageAccueil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+<<<<<<< HEAD
        
+=======
+>>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
+<<<<<<< HEAD
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArticleManager articleManager = new ArticleManager();
 		List <Articles> listArticle = new ArrayList();		
@@ -39,17 +48,102 @@ public class ServletPageAccueil extends HttpServlet {
 		
 		request.setAttribute("listeArticleEnCours", listArticle);
 		
+=======
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		ArticleManager articleManager = new ArticleManager();
+		List<Articles> listArticle = new ArrayList();
+		
+		//MISE A JOUR DANS LA BASE DE DONNEE DES ETATS DE VENTE EN FONCTION DE LA DATE
+		
+		try {
+			articleManager.miseAJourEtatVente();
+		} catch (BusinessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		// PAR DEFAUT => PAS DE RECHERCHE, PAS DE CATEGORIE SELECTIONNE TOUS LES ARTICLES \\
+
+		// RECUPERATION PARAMETRE DE FILTRE PAR CATEGORIE
+		String cat = null;
+		Categorie categorie = null;
+
+
+		if (request.getParameter("encheresOuvertes") != null | request.getParameter("enchereEnCours") != null
+				| request.getParameter("mesEnchereRemportees") != null | request.getParameter("mesVentesEnCours") != null
+				| request.getParameter("ventesNonDebutees") != null | request.getParameter("ventesTerminees") != null) {
+			
+			try {
+				listArticle =articleManager.Filtrage(request);
+			} catch (BusinessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		// SI PARAMETRE CATEGORIE EST EXISTANT MAIS PAS D'AUTRES
+
+
+		else if (request.getParameter("categorie") != null) {
+			cat = request.getParameter("categorie");
+			categorie = new Categorie(cat);
+
+			// SI PARAMETRE CATEGORIE = TOUTES
+
+			if (cat.equals("Toutes")) {
+				try {
+
+					listArticle = articleManager.selectionnerListArticles();
+				} catch (BusinessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+
+			// SI PARAMETRE CATEGORIE = TYPES CATEGORIES
+
+			else {
+
+				try {
+					listArticle = articleManager.selectionnerListArticleSelonCategorie(categorie);
+				} catch (BusinessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+
+		// SI PAS DE PARAMETRE CATEGORIE => PAR DEFAUT "TOUTES"
+
+		else {
+
+			try {
+
+				listArticle = articleManager.selectionnerListArticles();
+			} catch (BusinessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+		request.setAttribute("listeArticleEnCours", listArticle);
+		request.setAttribute("categorie", cat);
+
+>>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/JSP/Accueil.jsp");
 		rd.forward(request, response);
-		
-	
-	
+
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

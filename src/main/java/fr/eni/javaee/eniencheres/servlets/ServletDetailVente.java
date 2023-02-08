@@ -13,9 +13,17 @@ import javax.servlet.http.HttpSession;
 import fr.eni.javaee.eniencheres.BusinessException;
 import fr.eni.javaee.eniencheres.bll.ArticleManager;
 import fr.eni.javaee.eniencheres.bll.EnchereManager;
+<<<<<<< HEAD
 import fr.eni.javaee.eniencheres.bll.UtilisateurManager;
 import fr.eni.javaee.eniencheres.bo.Articles;
 import fr.eni.javaee.eniencheres.bo.Encheres;
+=======
+import fr.eni.javaee.eniencheres.bll.RetraitManager;
+import fr.eni.javaee.eniencheres.bll.UtilisateurManager;
+import fr.eni.javaee.eniencheres.bo.Articles;
+import fr.eni.javaee.eniencheres.bo.Encheres;
+import fr.eni.javaee.eniencheres.bo.Retrait;
+>>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 import fr.eni.javaee.eniencheres.bo.Utilisateur;
 
 /**
@@ -31,6 +39,7 @@ public class ServletDetailVente extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+<<<<<<< HEAD
 		
 		//SI UTILISATEUR NON CONNECTE REDIRECTION VERS PAGE CONNEXION
 		
@@ -57,6 +66,50 @@ public class ServletDetailVente extends HttpServlet {
 		}	
 		}
 		request.setAttribute("article", article);
+=======
+		Retrait retrait = null;
+
+		
+		//SI UTILISATEUR NON CONNECTE REDIRECTION VERS PAGE CONNEXION
+		
+		if(session.getAttribute("noUtilisateur")==null) {
+			
+			response.sendRedirect("Connexion");
+			
+		} else {
+		
+		//RECUPERATION DE L'ID ARTICLE DANS L'URL, CREATION DE L'ARTICLE EN PARAMETRE ET DISPATCH VERS URL
+		
+		ArticleManager articleManager = new ArticleManager();
+		Articles article = new Articles();
+		
+		if(request.getParameter("id")!=null) {
+			
+			int noArticle = Integer.parseInt(request.getParameter("id"));	
+			
+		try {
+			article =  articleManager.selectionnerArticle(noArticle);
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}
+		
+		//RECUPERATION DU RETRAIT
+		RetraitManager retraitManager= new RetraitManager();
+
+		try {
+			retrait = retraitManager.selectRetraitById(article.getNoArticle());
+		} catch (BusinessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		}
+		request.setAttribute("article", article);
+		request.setAttribute("retrait", retrait);
+
+>>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 		
 		request.getRequestDispatcher("/WEB-INF/JSP/DetailVente.jsp").forward(request, response);}
 		
@@ -74,6 +127,7 @@ public class ServletDetailVente extends HttpServlet {
 		UtilisateurManager utilisateurManager= new UtilisateurManager();
 		
 		ArticleManager articleManager = new ArticleManager();
+<<<<<<< HEAD
 		
 		HttpSession session = request.getSession();
 		
@@ -131,6 +185,84 @@ public class ServletDetailVente extends HttpServlet {
 			}	
 			
 			request.setAttribute("article", article);
+=======
+				
+		HttpSession session = request.getSession();
+		
+		Retrait retrait = null;
+
+		
+		//RECUPERATION DU MONTANT DE L ENCHERE, DU NO DE L'ACHETEUR ( = utilisateur en session) ET DU NO ARTICLE
+		int noUtilisateur = (int) session.getAttribute("noUtilisateur");
+		
+		int propositionEnchere= Integer.parseInt(request.getParameter("propositionEnchere"));
+		
+		int noArticle = Integer.parseInt(request.getParameter("noArticle"));
+		
+
+		
+		//RECUPERATION DE L'UTILISATEUR EN COURS
+		Utilisateur noAcheteur = new Utilisateur();
+		
+		try {
+			noAcheteur = utilisateurManager.selectUser(noUtilisateur);
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
+		//RECUPERATION DE L'ARTICLE
+		
+		Articles article = new Articles();
+		
+		try {
+			article = articleManager.selectionnerArticle(noArticle);
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
+		
+		Articles articleAvantModifications = article;
+		
+		//RECUPERATION DU RETRAIT
+		
+		RetraitManager retraitManager= new RetraitManager();
+
+		try {
+			retrait = retraitManager.selectRetraitById(article.getNoArticle());
+		} catch (BusinessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		//CREATION LOCALDATE
+		
+		LocalDate localDate;
+		
+		localDate = LocalDate.now();
+		
+		//CREATION ENCHERE
+		
+		Encheres enchere = new Encheres(noAcheteur,article,localDate,propositionEnchere);
+		
+		try {
+			enchereManager.insertEnchere(enchere);
+			
+			//SI INSERT REUSSI, MISE A JOUR DE l'ARTICLE(NO ACHETEUR ET PRIX VENTE)
+			article.setNoAcheteur(noAcheteur);
+			article.setPrixVente(enchere.getMontant_enchere());
+			articleManager.miseAjourArticle(article);
+			
+			
+			//REDIRECTION VERS LA PAGE DE VENTE ACTUALISEE
+			try {
+				article =  articleManager.selectionnerArticle(noArticle);
+			} catch (BusinessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+			
+			request.setAttribute("article", article);
+			request.setAttribute("retrait", retrait);
+
+>>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 			
 			request.getRequestDispatcher("/WEB-INF/JSP/DetailVente.jsp").forward(request, response);
 			

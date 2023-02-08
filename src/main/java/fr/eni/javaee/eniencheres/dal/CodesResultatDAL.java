@@ -75,7 +75,13 @@ public abstract class CodesResultatDAL {
 	public static final int LECTURE_RETRAIT_ECHEC = 10013;
 
 	public static final int LECTURE_RETRAIT_INEXISTANT = 10014;
+<<<<<<< HEAD
 
+=======
+	
+	//ENCHERES
+	
+>>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 	public static final int INSERT_ENCHERE_NULL = 10015;
 }
 

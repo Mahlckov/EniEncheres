@@ -35,6 +35,12 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			+ "				no_vendeur=?, no_acheteur=?  WHERE no_article=?";
 	
 	private static final String SELECT_ALL_BY_ETAT_VENTE = "SELECT* FROM ARTICLES WHERE etat_vente=?";
+<<<<<<< HEAD
+=======
+	
+	private static final String SELECT_ALL_BY_CATEGORIE = "SELECT* FROM ARTICLES WHERE no_categorie=?";
+
+>>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 
 	
 	@Override
@@ -238,6 +244,48 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		return listArticles;
 	}	
 	
+<<<<<<< HEAD
+=======
+	
+	public List<Articles> selectAllByCategorie(Categorie inputCategorie) throws BusinessException {
+		List<Articles> listArticles = new ArrayList<Articles>();
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ALL_BY_CATEGORIE);
+			pstmt.setInt(1, inputCategorie.getNoCategorie());
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next())
+			{
+				int noArticle = rs.getInt("no_article");
+				String nomArticle = rs.getString("nom_article");
+				String description = rs.getString("description");
+				LocalDate dateDebutEncheres = rs.getDate("date_debut_encheres").toLocalDate();
+				LocalDate dateFinEncheres = rs.getDate("date_fin_encheres").toLocalDate();
+				int miseAprix = rs.getInt("prix_initial");
+				int prixVente = rs.getInt("prix_vente");
+				String etatVente = rs.getString("etat_vente");
+				
+				Categorie categorie = categorieDAOJdbcImpl.selectByIdCategorie(rs.getInt("no_categorie")) ;
+				Utilisateur vendeur = utilisateurDAOJdbcImpl.selectUserById(rs.getInt("no_vendeur"));
+				Utilisateur acheteur = utilisateurDAOJdbcImpl.selectUserById(rs.getInt("no_acheteur"));
+
+				Articles article = new Articles(noArticle, nomArticle, description, dateDebutEncheres, dateFinEncheres, miseAprix, prixVente, etatVente, categorie, vendeur, acheteur);
+				listArticles.add(article);
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTE_ARTICLES_ECHEC);
+			throw businessException;
+		}
+		return listArticles;
+	}	
+
+	
+>>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 	
 	
 }

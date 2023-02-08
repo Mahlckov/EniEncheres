@@ -39,4 +39,13 @@ public abstract class CodesResultatBLL {
 
 	public static final int REGLE_DATE_ENCHERE_ERREUR = 20008;
 	
+	public static final int REGLE_RETRAIT_NO_ARTICLE_ERREUR = 20009;
+
+	public static final int REGLE_RETRAIT_RUE_ERREUR = 20010;
+
+	public static final int REGLE_RETRAIT_CODEPOSTAL_ERREUR = 20011;
+
+	public static final int REGLE_RETRAIT_VILLE_ERREUR = 20012;
+
+	
 }

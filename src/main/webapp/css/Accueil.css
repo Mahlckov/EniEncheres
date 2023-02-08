@@ -62,6 +62,8 @@ a {
 	font-size: 1.1em;
 	padding-left: 4.2em;
 	margin-top: 2em;
+<<<<<<< HEAD
+=======
 }
 
 .inputCategorie {
@@ -103,4 +105,59 @@ a {
 	width: 15em;
 	position:relative;
 
+>>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 }
+
+<<<<<<< HEAD
+.inputCategorie {
+	width: 14em;;
+=======
+
+.aCocher {
+	font-size: 1.1em;
+	padding-left: 4.2em;
+	margin-top: 1em;
+	width:15em;
+>>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
+}
+
+<<<<<<< HEAD
+.titreListeEnchere {
+	text-align: center;
+}
+
+.filtre {
+	font-weight: bold;
+	font-size: 1.5em;
+	padding-left: 3em;
+}
+
+.conteneurListeEnchere {
+	width: 80%;
+	display: flex;
+	margin-left: auto;
+	margin-right: auto;
+		flex-direction:row;
+		flex-wrap:wrap;
+	
+}
+
+.conteneurArticle {
+	width: 40em;;
+	display: flex;
+	height:10em;
+	margin-left:5em;
+	margin-top:5em;
+	border-color:black;
+	border:solid;
+
+}
+
+.conteneurPhoto {
+	width: 15em;
+	position:relative;
+
+}
+=======
+.surContainerACocher{display:flex;width: 50em;}
+>>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
