@@ -1,12 +1,20 @@
 @charset "UTF-8";
 
+
+
 body {
 	margin: 0;
 }
 
-h1 {
+/* MENU */
+
+h2 {
 	margin-bottom: 0, 5em;
 }
+
+h3 {font-size:0,5em;}
+
+
 
 header {
 	width: 100%;
@@ -47,11 +55,16 @@ header {
 	margin-left: auto;
 	margin-right: auto;
 	border-width: 1px;
+	margin-bottom:0.5em;
 }
 
 a {
 	text-decoration: none;
 }
+
+.lienAccueil {color:red;}
+
+/* JSP : ACCUEIL */
 
 .searchBar {
 	width: 20em;
@@ -62,8 +75,6 @@ a {
 	font-size: 1.1em;
 	padding-left: 4.2em;
 	margin-top: 2em;
-<<<<<<< HEAD
-=======
 }
 
 .inputCategorie {
@@ -101,63 +112,115 @@ a {
 
 }
 
-.conteneurPhoto {
+.conteneurPhotoAccueil {
 	width: 15em;
 	position:relative;
 
->>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 }
 
-<<<<<<< HEAD
-.inputCategorie {
-	width: 14em;;
-=======
 
 .aCocher {
 	font-size: 1.1em;
 	padding-left: 4.2em;
 	margin-top: 1em;
 	width:15em;
->>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 }
 
-<<<<<<< HEAD
-.titreListeEnchere {
-	text-align: center;
-}
+.surContainerACocher{display:flex;width: 50em;}
 
-.filtre {
-	font-weight: bold;
-	font-size: 1.5em;
-	padding-left: 3em;
-}
 
-.conteneurListeEnchere {
-	width: 80%;
-	display: flex;
-	margin-left: auto;
-	margin-right: auto;
-		flex-direction:row;
-		flex-wrap:wrap;
+/*JSP : NOUVELLE VENTE/DETAIL VENTE/ PROFIL */
+
+h1 {
+	text-align:center;	margin-block-start:0;
 	
 }
 
-.conteneurArticle {
-	width: 40em;;
-	display: flex;
-	height:10em;
-	margin-left:5em;
-	margin-top:5em;
-	border-color:black;
-	border:solid;
+
+p{margin-right:0.0em;}
+
+.titreNouvelleVente{	text-align:center;}
+
+
+
+.conteneurPhoto {width:45em;
+				height:80em;
+				margin:	0;}
+				
+.conteneur {display:flex;}
+
+.conteneurFormulaire {width:45em;}
+
+.libelle {width:10em; display:inline-block; height:2em;line-height:2em;}
+
+.info {width:15em; display:inline-block; height:2em;line-height:2em;}
+
+
+.DescriptionArticle {width:8em; display:inline-block;}
+
+
+				
+				 
+.divParam {
+width:30em;
+margin-top:0.2em;	
+display:flex}
+
+.divRetrait {border: solid;
+width:25em;
+padding-left:2em;
+padding-bottom:0em;
 
 }
 
-.conteneurPhoto {
-	width: 15em;
-	position:relative;
+
+.submit {
+width:12em;}
+
+
+.submitConnexion {margin-top:2em;
+width:12em;}
+
+.delete {width:13em;}
+
+.champs{width:10em;}
+
+.conteneurProfil {width:50%;
+margin-left:auto;
+margin-right:auto;
+}
+
+.divParamProfil {
+width:50%;
+height:3.5em;
+
+display:flex;
+
 
 }
-=======
-.surContainerACocher{display:flex;width: 50em;}
->>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
+
+.divParamID {
+width:50%;
+height:3.5em;
+padding-right:3em;
+
+display:flex;
+
+
+}
+
+
+
+
+.centrageProfil {
+	width:40%;
+	
+}
+
+.formInput {height:2em;line-height:2em; margin-top:1em;}
+
+.buttonsDiv {display:inline-block; height:2em;line-height:2em;}
+
+.centrageLienInscription{display:inline-block; text-align:center;width:100%;}
+
+

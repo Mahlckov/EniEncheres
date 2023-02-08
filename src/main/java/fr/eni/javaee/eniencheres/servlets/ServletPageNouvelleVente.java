@@ -73,41 +73,13 @@ public class ServletPageNouvelleVente extends HttpServlet {
 
 		String rue = request.getParameter("rue");
 		String codePostal = request.getParameter("codePostal");
-<<<<<<< HEAD
-		String ville = request.getParameter("codePostal");
-		
-		//RECUPERATION DE l'IDENTIFIANT EN COURS DE SESSION
-		
-		HttpSession session = request.getSession();	
-		
-		int noUtilisateur=0;
-=======
 		String ville = request.getParameter("ville");
 		String etat_Vente = null;
->>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 
-<<<<<<< HEAD
-
-		noUtilisateur = (int) session.getAttribute("noUtilisateur");
-		
-		Utilisateur utilisateur = new Utilisateur();
-		
-		
-		if (noUtilisateur==0){response.sendRedirect("Connexion");};
-		
-			
-			try {
-				utilisateur = utilisateurManager.selectUser(noUtilisateur);
-=======
 		LocalDate localDate = LocalDate.now();
->>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 
 		if (localDate.isBefore(dateDebutEnchere)) {
 			
-<<<<<<< HEAD
-			
-	
-=======
 			etat_Vente = "NON DEBUTEE";
 
 		}
@@ -166,20 +138,10 @@ public class ServletPageNouvelleVente extends HttpServlet {
 		if(rue==null | rue.isBlank()) {rue=utilisateur.getRue();};
 		if(codePostal==null | codePostal.isBlank()) {codePostal=utilisateur.getCodePostal();}
 		if(ville==null | ville.isBlank()) {ville=utilisateur.getVille();};
->>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 
 		
 		Retrait retrait = new Retrait(article,rue,codePostal,ville);
 		
-<<<<<<< HEAD
-	Articles article = new Articles(nomArticle,descriptionArticle,dateDebutEnchere,dateFinEnchere,miseAPrix,miseAPrix,"EN COURS",categorie,utilisateur,null);
-	
-	try {
-		articleManager.ajouterArticle(article);
-	} catch (BusinessException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-=======
 		RetraitManager retraitManager = new RetraitManager();
 		
 		try {
@@ -191,6 +153,5 @@ public class ServletPageNouvelleVente extends HttpServlet {
 		
 		//REDIRECTION ACCUEIL
 		response.sendRedirect("Accueil");
->>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 	}
 }

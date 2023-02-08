@@ -35,12 +35,9 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			+ "				no_vendeur=?, no_acheteur=?  WHERE no_article=?";
 	
 	private static final String SELECT_ALL_BY_ETAT_VENTE = "SELECT* FROM ARTICLES WHERE etat_vente=?";
-<<<<<<< HEAD
-=======
 	
 	private static final String SELECT_ALL_BY_CATEGORIE = "SELECT* FROM ARTICLES WHERE no_categorie=?";
 
->>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 
 	
 	@Override
@@ -244,8 +241,6 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		return listArticles;
 	}	
 	
-<<<<<<< HEAD
-=======
 	
 	public List<Articles> selectAllByCategorie(Categorie inputCategorie) throws BusinessException {
 		List<Articles> listArticles = new ArrayList<Articles>();
@@ -285,7 +280,6 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	}	
 
 	
->>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 	
 	
 }

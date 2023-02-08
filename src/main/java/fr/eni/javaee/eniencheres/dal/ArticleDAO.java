@@ -19,9 +19,6 @@ public interface ArticleDAO {
 	
 	public List<Articles> selectAllByEtatVente(String inputEtatVente) throws BusinessException;
 
-<<<<<<< HEAD
-=======
 	public List<Articles> selectAllByCategorie(Categorie inputCategorie) throws BusinessException;
->>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 
 }

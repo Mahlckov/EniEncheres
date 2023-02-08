@@ -6,47 +6,44 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="/EniEncheres/css/style.css" rel="stylesheet">
+<link href="/EniEncheres/css/Accueil.css" rel="stylesheet">
 
 <title>ENI Enchères</title>
 </head>
 <body>
 
-<header>
-<div class="header"><h1>ENI</h1><p>Enchères</p></div> 
+<jsp:include page="Menu.jsp"></jsp:include>
 
-<nav class="connect">
-
-<a href="">Se connecter / S'inscrire</a>
-
-</nav>
-
-</header>
-
-
-
-<div class="barreDeco"></div>
 
 <div style="height:3em;" ></div>
 
-
 <form method="post">
-<div class="containerForm">
-<label for="identifiant">Identifiant : </label> 
-<input type="text" name="identifiant" id="identifiant" /> <div style="height:1em;" ></div>
+
+		<div class="conteneur">
 
 
-<label for="motDePasse">Mot de passe : </label>
-<input type="password" name="motDePasse" id="motDePasse" /> <div style="height:1em;" ></div>
-
-</div>
-<input class="submit" type="submit"  value="Connexion">
+			<div class="centrageProfil"></div>
 
 
+			<div class="conteneurProfil">
 
-</form> 
+<div class="divParamID">
+						<p class="libelle">Identifiant : </p> 
+<input class="formInput" type="text" name="identifiant" id="identifiant" /> </div>
 
-<a href="/EniEncheres/Inscription"><p class="lienCréaDeCompte">Vous n'avez pas de compte ? Cliquez ici pour s'inscrire</a> </p>
+
+<div class="divParamID">
+						<p class="libelle">Mot de passe : </p>
+<input class="formInput" type="password" name="motDePasse" id="motDePasse" /></div> 
+
+<input class="submitConnexion" type="submit"  value="Connexion">
+
+</div> </div>
+</form>
+
+
+<div class="centrageLienInscription">
+<a href="/EniEncheres/Inscription"><p class="lienCréaDeCompte">Vous n'avez pas de compte ? Cliquez ici pour s'inscrire</a> </p> </div>
 
 
     <c:if test="${!empty messageConnexion}"> <c:out value="${messageConnexion }"></c:out> </c:if> 

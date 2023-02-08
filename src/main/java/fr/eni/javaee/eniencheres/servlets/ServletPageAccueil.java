@@ -14,10 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.javaee.eniencheres.BusinessException;
 import fr.eni.javaee.eniencheres.bll.ArticleManager;
 import fr.eni.javaee.eniencheres.bo.Articles;
-<<<<<<< HEAD
-=======
 import fr.eni.javaee.eniencheres.bo.Categorie;
->>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 
 /**
  * Servlet implementation class ServletPageAccueil
@@ -25,30 +22,11 @@ import fr.eni.javaee.eniencheres.bo.Categorie;
 @WebServlet("/Accueil")
 public class ServletPageAccueil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-<<<<<<< HEAD
-       
-=======
->>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-<<<<<<< HEAD
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArticleManager articleManager = new ArticleManager();
-		List <Articles> listArticle = new ArrayList();		
-		
-		try {
-			listArticle = articleManager.selectionnerListArticleSelonEtatVente("EN COURS");
-		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		request.setAttribute("listeArticleEnCours", listArticle);
-		
-=======
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		ArticleManager articleManager = new ArticleManager();
@@ -70,8 +48,8 @@ public class ServletPageAccueil extends HttpServlet {
 		Categorie categorie = null;
 
 
-		if (request.getParameter("encheresOuvertes") != null | request.getParameter("enchereEnCours") != null
-				| request.getParameter("mesEnchereRemportees") != null | request.getParameter("mesVentesEnCours") != null
+		if (request.getParameter("encheresOuvertes") != null | request.getParameter("mesEncheresEnCours") != null
+				| request.getParameter("mesEncheresRemportees") != null | request.getParameter("mesVentesEnCours") != null
 				| request.getParameter("ventesNonDebutees") != null | request.getParameter("ventesTerminees") != null) {
 			
 			try {
@@ -132,7 +110,6 @@ public class ServletPageAccueil extends HttpServlet {
 		request.setAttribute("listeArticleEnCours", listArticle);
 		request.setAttribute("categorie", cat);
 
->>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/JSP/Accueil.jsp");
 		rd.forward(request, response);
 
