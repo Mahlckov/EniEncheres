@@ -6,57 +6,56 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="/EniEncheres/css/style.css" rel="stylesheet">
+<link href="/EniEncheres/css/Accueil.css" rel="stylesheet">
 
 <title>Insert title here</title>
 </head>
 <body>
 
-<header>
-<div class="header"><h1>ENI</h1><p>Enchères</p></div> 
+<jsp:include page="Menu.jsp"></jsp:include>
 
 
-</header>
+<h1>Mon inscription</h1>
+<div class="conteneur">
+
+<div class="conteneurPhoto"></div>
 
 
 
-<div class="barreDeco"></div>
 
-<div style="height:3em;" ></div>
-
-
+<div class="conteneurFormulaire">
 
 <form method="post" >
-<label for="pseudo">Pseudo : </label> 
-<input type="text" name="pseudo" id="pseudo" /> <div style="height:1em;" ></div>
+<div class="divParam"><p class="libelle">Pseudo : </p> 
+<input class="formInput" type="text" name="pseudo" id="pseudo" /></div> 
 
-<label for="nom">Nom : </label> 
-<input type="text" name="nom" id="nom" /> <div style="height:1em;" ></div>
+<div class="divParam"><p class="libelle">Nom :  </p>  
+<input class="formInput" type="text" name="nom" id="nom" /> </div>
 
-<label for="prenom">Prenom : </label> 
-<input type="text" name="prenom" id="prenom" /> <div style="height:1em;" ></div>
+<div class="divParam"><p class="libelle">Prenom :  </p>  
+<input class="formInput" type="text" name="prenom" id="prenom" /> </div>
 
-<label for="email">Email : </label> 
-<input type="text" name="email" id="email" /> <div style="height:1em;" ></div>
+<div class="divParam"><p class="libelle">Email :  </p>  
+<input class="formInput" type="text" name="email" id="email" /> </div>
 
-<label for="telephone">Telephone : </label> 
-<input type="text" name="telephone" id="telephone" /> <div style="height:1em;" ></div>
+<div class="divParam"><p class="libelle">Telephone :  </p>  
+<input class="formInput" type="text" name="telephone" id="telephone" /></div>
 
-<label for="rue">Rue : </label> 
-<input type="text" name="rue" id="rue" /> <div style="height:1em;" ></div>
+<div class="divParam"><p class="libelle">Rue :  </p>  
+<input class="formInput" type="text" name="rue" id="rue" /></div> 
 
-<label for="code_postal">Code postal : </label> 
-<input type="text" name="code_postal" id="code_postal" /> <div style="height:1em;" ></div>
+<div class="divParam"><p class="libelle">Code postal :</p> 
+<input class="formInput" type="text" name="code_postal" id="code_postal" /></div>
 
-<label for="ville">Ville : </label> 
-<input type="text" name="ville" id="ville" /> <div style="height:1em;" ></div>
+<div class="divParam"><p class="libelle">Ville :  </p>  
+<input class="formInput" type="text" name="ville" id="ville" /> </div>
 
 
-<label for="motdepasse">Mot de passe : </label>
-<input type="password" name="motDePasse" id="motDePasse" /> <div style="height:1em;" ></div>
+<div class="divParam"><p class="libelle">Mot de passe :  </p> 
+<input class="formInput" type="password" name="motDePasse" id="motDePasse" /></div>
 
-<label for="confirmation">Confirmation : </label> 
-<input type="password" name="confirmation" id="confirmation" /> <div style="height:1em;" ></div>
+<div class="divParam"><p class="libelle">Confirmation :  </p> 
+<input class="formInput" type="password" name="confirmation" id="confirmation" /></div> 
 
 <input class="submit" type="submit"  value="Créer">
 
@@ -79,7 +78,7 @@
     
      </c:if>
 
-
+</div></div>
 
 </body>
 </html>

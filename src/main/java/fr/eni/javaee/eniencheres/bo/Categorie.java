@@ -14,7 +14,7 @@ public class Categorie {
 		
 		if(libelle.equals("Informatique")) {this.noCategorie =1;}
 		if(libelle.equals("Ameublement")) {this.noCategorie =2;}
-		if(libelle.equals("Vêtement")) {this.noCategorie =3;}
+		if(libelle.equals("Vetement")) {this.noCategorie =3;}
 		if(libelle.equals("Sport&Loisirs")) {this.noCategorie =4;}
 
 
