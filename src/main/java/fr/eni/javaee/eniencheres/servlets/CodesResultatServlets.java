@@ -8,7 +8,7 @@ public abstract class CodesResultatServlets {
 	/**
 	 * Format id liste course incorrect
 	 */
-	public static final int FORMAT_ID_LISTE_ERREUR=30000;
+	public static final int FORMAT_ID_ERREUR=30000;
 	/**
 	 * Format id liste course incorrect
 	 */

@@ -1,11 +1,22 @@
 package fr.eni.javaee.eniencheres.servlets;
 
 import java.io.IOException;
+import java.time.LocalDate;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import fr.eni.javaee.eniencheres.BusinessException;
+import fr.eni.javaee.eniencheres.bll.ArticleManager;
+import fr.eni.javaee.eniencheres.bll.EnchereManager;
+import fr.eni.javaee.eniencheres.bll.UtilisateurManager;
+import fr.eni.javaee.eniencheres.bo.Articles;
+import fr.eni.javaee.eniencheres.bo.Encheres;
+import fr.eni.javaee.eniencheres.bo.Utilisateur;
 
 /**
  * Servlet implementation class ServletDetailVente
@@ -13,28 +24,124 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/DetailVente")
 public class ServletDetailVente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ServletDetailVente() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/JSP/DetailVente.jsp").forward(request, response);
+		HttpSession session = request.getSession();
+		
+		//SI UTILISATEUR NON CONNECTE REDIRECTION VERS PAGE CONNEXION
+		
+		if(session.getAttribute("noUtilisateur")==null) {
+			
+			response.sendRedirect("Connexion");
+			
+		} else {
+		
+		//RECUPERATION DE L'ID ARTICLE DANS L'URL, CREATION DE L'ARTICLE EN PARAMETRE ET DISPATCH VERS URL
+		
+		ArticleManager articleManager = new ArticleManager();
+		Articles article = new Articles();
+		
+		if(request.getParameter("id")!=null) {
+			
+			int noArticle = Integer.parseInt(request.getParameter("id"));	
+			
+		try {
+			article =  articleManager.selectionnerArticle(noArticle);
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		}
+		request.setAttribute("article", article);
+		
+		request.getRequestDispatcher("/WEB-INF/JSP/DetailVente.jsp").forward(request, response);}
+		
+		
+		
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		EnchereManager enchereManager = new EnchereManager();
+
+		UtilisateurManager utilisateurManager= new UtilisateurManager();
+		
+		ArticleManager articleManager = new ArticleManager();
+		
+		HttpSession session = request.getSession();
+		
+		//RECUPERATION DU MONTANT DE L ENCHERE, DU NO DE L'ACHETEUR ( = utilisateur en session) ET DU NO ARTICLE
+		int noUtilisateur = (int) session.getAttribute("noUtilisateur");
+		
+		int propositionEnchere= Integer.parseInt(request.getParameter("propositionEnchere"));
+		
+		int noArticle = Integer.parseInt(request.getParameter("noArticle"));
+		
+		//RECUPERATION DE L'UTILISATEUR EN COURS
+		Utilisateur noAcheteur = new Utilisateur();
+		
+		try {
+			noAcheteur = utilisateurManager.selectUser(noUtilisateur);
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
+		//RECUPERATION DE L'ARTICLE
+		
+		Articles article = new Articles();
+		
+		try {
+			article = articleManager.selectionnerArticle(noArticle);
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
+		
+		Articles articleAvantModifications = article;
+		//CREATION LOCALDATE
+		
+		LocalDate localDate;
+		
+		localDate = LocalDate.now();
+		
+		//CREATION ENCHERE
+		
+		Encheres enchere = new Encheres(noAcheteur,article,localDate,propositionEnchere);
+		
+		try {
+			enchereManager.insertEnchere(enchere);
+			
+			//SI INSERT REUSSI, MISE A JOUR DE l'ARTICLE(NO ACHETEUR ET PRIX VENTE)
+			article.setNoAcheteur(noAcheteur);
+			article.setPrixVente(enchere.getMontant_enchere());
+			articleManager.miseAjourArticle(article);
+			
+			
+			//REDIRECTION VERS LA PAGE DE VENTE ACTUALISEE
+			try {
+				article =  articleManager.selectionnerArticle(noArticle);
+			} catch (BusinessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+			
+			request.setAttribute("article", article);
+			
+			request.getRequestDispatcher("/WEB-INF/JSP/DetailVente.jsp").forward(request, response);
+			
+			//SI ECHEC INSERT REDIRECTION VERS LA PAGE DE VENTE
+		} catch (BusinessException e) {
+			request.setAttribute("article", articleAvantModifications);
+			request.getRequestDispatcher("/WEB-INF/JSP/DetailVente.jsp").forward(request, response);
+
+			e.printStackTrace();
+		}
+		
 	}
 
 }

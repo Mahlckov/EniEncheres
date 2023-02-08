@@ -101,6 +101,21 @@ public class Articles {
 
 	}
 	
+	public Articles(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
+			int miseAprix, String etatVente, Categorie noCategorie, Utilisateur noVendeur) {
+		super();
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAprix = miseAprix;
+		this.etatVente = etatVente;
+		this.noCategorie = noCategorie;
+		this.noVendeur =noVendeur;
+		
+		
+	}
+
 	public int getNoArticle() {
 		return noArticle;
 	}

@@ -26,7 +26,7 @@
 
 
 
-<form method="post" >
+<form method="post">
 <label for="pseudo">Pseudo : </label> 
 <input type="text" name="pseudo" id="pseudo" /> <div style="height:1em;" ></div>
 

@@ -7,27 +7,27 @@ public abstract class CodesResultatBLL {
 	
 
 	/**
-	 * Echec le nom de l'article ne respecte pas les règles définies
+	 * Echec le nom de l'article ne respecte pas les rÃ¨gles dÃ©finies
 	 */
 	public static final int REGLE_ARTICLE_NOM_ERREUR=20000;
 	
 	/**
-	 * Echec la date de l'article ne respecte pas les règles définies
+	 * Echec la date de l'article ne respecte pas les rÃ¨gles dÃ©finies
 	 */
 	public static final int REGLE_DATE_ARTICLE_ERREUR=20001;
 	
 	/**
-	 * Echec la description de l'article ne respecte pas les règles définies
+	 * Echec la description de l'article ne respecte pas les rÃ¨gles dÃ©finies
 	 */
 	public static final int REGLE_ARTICLE_DESCRIPTION_ERREUR=20002;
 	
 	/**
-	 * Echec l'état de l'article ne respecte pas les règles définies
+	 * Echec l'Ã©tat de l'article ne respecte pas les rÃ¨gles dÃ©finies
 	 */
 	public static final int REGLE_ARTICLE_ETAT_ERREUR=20003;
 	
 	/**
-	 * Echec le prix de l'article ne respecte pas les règles définies
+	 * Echec le prix de l'article ne respecte pas les rÃ¨gles dÃ©finies
 	 */
 	public static final int REGLE_ARTICLE_PRIX_ERREUR= 20004;
 

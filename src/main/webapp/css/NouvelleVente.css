@@ -8,7 +8,7 @@ body {
 }
 
 h1 {
-	margin-bottom: 0, 5em;
+	text-align:center;
 }
 
 header {
@@ -75,7 +75,8 @@ p{margin-right:0.0em;}
 				 
 .divParam {
 width:30em;
-margin-top:1.5em;	}
+margin-top:1.5em;	
+display:flex}
 
 .divRetrait {border: solid;
 width:25em;
@@ -94,4 +95,4 @@ width:10em;}
 
 .annuler {width:10em;}
 
-
+.champs{width:10em;}

@@ -11,4 +11,8 @@ public interface EnchereDAO {
 
 	public List<Encheres> selectAllEncheresByNoArticle(int noArticle) throws BusinessException;
 
+	public void insertEnchere(Encheres enchere) throws BusinessException;
+	
+	
+	
 }

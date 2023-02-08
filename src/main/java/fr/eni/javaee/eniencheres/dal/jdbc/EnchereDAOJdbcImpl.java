@@ -19,6 +19,11 @@ import fr.eni.javaee.eniencheres.dal.EnchereDAO;
 
 public class EnchereDAOJdbcImpl implements EnchereDAO {
 	private static final String SELECT_ALL_ENCHERES_BY_NOARTICLE = "SELECT * FROM ENCHERES WHERE no_article = ?";
+	
+	private static final String INSERT_ENCHERE ="INSERT INTO ENCHERES(no_acheteur, no_article, date_enchere,\r\n"
+			+ "			 montant_enchere) "
+			+ "			 VALUES(?,?,?,?)";
+	
 	UtilisateurDAOJdbcImpl utilisateurDAOJdbcImpl = new UtilisateurDAOJdbcImpl();
 	ArticleDAOJdbcImpl articleDAOJdbcImpl = new ArticleDAOJdbcImpl();
 	
@@ -58,7 +63,53 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	}
 		
 	
+	public void insertEnchere(Encheres enchere) throws BusinessException{
+		if (enchere== null) {
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.INSERT_ENCHERE_NULL);
+			throw businessException;
+		}
+		try(Connection cnx = ConnectionProvider.getConnection()){
+			try{
+//				cnx.setAutoCommit(false); //does not commit transaction automatically after each query
+			    PreparedStatement pstmt;
+			    ResultSet rs;
+			    pstmt = cnx.prepareStatement(INSERT_ENCHERE, PreparedStatement.RETURN_GENERATED_KEYS);
+			    pstmt.setInt(1, enchere.getNoAcheteur().getNoUtilisateur());
+			    pstmt.setInt(2, enchere.getNoArticle().getNoArticle());
+			    pstmt.setDate(3, java.sql.Date.valueOf(enchere.getDate_enchere()));
+			    pstmt.setInt(4, enchere.getMontant_enchere());
+			    
+			    pstmt.executeUpdate();
+			    rs= pstmt.getGeneratedKeys();
+			   
+//			    if(rs.next()) {
+//					enchere.setNoArticle(rs.getInt(1));
+//					
+//			    }
+			    rs.close();
+			    pstmt.close();
+			 
+			} catch (Exception e) {
+				e.printStackTrace();
+				cnx.rollback();
+				throw e;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
+			throw businessException;
+		}
 	}
+		
+		
+		
+		
+	}
+
+	
+	
 
 	
 	

@@ -80,6 +80,38 @@
    
 </input>
 </div>
+
+<div class="conteneurListeEnchere">
+
+
+<c:forEach var="a" items="${listeArticleEnCours}"> 
+
+<div class="conteneurArticle"> 
+
+<div class="conteneurPhoto"></div>
+<div class="conteneurDescriptionArticle">
+
+<a href="/EniEncheres/DetailVente?id=${a.noArticle}"><p class="descriptionArticle"><c:out value="${a.getNomArticle()}"></c:out> <p></a>
+
+<p class="descriptionArticle">Prix : <c:out value="${a.getPrixVente()}"> points</c:out> <p>
+
+<p class="descriptionArticle">Fin de l'enchère : <c:out value="${a.getDateFinEncheres()}"></c:out> <p>
+
+<p class="descriptionArticle">Vendeur : <c:out value="${a.getNoVendeur().getNom()}"></c:out> <p>
+
+
+
+
+</div>
+
+</div>
+
+</c:forEach>
+
+
+</div>
+
+
 </body>
 </html>
 
