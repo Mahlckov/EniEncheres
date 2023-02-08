@@ -5,11 +5,14 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import fr.eni.javaee.eniencheres.bo.Encheres;
 import fr.eni.javaee.eniencheres.bo.Utilisateur;
 import fr.eni.javaee.eniencheres.BusinessException;
 
 import fr.eni.javaee.eniencheres.dal.UtilisateurDAO;
+import fr.eni.javaee.eniencheres.dal.CodesResultatDAL;
 import fr.eni.javaee.eniencheres.dal.DAOFactory;
 
 public class UtilisateurManager {
@@ -305,5 +308,30 @@ public class UtilisateurManager {
 	      return false;
 	    }
 	  }
-
+	
+	public void retirerCredit (int credit, int noUtilisateur, Encheres encheres) throws BusinessException {
+		String errorList = null;
+		UtilisateurManager userManager = new UtilisateurManager();
+		Utilisateur user = userManager.selectUser(noUtilisateur);
+		Encheres enchere =  encheres;
+		
+			if(user.getCredit() >= enchere.getMontant_enchere()) {
+				int montantRetire = user.getCredit() - enchere.getMontant_enchere();
+					user.setCredit(montantRetire);
+					userManager.updateUser(user);
+					
+				}
+//			else if(user.getCredit() < enchere.getMontant_enchere()){
+//				errorList = "Votre nombre de crédits est insuffisant pour enchérir, il vous manque " + (enchere.getMontant_enchere()-user.getCredit())+ " points";
+//			}
+//			return errorList;
+	}
+	
+	public void restituerCredit  (int credit, int noUtilisateur) throws BusinessException {
+		UtilisateurManager userManager = new UtilisateurManager();
+		Utilisateur user = userManager.selectUser(noUtilisateur);
+		
+		user.setCredit(user.getCredit() + credit);
+		userManager.updateUser(user);
+	}
 }

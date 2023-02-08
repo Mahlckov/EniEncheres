@@ -6,20 +6,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="/EniEncheres/css/NouvelleVente.css" rel="stylesheet">
+<link href="/EniEncheres/css/Accueil.css" rel="stylesheet">
 <title>Detail Vente</title>
 </head>
 <body>
 
+<jsp:include page="Menu.jsp"></jsp:include>
 
 
-	<div class="conteneur">
-
-		<div class="conteneurPhoto"></div>
-
-		<div class="conteneurFormulaire">
 			<c:if test="${article.getEtatVente()=='EN COURS'}">
-				<h1>Detail vente</h1>
+				<h1>Detail de la vente</h1>
 			</c:if>
 			<c:if test="${article.etatVente == 'TERMINEE'}">
 				<c:if
@@ -33,8 +29,16 @@
 
 				</c:if>
 			</c:if>
+			<div style="height:2em;"></div>
 
-			<div class="divParam">${article.nomArticle}</div>
+	<div class="conteneur">
+
+		<div class="conteneurPhoto"></div>
+
+		<div class="conteneurFormulaire">
+
+
+			<div class="divParam" style="font-weight:bold;">${article.nomArticle}</div>
 			<div class="divParam">
 				<p class="champs">Description :</p>
 				<p class="remplissageChamps">${article.description}</p>
@@ -93,7 +97,7 @@
 					<input type="hidden" name="noArticle" value="${article.noArticle}">
 					<div class="divParam">
 						<p class="champs">Ma proposition :</p>
-						<input class="remplissageChamps" id="propositionEnchere"
+						<input class="formProfil" class="remplissageChamps" id="propositionEnchere"
 							name="propositionEnchere" type="number"
 							min="${article.prixVente}+10" max="10000" step="25">
 					</div>
@@ -103,7 +107,15 @@
 			</c:if>
 		</div>
 	</div>
-
+	<c:if test="${!empty listError}">
+		<c:forEach var="a" items="listError">
+			<c:out value="${a}"></c:out>
+		</c:forEach>
+	</c:if>
+	<c:if test="${!empty listErrorCredit}">
+	<c:out value="${listErrorCredit}"></c:out>
+	</c:if>
+	
 </body>
 
 </html>
