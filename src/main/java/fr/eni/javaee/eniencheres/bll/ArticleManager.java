@@ -52,6 +52,12 @@ private ArticleDAO articleDAO;
 		}
 	}
 	
+	public List<Articles> selectionnerListArticleSelonEtatVente(String inputEtatVente) throws BusinessException
+	{
+		return this.articleDAO.selectAllByEtatVente(inputEtatVente);
+	}
+	
+	
 	 private void validerArticle(Articles article) throws BusinessException{
 		 BusinessException businessException = new BusinessException();
 	    
