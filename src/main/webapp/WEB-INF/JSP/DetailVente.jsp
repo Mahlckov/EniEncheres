@@ -107,7 +107,15 @@
 			</c:if>
 		</div>
 	</div>
-
+	<c:if test="${!empty listError}">
+		<c:forEach var="a" items="listError">
+			<c:out value="${a}"></c:out>
+		</c:forEach>
+	</c:if>
+	<c:if test="${!empty listErrorCredit}">
+	<c:out value="${listErrorCredit}"></c:out>
+	</c:if>
+	
 </body>
 
 </html>
