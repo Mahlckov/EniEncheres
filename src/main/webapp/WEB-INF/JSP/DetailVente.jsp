@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="fr.eni.javaee.eniencheres.messages.LecteurMessage" %>
 
 <!DOCTYPE html>
 <html>
@@ -107,14 +108,19 @@
 			</c:if>
 		</div>
 	</div>
-	<c:if test="${!empty listError}">
-		<c:forEach var="a" items="listError">
-			<c:out value="${a}"></c:out>
-		</c:forEach>
-	</c:if>
+	
 	<c:if test="${!empty listErrorCredit}">
 	<c:out value="${listErrorCredit}"></c:out>
 	</c:if>
+	
+	<c:if test="${!empty listeCodesErreur}">
+			  <ul>
+			  	<c:forEach var="code" items="${listeCodesErreur}">
+			  		<li>${LecteurMessage.getMessageErreur(code)}</li>
+			  	</c:forEach>
+			  </ul>
+			
+		</c:if>
 	
 </body>
 
