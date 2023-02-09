@@ -8,5 +8,8 @@ public interface RetraitDAO {
 	public Retrait selectRetraitByNoArticle(int noArticle) throws BusinessException;
 
 	public void insertRetrait(Retrait retrait) throws BusinessException;
+	
+	public void miseAJourRetrait(Retrait retrait) throws BusinessException;
+
 
 }

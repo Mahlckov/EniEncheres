@@ -41,6 +41,7 @@ public class ServletPageNouvelleVente extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+<<<<<<< HEAD
 		
 		if(request.getParameter("delete")!=null) {
 			ArticleManager articleManager = new ArticleManager();
@@ -87,6 +88,59 @@ public class ServletPageNouvelleVente extends HttpServlet {
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/JSP/NouvelleVente.jsp");
 		rd.forward(request, response);}
+=======
+
+		// SI VOLONTE DE SUPPRIMER UNE VENTE AVANT QU'ELLE DEBUTE DEPUIS JSP DETAILVENTE
+
+		if (request.getParameter("delete") != null) {
+			ArticleManager articleManager = new ArticleManager();
+			int noArticle = Integer.parseInt(request.getParameter("noArticle"));
+			try {
+				articleManager.supprimerArticle(noArticle);
+
+				response.sendRedirect("Accueil");
+			} catch (BusinessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+		// SI VOLONTE DE MODIFIER UNE VENTE AVANT QU'ELLE DEBUTE DEPUIS JSP DETAILVENTE
+
+		else if (request.getParameter("modifier") != null) {
+			ArticleManager articleManager = new ArticleManager();
+			RetraitManager retraitManager = new RetraitManager();
+			int noArticle = Integer.parseInt(request.getParameter("noArticle")); // RECUP noARTICLE DE L'URL
+			Articles article = new Articles();
+			Retrait retrait = null;
+			try {
+				article = articleManager.selectionnerArticle(noArticle);
+			} catch (BusinessException e) {
+				e.printStackTrace();
+			}
+			try {
+				retrait = retraitManager.selectRetraitById(noArticle);
+			} catch (BusinessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			request.setAttribute("article", article);
+			request.setAttribute("retrait", retrait);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/JSP/NouvelleVente.jsp");
+			rd.forward(request, response);
+
+		}
+
+		// PAR DEFAUT QUAND ON ARRIVE SUR LA SERVLET POUR UNE NOUVELLE VENTE
+
+		else {
+
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/JSP/NouvelleVente.jsp");
+			rd.forward(request, response);
+		}
+>>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 
 	}
 
@@ -123,12 +177,14 @@ public class ServletPageNouvelleVente extends HttpServlet {
 		LocalDate localDate = LocalDate.now();
 
 		if (localDate.isBefore(dateDebutEnchere)) {
-			
+
 			etat_Vente = "NON DEBUTEE";
 
 		}
-		
-		else {etat_Vente="EN COURS";}
+
+		else {
+			etat_Vente = "EN COURS";
+		}
 
 		// RECUPERATION DE l'IDENTIFIANT EN COURS DE SESSION
 
@@ -153,13 +209,58 @@ public class ServletPageNouvelleVente extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		
-		//CREATION DE L ARTICLE
-		
+		// CREATION DE L ARTICLE
+
 		Articles article = new Articles(nomArticle, descriptionArticle, dateDebutEnchere, dateFinEnchere, miseAPrix,
 				miseAPrix, etat_Vente, categorie, utilisateur, null);
 		
-		//INSERTION DE L ARTICLE
+	//////////////////////////////////////////////////////////////////////////////	
+		//SI MISE A JOUR D UN ARTICLE EXISTANT DONT LA VENTE N A PAS DEBUTEE
+		if (request.getParameter("articleModif") != null) {
+			
+			article.setNoArticle(Integer.parseInt(request.getParameter("articleModif")));
+			try {
+				articleManager.miseAjourArticle(article);
+			} catch (BusinessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			//CREATION DU RETRAIT
+			if (rue == null | rue.isBlank()) {
+				rue = utilisateur.getRue();
+			}
+			;
+			if (codePostal == null | codePostal.isBlank()) {
+				codePostal = utilisateur.getCodePostal();
+			}
+			if (ville == null | ville.isBlank()) {
+				ville = utilisateur.getVille();
+			}
+			;
+
+			Retrait retrait = new Retrait(article, rue, codePostal, ville);
+
+			RetraitManager retraitManager = new RetraitManager();
+			
+			//MISE A JOUR DU RETRAIT
+			
+			try {
+				retraitManager.miseAJourRetrait(retrait);
+			} catch (BusinessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+
+		}
+		
+		//////////////////////////////////////////////////////////////////////////////////////
+		//////////////// SI CREATION D UN NOUVEL ARTICLE  /////////////////////////////////
+		
+		else {
+
+		// INSERTION DE L ARTICLE
 
 		try {
 			articleManager.ajouterArticle(article);
@@ -167,35 +268,41 @@ public class ServletPageNouvelleVente extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		//RECUPERATION DE l'ARTICLE AVEC SON ID
-		
+
+		// RECUPERATION DE l'ARTICLE AVEC SON ID
+
 		try {
 			article = articleManager.selectionnerArticle(article.getNoArticle());
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		//CREATION DU RETRAIT
-		
-		if(rue==null | rue.isBlank()) {rue=utilisateur.getRue();};
-		if(codePostal==null | codePostal.isBlank()) {codePostal=utilisateur.getCodePostal();}
-		if(ville==null | ville.isBlank()) {ville=utilisateur.getVille();};
 
-		
-		Retrait retrait = new Retrait(article,rue,codePostal,ville);
-		
+		// CREATION DU RETRAIT
+
+		if (rue == null | rue.isBlank()) {
+			rue = utilisateur.getRue();
+		}
+		;
+		if (codePostal == null | codePostal.isBlank()) {
+			codePostal = utilisateur.getCodePostal();
+		}
+		if (ville == null | ville.isBlank()) {
+			ville = utilisateur.getVille();
+		}
+		;
+
+		Retrait retrait = new Retrait(article, rue, codePostal, ville);
+
 		RetraitManager retraitManager = new RetraitManager();
-		
+
 		try {
 			retraitManager.ajouterRetrait(retrait);
 		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
-		//REDIRECTION ACCUEIL
+		}}
+/////////////////////////////////////////////////////////////////
+		// REDIRECTION ACCUEIL
 		response.sendRedirect("Accueil");
 	}
 }

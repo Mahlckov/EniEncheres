@@ -19,6 +19,8 @@ public class RetraitDAOJdbcImpl implements RetraitDAO{
 	private static final String INSERT_RETRAIT = "INSERT INTO RETRAITS(no_article, rue, code_postal,\r\n"
 			+ "			 ville) "
 			+ "			 VALUES(?,?,?,?)";
+	private static final String UPDATE_RETRAIT = "update RETRAITS set rue=?, code_postal=?, ville=? where no_article=?";
+
 
 	@Override
 	public Retrait selectRetraitByNoArticle(int noArticle) throws BusinessException {
@@ -93,6 +95,43 @@ public class RetraitDAOJdbcImpl implements RetraitDAO{
 			throw businessException;
 		}
 	
+	}
+	
+	public void miseAJourRetrait (Retrait retrait) throws BusinessException  {
+		
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			try
+			{
+				cnx.setAutoCommit(false);
+				PreparedStatement pstmt;
+	
+				pstmt = cnx.prepareStatement(UPDATE_RETRAIT);
+				pstmt.setString(1, retrait.getRue());
+				pstmt.setString(2, retrait.getCode_postal());
+				pstmt.setString(3, retrait.getVille());
+				pstmt.setInt(4, retrait.getNoArticle().getNoArticle());
+				
+
+				pstmt.executeUpdate();
+		
+				cnx.commit();
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				cnx.rollback();
+				throw e;
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
+			throw businessException;
+		}
+		
 	}
 	
 
