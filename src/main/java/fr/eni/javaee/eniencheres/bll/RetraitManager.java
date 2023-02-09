@@ -30,6 +30,16 @@ public class RetraitManager {
 		} else {
 			throw businessException;}
 		}
+	
+	public void miseAJourRetrait(Retrait newRetrait) throws BusinessException {
+		BusinessException businessException = new BusinessException();
+		this.validerRetrait(newRetrait);
+		if (!businessException.hasErreurs()) {
+			retraitDAO.miseAJourRetrait(newRetrait);
+		} else {
+			throw businessException;}
+		}
+	
 
 	private void validerRetrait(Retrait retrait) throws BusinessException {
 		BusinessException businessException = new BusinessException();

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="fr.eni.javaee.eniencheres.messages.LecteurMessage" %>
 
 <!DOCTYPE html>
 <html>
@@ -100,26 +99,23 @@
 						<p class="champs">Ma proposition :</p>
 						<input class="formProfil" class="remplissageChamps" id="propositionEnchere"
 							name="propositionEnchere" type="number"
-							min="${article.prixVente}+10" max="10000" step="25">
+							min="${article.prixVente + 25}" max="100000" step="25">
 					</div>
 					<input type="submit" value="Enchérir">
 				</form>
-
+				
+			</c:if>
+			<c:if test="${!empty modifier}">
+			
+			<a href="/EniEncheres/NouvelleVente?modifier=true&noArticle=${article.noArticle}"><button>Modifier</button></a>
 			</c:if>
 		</div>
 	</div>
-	
-	<c:if test="${!empty listErrorCredit}">
-	<c:out value="${listErrorCredit}"></c:out>
-	</c:if>
-	
-	<c:if test="${!empty listeCodesErreur}">
-			  <ul>
-			  	<c:forEach var="code" items="${listeCodesErreur}">
-			  		<li>${LecteurMessage.getMessageErreur(code)}</li>
-			  	</c:forEach>
-			  </ul>
-			
+		<c:if test="${!empty errorList }">
+		<c:forEach var="a" items="${errorList}">
+		<em>${a}</em>
+		</c:forEach>
+		
 		</c:if>
 	
 </body>

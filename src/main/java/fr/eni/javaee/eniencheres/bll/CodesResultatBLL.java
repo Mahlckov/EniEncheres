@@ -24,7 +24,18 @@ public abstract class CodesResultatBLL {
 	/**
 	 * Echec l'Ã©tat de l'article ne respecte pas les rÃ¨gles dÃ©finies
 	 */
-	public static final int REGLE_ARTICLE_ETAT_ERREUR=20003;
+	public static final int REGLE_ARTICLE_ETAT_ERREUR=20013;
+	
+	public static final int REGLE_DATEDEBUT_ARTICLE_ERREUR=20014;
+	
+	public static final int REGLE_DATEDEBUT_ARTICLE_PASSE=20015;
+
+	public static final int REGLE_DATEDEFIN_ARTICLE_ERREUR=20016;
+
+	public static final int REGLE_DATEDEFIN_ARTICLE_PASSE=20017;
+
+
+	
 	
 	/**
 	 * Echec le prix de l'article ne respecte pas les rÃ¨gles dÃ©finies
@@ -46,7 +57,7 @@ public abstract class CodesResultatBLL {
 	public static final int REGLE_RETRAIT_VILLE_ERREUR = 20011;
 	
 	/**
-	 * Echec nombre de crédits insuffisants pour enchérir
+	 * Echec nombre de crÃ©dits insuffisants pour enchÃ©rir
 	 */
 	public static final int REGLE_ENCHERES_CREDIT_ERREUR = 20012;
 

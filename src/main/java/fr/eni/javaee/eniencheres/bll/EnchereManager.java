@@ -60,34 +60,4 @@ public class EnchereManager {
 			return listEncheres;
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	public List<Encheres> validateDateEnchere(LocalDate date_enchere) throws BusinessException
-//	{
-//		LocalDate currentDate = LocalDate.now();
-//		List<Encheres> liste = new ArrayList<Encheres>();
-//	    
-//	    if(date_enchere.isAfter(currentDate)||date_enchere.isEqual(currentDate)) {
-//	    	liste.add((Encheres) this.enchereDAO.selectAll());
-//	    }
-//	    return liste;
-//		
-//	
-//}}
-
-	
 }
