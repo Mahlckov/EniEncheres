@@ -7,14 +7,18 @@ import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.javaee.eniencheres.BusinessException;
 import fr.eni.javaee.eniencheres.bll.ArticleManager;
+import fr.eni.javaee.eniencheres.bll.UtilisateurManager;
 import fr.eni.javaee.eniencheres.bo.Articles;
 import fr.eni.javaee.eniencheres.bo.Categorie;
+import fr.eni.javaee.eniencheres.bo.Utilisateur;
 
 /**
  * Servlet implementation class ServletPageAccueil
@@ -30,8 +34,67 @@ public class ServletPageAccueil extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		ArticleManager articleManager = new ArticleManager();
+		UtilisateurManager userManager = new UtilisateurManager();
 		List<Articles> listArticle = new ArrayList();
 		List<Articles> listRecherche = new ArrayList<>();
+	
+		
+		
+		if(request.getCookies()!=null) {
+			String identifiant = null;
+			String motDePasse = null;
+			Cookie[] Cookies=request.getCookies();
+			
+			for (Cookie cookies : Cookies) {
+				if(cookies.getName().equals("EniCookie1")) {
+					 identifiant = cookies.getValue();
+				}
+				if(cookies.getName().equals("EniCookie2")) {
+					 motDePasse = cookies.getValue();
+				}
+				
+			}
+			
+			if(identifiant != null && motDePasse!=null) {
+				boolean connectionAutorise = userManager.seConnecterAvecCookie(identifiant, motDePasse);
+		
+			if (connectionAutorise == true) {
+				
+				Utilisateur utilisateur = new Utilisateur();
+
+				if (identifiant.contains("@")) {
+
+					try {
+						utilisateur = userManager.selectUserByMail(identifiant);
+						
+				        
+						
+					} catch (BusinessException e) {
+						e.printStackTrace();
+					}
+
+				} else {
+					try {
+						utilisateur = userManager.selectUserByPseudo(identifiant);
+						
+					} catch (BusinessException e) {
+						e.printStackTrace();
+					}
+				}
+				
+				int noUtilisateur = utilisateur.getNoUtilisateur();
+
+				HttpSession session = request.getSession();
+				
+				session.setAttribute("noUtilisateur", noUtilisateur);
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/JSP/Accueil.jsp");
+				rd.forward(request, response);
+			}
+			}
+		
+				
+		}
+			
 
 		// MISE A JOUR DANS LA BASE DE DONNEE DES ETATS DE VENTE EN FONCTION DE LA DATE
 

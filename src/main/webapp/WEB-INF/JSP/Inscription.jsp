@@ -73,7 +73,7 @@
 
     <c:if test="${ !empty errorList}"> 
     
-    <c:forEach items="${ errorList}" var="errorList"> <p>${errorList } </p>   </c:forEach>
+    <c:forEach items="${ errorList}" var="errorList"> <em>${errorList} </em>   </c:forEach>
     
     
      </c:if>

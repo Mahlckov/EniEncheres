@@ -25,7 +25,10 @@
 	<form method="get">
 
 		<label for="search">:</label> <input class="searchBar" type="search"
-			id="search" name="search"> <input type="submit"
+			id="search" name="search"<c:if test="${!empty alreadySearched }">value="${alreadySearched}"
+						onblur="if(this.value == '') 
+						{ this.value= '${alreadySearched}'; }"
+							onclick="this.value = '';"</c:if>> <input type="submit"
 			value="Rechercher">
 
 		<!--PARAMETRE DE FILTRAGE CATEGORIE   -->

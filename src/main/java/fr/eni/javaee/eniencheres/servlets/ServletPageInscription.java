@@ -29,6 +29,12 @@ public class ServletPageInscription extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
+		if (request.getParameter("resetPassword") != null) {
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/JSP/Inscription.jsp");
+			rd.forward(request, response);
+		}
+		
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/JSP/Inscription.jsp");
 		rd.forward(request, response);
 	}
