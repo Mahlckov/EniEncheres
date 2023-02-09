@@ -125,11 +125,8 @@
 					</div>
 
 				</div>
-<<<<<<< HEAD
-=======
 				
 				<c:if test="${!empty article }"><input type="hidden"name="articleModif"value="${article.noArticle }")'></c:if>
->>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 
 				<div style="height: 2em;"></div>
 				<div class="buttonsDiv">
@@ -141,13 +138,8 @@
 <a
 						href="/EniEncheres/Accueil"><button class="delete">Annuler</button></a>
 
-<<<<<<< HEAD
-					<a href="/EniEncheres/NouvelleVente?delete=true&noArticle=${article.noArticle}"><button
-							class="delete">Annuler la vente</button></a>
-=======
 				<c:if test="${!empty article }">	<a href="/EniEncheres/NouvelleVente?delete=true&noArticle=${article.noArticle}"><button
 							class="delete">Annuler la vente</button></a></c:if>
->>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 		</div>
 	</div>
 </body>

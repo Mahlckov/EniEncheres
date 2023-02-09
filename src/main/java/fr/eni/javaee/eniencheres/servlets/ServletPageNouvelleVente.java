@@ -41,54 +41,6 @@ public class ServletPageNouvelleVente extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-<<<<<<< HEAD
-		
-		if(request.getParameter("delete")!=null) {
-			ArticleManager articleManager = new ArticleManager();
-			int noArticle = Integer.parseInt(request.getParameter("noArticle"));
-			try {
-				articleManager.supprimerArticle(noArticle);
-				
-				response.sendRedirect("Accueil");
-					} catch (BusinessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	
-		}
-		
-		
-		else if(request.getParameter("modifier")!=null) {
-			ArticleManager articleManager = new ArticleManager();
-			RetraitManager retraitManager = new RetraitManager();
-			int noArticle = Integer.parseInt(request.getParameter("noArticle")); //RECUP noARTICLE DE L'URL
-			Articles article = new Articles();
-			Retrait retrait =null;
-			try {
-				article = articleManager.selectionnerArticle(noArticle);
-			} catch (BusinessException e) {
-				e.printStackTrace();
-			}
-			try {
-				retrait =retraitManager.selectRetraitById(noArticle);
-			} catch (BusinessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
-			request.setAttribute("article", article);
-			request.setAttribute("retrait", retrait);
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/JSP/NouvelleVente.jsp");
-			rd.forward(request, response);
-			
-		}
-		
-		else {
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/JSP/NouvelleVente.jsp");
-		rd.forward(request, response);}
-=======
 
 		// SI VOLONTE DE SUPPRIMER UNE VENTE AVANT QU'ELLE DEBUTE DEPUIS JSP DETAILVENTE
 
@@ -140,7 +92,6 @@ public class ServletPageNouvelleVente extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/JSP/NouvelleVente.jsp");
 			rd.forward(request, response);
 		}
->>>>>>> branch 'main' of https://github.com/Mahlckov/EniEncheres.git
 
 	}
 
