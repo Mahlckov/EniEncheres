@@ -151,21 +151,25 @@ public class ServletDetailVente extends HttpServlet {
 		localDate = LocalDate.now();
 
 		// CREATION ENCHERE
-		BusinessException businessException = null;
 		Encheres enchere = new Encheres(noAcheteur, article, localDate, propositionEnchere);
+		List <String> errorList = null;
+		
 		try {
-			businessException = enchereManager.validerEncheres(enchere);
+			errorList = enchereManager.validerEncheres(enchere);
 
 		} catch (BusinessException e1) {
 			e1.printStackTrace();
 		}
-		if (businessException.hasErreurs()) {
-			request.setAttribute("listError", businessException.getListeCodesErreur());
+		
+		if (!errorList.isEmpty()) {
+			request.setAttribute("errorList", errorList);
 			request.setAttribute("retrait", retrait);
 			request.setAttribute("article", articleAvantModifications);
 			request.getRequestDispatcher("/WEB-INF/JSP/DetailVente.jsp").forward(request, response);
 
 		}
+		
+		else {
 
 		try {
 			// MODIF NOMBRE DE CREDITS DE L'ACHETEUR
@@ -204,6 +208,6 @@ public class ServletDetailVente extends HttpServlet {
 			e.printStackTrace();
 		}
 
-	}
+	}}
 
 }

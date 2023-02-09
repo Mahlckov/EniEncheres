@@ -73,22 +73,22 @@ public class UtilisateurManager {
 		if (prenom.trim().length()>30) {
 			errorList.add("Le champ 'Prénom' ne peut dépasser 30 caractères.");
 		}
-		if (email.trim().length()>20) {
+		if (email.trim().length()>70) {
 			errorList.add("Le champ 'Email' ne peut dépasser 70 caractères.");
 		}
-		if (telephone.trim().length()>15) {
+		if (telephone !=null && telephone.trim().length()!=10) {
 			errorList.add("Le champ 'Téléphone' saisi n'est pas conforme.");
 		}
 		if (rue.trim().length()>30) {
 			errorList.add("Le champ 'Rue' ne peut dépasser 30 caractères.");
 		}
-		if (codePostal.length()>5) {
+		if (codePostal.length()!=5) {
 			errorList.add("Le champ 'Code Postal' saisi n'est pas conforme.");
 		}
 		if (ville.trim().length()>30) {
 			errorList.add("Le champ 'Ville' ne peut dépasser 30 caractères.");
 		}
-		if (motDePasse.trim().length()>20) {
+		if (motDePasse.trim().length()>30) {
 			errorList.add("Le champ 'Mot de passe' ne peut dépasser 30 caractères.");
 		}
 		
@@ -158,34 +158,59 @@ public class UtilisateurManager {
 		if (pseudo.isBlank()) {
 			errorList.add("Le champ 'Pseudo' doit être rempli.");
 		}
+		else if (pseudo.trim().length()>30) {
+			errorList.add("Le champ 'Pseudo' ne peut dépasser 30 caractères.");
+		};
 		
 		if (nom.isBlank()) {
 			errorList.add("Le champ 'Nom' doit être rempli.");
 		}
+		else if (nom.trim().length()>30) {
+			errorList.add("Le champ 'Nom' ne peut dépasser 30 caractères.");
+		}
 		;
+		
 		if (prenom.isBlank()) {
 			errorList.add("Le champ 'Prenom' doit être rempli.");
 		}
+		else if (prenom.trim().length()>30) {
+			errorList.add("Le champ 'Prénom' ne peut dépasser 30 caractères.");
+		}
 		;
+		
 		if (email.isBlank()) {
 			errorList.add("Le champ 'Email' doit être rempli.");
 		}
-		;
+		else if (email.trim().length()>70) {
+			errorList.add("Le champ 'Email' ne peut dépasser 70 caractères.");
+		};
 
 		if (rue.isBlank()) {
 			errorList.add("Le champ 'Rue' doit être rempli.");
+		}
+		else if (rue.trim().length()>30) {
+			errorList.add("Le champ 'Rue' ne peut dépasser 30 caractères.");
 		}
 		;
 		if (codePostal.isBlank()) {
 			errorList.add("Le champ 'Code Postal' doit être rempli.");
 		}
+		else if (codePostal.length()!=5) {
+			errorList.add("Le champ 'Code Postal' saisi n'est pas conforme.");
+		}
 		;
 		if (ville.isBlank()) {
 			errorList.add("Le champ 'ville' doit être rempli.");
 		}
+		else if (ville.trim().length()>30) {
+			errorList.add("Le champ 'Ville' ne peut dépasser 30 caractères.");
+		}
 		;
 		if (motDePasse.isBlank()) {
 			errorList.add("Le champ 'Mot de passe' doit être rempli.");
+		}
+		else if (motDePasse.trim().length()>30) {
+			errorList.add("Le champ 'Mot de passe' ne peut dépasser 30 caractères.");
 		}
 		;
 		if (confirmation.isBlank()) {
@@ -319,12 +344,7 @@ public class UtilisateurManager {
 				int montantRetire = user.getCredit() - enchere.getMontant_enchere();
 					user.setCredit(montantRetire);
 					userManager.updateUser(user);
-					
 				}
-//			else if(user.getCredit() < enchere.getMontant_enchere()){
-//				errorList = "Votre nombre de crédits est insuffisant pour enchérir, il vous manque " + (enchere.getMontant_enchere()-user.getCredit())+ " points";
-//			}
-//			return errorList;
 	}
 	
 	public void restituerCredit  (int credit, int noUtilisateur) throws BusinessException {
