@@ -1,12 +1,20 @@
 @charset "UTF-8";
 
+
+
 body {
 	margin: 0;
 }
 
-h1 {
+/* MENU */
+
+h2 {
 	margin-bottom: 0, 5em;
 }
+
+h3 {font-size:0,5em;}
+
+
 
 header {
 	width: 100%;
@@ -47,11 +55,16 @@ header {
 	margin-left: auto;
 	margin-right: auto;
 	border-width: 1px;
+	margin-bottom:0.5em;
 }
 
 a {
 	text-decoration: none;
 }
+
+.lienAccueil {color:red;}
+
+/* JSP : ACCUEIL */
 
 .searchBar {
 	width: 20em;
@@ -99,7 +112,7 @@ a {
 
 }
 
-.conteneurPhoto {
+.conteneurPhotoAccueil {
 	width: 15em;
 	position:relative;
 
@@ -114,3 +127,100 @@ a {
 }
 
 .surContainerACocher{display:flex;width: 50em;}
+
+
+/*JSP : NOUVELLE VENTE/DETAIL VENTE/ PROFIL */
+
+h1 {
+	text-align:center;	margin-block-start:0;
+	
+}
+
+
+p{margin-right:0.0em;}
+
+.titreNouvelleVente{	text-align:center;}
+
+
+
+.conteneurPhoto {width:45em;
+				height:80em;
+				margin:	0;}
+				
+.conteneur {display:flex;}
+
+.conteneurFormulaire {width:45em;}
+
+.libelle {width:10em; display:inline-block; height:2em;line-height:2em;}
+
+.info {width:15em; display:inline-block; height:2em;line-height:2em;}
+
+
+.DescriptionArticle {width:8em; display:inline-block;}
+
+
+				
+				 
+.divParam {
+width:30em;
+margin-top:0.2em;	
+display:flex}
+
+.divRetrait {border: solid;
+width:25em;
+padding-left:2em;
+padding-bottom:0em;
+
+}
+
+
+.submit {
+width:12em;}
+
+
+.submitConnexion {margin-top:2em;
+width:12em;}
+
+.delete {width:13em;}
+
+.champs{width:10em;}
+
+.conteneurProfil {width:50%;
+margin-left:auto;
+margin-right:auto;
+}
+
+.divParamProfil {
+width:50%;
+height:3.5em;
+
+display:flex;
+
+
+}
+
+.divParamID {
+width:50%;
+height:3.5em;
+padding-right:3em;
+
+display:flex;
+
+
+}
+
+
+
+
+.centrageProfil {
+	width:40%;
+	
+}
+
+.formInput {height:2em;line-height:2em; margin-top:1em;}
+
+.buttonsDiv {display:inline-block; height:2em;line-height:2em;}
+
+.centrageLienInscription{display:inline-block; text-align:center;width:100%;}
+
+
