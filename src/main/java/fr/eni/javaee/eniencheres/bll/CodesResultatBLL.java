@@ -24,7 +24,18 @@ public abstract class CodesResultatBLL {
 	/**
 	 * Echec l'état de l'article ne respecte pas les règles définies
 	 */
-	public static final int REGLE_ARTICLE_ETAT_ERREUR=20003;
+	public static final int REGLE_ARTICLE_ETAT_ERREUR=20013;
+	
+	public static final int REGLE_DATEDEBUT_ARTICLE_ERREUR=20014;
+	
+	public static final int REGLE_DATEDEBUT_ARTICLE_PASSE=20015;
+
+	public static final int REGLE_DATEDEFIN_ARTICLE_ERREUR=20016;
+
+	public static final int REGLE_DATEDEFIN_ARTICLE_PASSE=20017;
+
+
+	
 	
 	/**
 	 * Echec le prix de l'article ne respecte pas les règles définies

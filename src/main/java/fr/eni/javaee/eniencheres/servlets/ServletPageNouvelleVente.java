@@ -2,6 +2,8 @@ package fr.eni.javaee.eniencheres.servlets;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -113,7 +115,7 @@ public class ServletPageNouvelleVente extends HttpServlet {
 		Categorie categorie = new Categorie(categorieForm);
 
 		String Prix = request.getParameter("miseAPrix");
-		int miseAPrix = Integer.parseInt(Prix);
+		Integer miseAPrix = Integer.parseInt(Prix);
 		String DebutEnchere = request.getParameter("dateDebutEnchere");
 		String FinEnchere = request.getParameter("dateFinEnchere");
 
@@ -164,6 +166,22 @@ public class ServletPageNouvelleVente extends HttpServlet {
 
 		Articles article = new Articles(nomArticle, descriptionArticle, dateDebutEnchere, dateFinEnchere, miseAPrix,
 				miseAPrix, etat_Vente, categorie, utilisateur, null);
+		
+		
+		//VERIFICATION DE L ARTICLE
+		try {
+			articleManager.validerArticle(article);
+			
+			
+		} catch (BusinessException e1) {
+			
+			
+			request.setAttribute("errorList", e1.getListeCodesErreur());
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/JSP/NouvelleVente.jsp");
+			rd.forward(request, response);		}
+		
+
 		
 	//////////////////////////////////////////////////////////////////////////////	
 		//SI MISE A JOUR D UN ARTICLE EXISTANT DONT LA VENTE N A PAS DEBUTEE
@@ -216,7 +234,6 @@ public class ServletPageNouvelleVente extends HttpServlet {
 		try {
 			articleManager.ajouterArticle(article);
 		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -225,7 +242,6 @@ public class ServletPageNouvelleVente extends HttpServlet {
 		try {
 			article = articleManager.selectionnerArticle(article.getNoArticle());
 		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

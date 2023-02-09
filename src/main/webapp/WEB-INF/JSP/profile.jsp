@@ -196,7 +196,7 @@
 	</c:if>
 	<c:if test="${!empty errorList}">
 		<c:forEach var="a" items="${errorList}">
-			<c:out value="${a}"></c:out>
+			<em>${a}</em>
 			<br>
 		</c:forEach>
 	</c:if>

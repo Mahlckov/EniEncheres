@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	<%@ page import = "fr.eni.javaee.eniencheres.messages.LecteurMessage" %> 
 	
 <!DOCTYPE html>
 <html>
@@ -142,5 +143,11 @@
 							class="delete">Annuler la vente</button></a></c:if>
 		</div>
 	</div>
+	<c:if test="${!empty errorList}">
+		<c:forEach var="a" items="${errorList}">
+			<em>${LecteurMessage.getMessageErreur(a)}</em>
+			<br>
+		</c:forEach>
+	</c:if>
 </body>
 </html>

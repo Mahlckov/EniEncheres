@@ -36,6 +36,8 @@
 						<p class="libelle">Mot de passe : </p>
 <input class="formInput" type="password" name="motDePasse" id="motDePasse" /></div> 
 
+<label> <input type="checkbox" id= "login-remember" name="remember" value="1" /> Se rappeler de moi </label>
+
 <input class="submitConnexion" type="submit"  value="Connexion">
 
 </div> </div>

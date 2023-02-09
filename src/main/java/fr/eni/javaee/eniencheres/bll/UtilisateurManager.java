@@ -335,5 +335,51 @@ public class UtilisateurManager {
 		userManager.updateUser(user);
 	}
 	
+	
+	public boolean seConnecterAvecCookie(String id,String mdp) {
+		boolean connexionAutorisee = false;
+		List<Utilisateur> liste = new ArrayList<>();
+
+		String identifiant = id;
+		String motDePasse = mdp;
+
+		UtilisateurManager manager = new UtilisateurManager();
+
+		try {
+			liste = manager.listeUtilisateur();
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		for (Utilisateur utilisateur : liste) {
+
+			if (identifiant.contains("@")) {
+
+				String identifiantExistant = utilisateur.getEmail();
+				String motDePasseExistant = utilisateur.getMotDePasse();
+
+				if (identifiant.equals(identifiantExistant) && motDePasse.equals(motDePasseExistant)) {
+
+					connexionAutorisee = true;
+				}
+
+			}
+
+			else {
+
+				String identifiantExistant = utilisateur.getPseudo();
+				String motDePasseExistant = utilisateur.getMotDePasse();
+
+				if (identifiant.equals(identifiantExistant) && motDePasse.equals(motDePasseExistant)) {
+
+					connexionAutorisee = true;
+				}
+			}
+		}
+
+		return connexionAutorisee;
+
+	}
 
 }

@@ -7,14 +7,18 @@ import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.javaee.eniencheres.BusinessException;
 import fr.eni.javaee.eniencheres.bll.ArticleManager;
+import fr.eni.javaee.eniencheres.bll.UtilisateurManager;
 import fr.eni.javaee.eniencheres.bo.Articles;
 import fr.eni.javaee.eniencheres.bo.Categorie;
+import fr.eni.javaee.eniencheres.bo.Utilisateur;
 
 /**
  * Servlet implementation class ServletPageAccueil
@@ -30,8 +34,68 @@ public class ServletPageAccueil extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		ArticleManager articleManager = new ArticleManager();
+		UtilisateurManager userManager = new UtilisateurManager();
 		List<Articles> listArticle = new ArrayList();
 		List<Articles> listRecherche = new ArrayList<>();
+		HttpSession session = request.getSession();
+
+		
+		
+		//SI COOKIES RECUPERATION DU LOGIN ET CONNEXION
+
+		if (request.getCookies() != null && session.getAttribute("noUtilisateur")==null) {
+			String identifiant = null;
+			String motDePasse = null;
+			Cookie[] Cookies = request.getCookies();
+
+			for (Cookie cookies : Cookies) {
+
+				if (cookies.getName().equals("EniCookie1")) {
+					identifiant = cookies.getValue();
+				}
+				if (cookies.getName().equals("EniCookie2")) {
+					motDePasse = cookies.getValue();
+				}
+
+			}
+
+
+
+
+			if (identifiant != null && motDePasse != null) {
+				boolean connectionAutorise = userManager.seConnecterAvecCookie(identifiant, motDePasse);
+
+				if (connectionAutorise == true) {
+
+					Utilisateur utilisateur = new Utilisateur();
+
+					if (identifiant.contains("@")) {
+
+						try {
+							utilisateur = userManager.selectUserByMail(identifiant);
+
+						} catch (BusinessException e) {
+							e.printStackTrace();
+						}
+
+					} else {
+						try {
+							utilisateur = userManager.selectUserByPseudo(identifiant);
+
+						} catch (BusinessException e) {
+							e.printStackTrace();
+						}
+					}
+
+					int noUtilisateur = utilisateur.getNoUtilisateur();
+
+
+					session.setAttribute("noUtilisateur", noUtilisateur);
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/JSP/Accueil.jsp");
+					rd.forward(request, response);				}
+			}
+
+		}
 
 		// MISE A JOUR DANS LA BASE DE DONNEE DES ETATS DE VENTE EN FONCTION DE LA DATE
 
@@ -78,22 +142,25 @@ public class ServletPageAccueil extends HttpServlet {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				/////SI RECHERCHE EFFECTUE DANS LA BARRE DE RECHERCHE
+				///// SI RECHERCHE EFFECTUE DANS LA BARRE DE RECHERCHE
 
 				if (request.getParameter("search") != null) {
+					
+					String alreadySearched = request.getParameter("search");
+
+					request.setAttribute("alreadySearched", alreadySearched);
 
 					for (
 
-							Articles articles : listArticle) {
+					Articles articles : listArticle) {
 
 						if (articles.getNomArticle().contains(request.getParameter("search"))) {
 							listRecherche.add(articles);
 						}
 					}
-		
-		
-		listArticle = listRecherche;
-	}
+
+					listArticle = listRecherche;
+				}
 			}
 
 			// SI PARAMETRE CATEGORIE = TYPES CATEGORIES
@@ -107,21 +174,24 @@ public class ServletPageAccueil extends HttpServlet {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
-				/////SI RECHERCHE EFFECTUE DANS LA BARRE DE RECHERCHE
 
-							if (request.getParameter("search") != null) {
+				///// SI RECHERCHE EFFECTUE DANS LA BARRE DE RECHERCHE
 
-								for (
+				if (request.getParameter("search") != null) {
 
-										Articles articles : listArticle) {
+					String alreadySearched = request.getParameter("search");
 
-									if (articles.getNomArticle().contains(request.getParameter("search"))) {
-										listRecherche.add(articles);
-									}
-								}
-					
-					
+					request.setAttribute("alreadySearched", alreadySearched);
+
+					for (
+
+					Articles articles : listArticle) {
+
+						if (articles.getNomArticle().contains(request.getParameter("search"))) {
+							listRecherche.add(articles);
+						}
+					}
+
 					listArticle = listRecherche;
 				}
 

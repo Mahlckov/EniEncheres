@@ -99,7 +99,7 @@
 						<p class="champs">Ma proposition :</p>
 						<input class="formProfil" class="remplissageChamps" id="propositionEnchere"
 							name="propositionEnchere" type="number"
-							min="${article.prixVente}+10" max="10000" step="25">
+							min="${article.prixVente + 25}" max="100000" step="25">
 					</div>
 					<input type="submit" value="Enchérir">
 				</form>
@@ -111,14 +111,12 @@
 			</c:if>
 		</div>
 	</div>
-	<c:if test="${!empty listError}">
-		<c:forEach var="a" items="listError">
-			<c:out value="${a}"></c:out>
+		<c:if test="${!empty errorList }">
+		<c:forEach var="a" items="${errorList}">
+		<em>${a}</em>
 		</c:forEach>
-	</c:if>
-	<c:if test="${!empty listErrorCredit}">
-	<c:out value="${listErrorCredit}"></c:out>
-	</c:if>
+		
+		</c:if>
 	
 </body>
 
