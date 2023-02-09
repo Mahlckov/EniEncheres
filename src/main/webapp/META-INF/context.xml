@@ -9,6 +9,7 @@
 		url="jdbc:sqlserver://localhost;databasename=ENCHERES;integratedSecurity=false;encrypt=true;trustServerCertificate=true;"
 
 
+
 		username="test"
 		password="testtest"
     	maxTotal="100"
