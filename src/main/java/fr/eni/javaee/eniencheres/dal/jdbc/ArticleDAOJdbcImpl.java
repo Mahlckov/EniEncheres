@@ -34,6 +34,10 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			+ "				date_fin_encheres=?, prix_initial=?, prix_vente=?, etat_vente=?, no_categorie=?, \r\n"
 			+ "				no_vendeur=?, no_acheteur=?  WHERE no_article=?";
 	
+	private static final String UPDATE_ARTICLE_SANS_noACHETEUR ="UPDATE ARTICLES SET nom_article=?, description=?, date_debut_encheres=?, \r\n"
+			+ "				date_fin_encheres=?, prix_initial=?, prix_vente=?, etat_vente=?, no_categorie=?, \r\n"
+			+ "				no_vendeur=?  WHERE no_article=?";
+	
 	private static final String SELECT_ALL_BY_ETAT_VENTE = "SELECT* FROM ARTICLES WHERE etat_vente=?";
 	
 	private static final String SELECT_ALL_BY_CATEGORIE = "SELECT* FROM ARTICLES WHERE no_categorie=?";
@@ -181,7 +185,37 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	public void updateArticle(Articles article) throws BusinessException {
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
-			PreparedStatement pstmt = cnx.prepareStatement(UPDATE_ARTICLE);
+			
+			PreparedStatement pstmt=null;
+			
+			//SI UPDATE D UN ARTICLE AVANT DEBUT DE LA VENTE(noACHETEUR = null DONC NON MIS DANS LE STATEMENT)
+			
+			if(article.getNoAcheteur()==null) {
+				
+				pstmt = cnx.prepareStatement(UPDATE_ARTICLE_SANS_noACHETEUR);
+				pstmt.setString(1,article.getNomArticle());
+				pstmt.setString(2,article.getDescription());
+				pstmt.setDate(3,java.sql.Date.valueOf(article.getDateDebutEncheres()));
+			    pstmt.setDate(4,java.sql.Date.valueOf(article.getDateFinEncheres()));
+			    pstmt.setInt(5,article.getMiseAprix());
+			    pstmt.setInt(6,article.getPrixVente());
+			    pstmt.setString(7,article.getEtatVente());
+			    pstmt.setInt(8,article.getNoCategorie().getNoCategorie());
+			    pstmt.setInt(9,article.getNoVendeur().getNoUtilisateur());
+			    pstmt.setInt(10,article.getNoArticle());
+
+			    pstmt.executeUpdate();
+			    pstmt.close();	
+				
+
+			}
+			
+			//SI UPDATE D'ARTICLE SUITE A UNE ENCHERE
+			else {
+			
+			pstmt = cnx.prepareStatement(UPDATE_ARTICLE); 
+			
+			
 			pstmt.setString(1,article.getNomArticle());
 			pstmt.setString(2,article.getDescription());
 			pstmt.setDate(3,java.sql.Date.valueOf(article.getDateDebutEncheres()));
@@ -193,9 +227,10 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		    pstmt.setInt(9,article.getNoVendeur().getNoUtilisateur());
 		    pstmt.setInt(10,article.getNoAcheteur().getNoUtilisateur());
 		    pstmt.setInt(11,article.getNoArticle());
+
 		    pstmt.executeUpdate();
 		    pstmt.close();	
-		}
+		}}
 		catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();

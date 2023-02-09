@@ -31,9 +31,10 @@ public class ServletPageAccueil extends HttpServlet {
 			throws ServletException, IOException {
 		ArticleManager articleManager = new ArticleManager();
 		List<Articles> listArticle = new ArrayList();
-		
-		//MISE A JOUR DANS LA BASE DE DONNEE DES ETATS DE VENTE EN FONCTION DE LA DATE
-		
+		List<Articles> listRecherche = new ArrayList<>();
+
+		// MISE A JOUR DANS LA BASE DE DONNEE DES ETATS DE VENTE EN FONCTION DE LA DATE
+
 		try {
 			articleManager.miseAJourEtatVente();
 		} catch (BusinessException e1) {
@@ -41,27 +42,27 @@ public class ServletPageAccueil extends HttpServlet {
 			e1.printStackTrace();
 		}
 
-		// PAR DEFAUT => PAS DE RECHERCHE, PAS DE CATEGORIE SELECTIONNE TOUS LES ARTICLES \\
+		// PAR DEFAUT => PAS DE RECHERCHE, PAS DE CATEGORIE SELECTIONNE TOUS LES
+		// ARTICLES \\
 
 		// RECUPERATION PARAMETRE DE FILTRE PAR CATEGORIE
 		String cat = null;
 		Categorie categorie = null;
 
-
 		if (request.getParameter("encheresOuvertes") != null | request.getParameter("mesEncheresEnCours") != null
-				| request.getParameter("mesEncheresRemportees") != null | request.getParameter("mesVentesEnCours") != null
-				| request.getParameter("ventesNonDebutees") != null | request.getParameter("ventesTerminees") != null) {
-			
+				| request.getParameter("mesEncheresRemportees") != null
+				| request.getParameter("mesVentesEnCours") != null | request.getParameter("ventesNonDebutees") != null
+				| request.getParameter("ventesTerminees") != null) {
+
 			try {
-				listArticle =articleManager.Filtrage(request);
+				listArticle = articleManager.Filtrage(request);
 			} catch (BusinessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
-		// SI PARAMETRE CATEGORIE EST EXISTANT MAIS PAS D'AUTRES
 
+		// SI PARAMETRE CATEGORIE EST EXISTANT MAIS PAS D'AUTRES
 
 		else if (request.getParameter("categorie") != null) {
 			cat = request.getParameter("categorie");
@@ -77,7 +78,22 @@ public class ServletPageAccueil extends HttpServlet {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				/////SI RECHERCHE EFFECTUE DANS LA BARRE DE RECHERCHE
 
+				if (request.getParameter("search") != null) {
+
+					for (
+
+							Articles articles : listArticle) {
+
+						if (articles.getNomArticle().contains(request.getParameter("search"))) {
+							listRecherche.add(articles);
+						}
+					}
+		
+		
+		listArticle = listRecherche;
+	}
 			}
 
 			// SI PARAMETRE CATEGORIE = TYPES CATEGORIES
@@ -86,10 +102,29 @@ public class ServletPageAccueil extends HttpServlet {
 
 				try {
 					listArticle = articleManager.selectionnerListArticleSelonCategorie(categorie);
+
 				} catch (BusinessException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
+				/////SI RECHERCHE EFFECTUE DANS LA BARRE DE RECHERCHE
+
+							if (request.getParameter("search") != null) {
+
+								for (
+
+										Articles articles : listArticle) {
+
+									if (articles.getNomArticle().contains(request.getParameter("search"))) {
+										listRecherche.add(articles);
+									}
+								}
+					
+					
+					listArticle = listRecherche;
+				}
+
 			}
 		}
 

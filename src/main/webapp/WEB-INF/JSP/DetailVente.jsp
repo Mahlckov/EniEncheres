@@ -103,7 +103,11 @@
 					</div>
 					<input type="submit" value="Enchérir">
 				</form>
-
+				
+			</c:if>
+			<c:if test="${!empty modifier}">
+			
+			<a href="/EniEncheres/NouvelleVente?modifier=true&noArticle=${article.noArticle}"><button>Modifier</button></a>
 			</c:if>
 		</div>
 	</div>

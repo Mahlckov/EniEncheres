@@ -334,4 +334,6 @@ public class UtilisateurManager {
 		user.setCredit(user.getCredit() + credit);
 		userManager.updateUser(user);
 	}
+	
+
 }

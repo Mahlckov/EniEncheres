@@ -64,6 +64,7 @@ public class ArticleManager {
 		ArticleManager articleManager = new ArticleManager();
 		List<Articles> listArticle = new ArrayList<>();
 		LocalDate localDate = LocalDate.now();
+		UtilisateurManager utilisateurManager = new UtilisateurManager();
 
 		listArticle = articleManager.selectionnerListArticleSelonEtatVente("NON DEBUTEE");
 		for (Articles articles : listArticle) {
@@ -83,6 +84,7 @@ public class ArticleManager {
 
 				articles.setEtatVente("TERMINEE");
 				articleManager.miseAjourArticle(articles);
+				utilisateurManager.restituerCredit(articles.getPrixVente(), articles.getNoVendeur().getNoUtilisateur());
 			}
 
 		}
