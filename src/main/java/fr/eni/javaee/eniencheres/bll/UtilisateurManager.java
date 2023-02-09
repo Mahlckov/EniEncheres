@@ -355,6 +355,7 @@ public class UtilisateurManager {
 		userManager.updateUser(user);
 	}
 	
+	
 	public boolean seConnecterAvecCookie(String id,String mdp) {
 		boolean connexionAutorisee = false;
 		List<Utilisateur> liste = new ArrayList<>();
@@ -367,6 +368,7 @@ public class UtilisateurManager {
 		try {
 			liste = manager.listeUtilisateur();
 		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -399,4 +401,5 @@ public class UtilisateurManager {
 		return connexionAutorisee;
 
 	}
+
 }
